@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">MRead</string>
+    <string name="app_dev_default">--</string>
+
+    <string name="app_title">口口悦读</string>
+
+    <string name="man_bottom_bar_book">读书</string>
+    <string name="man_bottom_bar_search">发现</string>
+    <string name="man_bottom_bar_me">我的</string>
+
+    <string name="search_book_edit_hint">搜索在线书籍</string>
 </resources>
