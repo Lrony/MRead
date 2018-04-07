@@ -2,6 +2,7 @@ package com.lrony.mread.ui;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
@@ -55,6 +56,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     }
 
     private void initView() {
+        Log.d(TAG, "initView");
         mBottomNavigationBar = findViewById(R.id.bottom_navigation_bar);
         mBottomNavigationBar.addItem(new BottomNavigationItem(R.drawable.ic_bottom_bar_book, R.string.man_bottom_bar_book))
                 .addItem(new BottomNavigationItem(R.drawable.ic_bottom_bar_search, R.string.man_bottom_bar_search))
@@ -64,11 +66,13 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     }
 
     private void initListener() {
+        Log.d(TAG, "initListener");
         mBottomNavigationBar.setTabSelectedListener(this);
     }
 
     @Override
     public void onTabSelected(int position) {
+        Log.d(TAG, "onTabSelected: " + position);
         switch (position) {
             case PAGE_BOOK:
                 showHideFragment(mFragments[PAGE_BOOK], mFragments[mCurrentFrm]);
