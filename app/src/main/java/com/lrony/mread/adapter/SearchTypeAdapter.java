@@ -40,6 +40,7 @@ public class SearchTypeAdapter extends RecyclerView.Adapter<SearchTypeAdapter.Vi
         holder.name.setText(datas.getBooks().get(position).getTitle());
         holder.shortIntro.setText(datas.getBooks().get(position).getShortIntro());
         holder.author.setText(datas.getBooks().get(position).getAuthor());
+        holder.minorCate.setText(datas.getBooks().get(position).getMinorCate());
 
         Picasso.get()
                 .load(Constant.IMG_BASE_URL + datas.getBooks().get(position).getCover())
@@ -61,6 +62,7 @@ public class SearchTypeAdapter extends RecyclerView.Adapter<SearchTypeAdapter.Vi
         private TextView name;
         private TextView shortIntro;
         private TextView author;
+        private TextView minorCate;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -69,6 +71,7 @@ public class SearchTypeAdapter extends RecyclerView.Adapter<SearchTypeAdapter.Vi
             name = itemView.findViewById(R.id.tv_name);
             shortIntro = itemView.findViewById(R.id.tv_shortIntro);
             author = itemView.findViewById(R.id.tv_author);
+            minorCate = itemView.findViewById(R.id.tv_minorCate);
         }
     }
 
