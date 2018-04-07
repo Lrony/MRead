@@ -9,4 +9,21 @@
     <string name="man_bottom_bar_me">我的</string>
 
     <string name="search_book_edit_hint">搜索在线书籍</string>
+
+    <string name="book_detail_download_book">缓存全书</string>
+    <string name="book_detail_add_bookcase">加入书架</string>
+    <string name="book_detail_open_book">免费阅读</string>
+
+    <!--book-->
+    <string name="book_unfinished">连载中</string>
+    <string name="book_finished">已完结</string>
+
+    <string name="book_copyright_info">
+        免责声明：本小说为转载作品,所有章节均由网友上传,转载至本站只是为了宣传本书让更多读者欣赏。
+        如有侵犯版权,请来信告知,我们将立即予以处理。
+        若小说含有不良信息请书友积极告知客服 5414115@qq.com
+    </string>
+    <string name="book_create_date_copyright">上架时间：</string>
+    <string name="word_count_copyright">字数：</string>
+    <string name="more_book_info">小说更多信息</string>
 </resources>

@@ -9,8 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.lrony.mread.AppRouter;
 import com.lrony.mread.R;
 import com.lrony.mread.adapter.SearchTypeAdapter;
+import com.lrony.mread.data.bean.BookDetailPackage;
 import com.lrony.mread.data.bean.SortBookPackage;
 import com.lrony.mread.service.BookApi;
 import com.lrony.mread.ui.base.BaseFragment;
@@ -82,6 +84,13 @@ public class SearchTypeContentFragment extends BaseFragment implements SwipeRefr
 
     private void initListener() {
         mRefreshView.setOnRefreshListener(this);
+
+        mAdapter.setOnItemClickListener(new SearchTypeAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                getBookInfo(mDatas.getBooks().get(position).get_id());
+            }
+        });
     }
 
     private void initData() {
@@ -108,6 +117,21 @@ public class SearchTypeContentFragment extends BaseFragment implements SwipeRefr
             public void onFailure(Call<SortBookPackage> call, Throwable t) {
                 ToastUtil.showToast("获取失败");
                 mRefreshView.setRefreshing(false);
+            }
+        });
+    }
+
+    private void getBookInfo(String id) {
+        Call<BookDetailPackage> call = mBookApi.getBookDetail(id);
+        call.enqueue(new Callback<BookDetailPackage>() {
+            @Override
+            public void onResponse(Call<BookDetailPackage> call, Response<BookDetailPackage> response) {
+                AppRouter.showBookDetailActivity(getContext(), response.body());
+            }
+
+            @Override
+            public void onFailure(Call<BookDetailPackage> call, Throwable t) {
+                ToastUtil.showToast("书籍详情获取失败");
             }
         });
     }

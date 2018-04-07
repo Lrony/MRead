@@ -4,6 +4,11 @@
     <color name="colorPrimaryDark">#3b5999</color>
     <color name="colorAccent">#4F94CD</color>
 
+    <color name="colorRipple">#e0e0e0</color><!--点击时水波纹颜色-->
+    <color name="colorInactive">#ff909090</color> <!--不活跃的颜色  icon的默认灰色-->
+    <color name="colorPress">#ffe0e0e0</color>
+    <color name="colorPictureDefault">#fff9f9f9</color>
+
     <color name="colorGrounding">@color/md_grey_100</color><!--界面底色-->
     <color name="colorForeground">#ffffff</color><!--界面前景色-->
     <color name="colorDivider">@color/md_grey_300</color> <!-- 分割线颜色-->
@@ -17,6 +22,10 @@
     <color name="man_text_2">#9e9e9e</color>
     <!-- 用于辅助、次要的文字信息、普通按钮描边,如时间、来自等补充信息文案 -->
     <color name="man_text_3">#B0B0B0</color>
+    <color name="textPrimaryInverted">#ffffff</color>
+    <color name="textSecondaryInverted">#c8ffffff</color>
+    <color name="textAssistInverted">#8affffff</color>
+    <color name="textError">#ffe7492e</color>
 
     <!--通用颜色-->
     <color name="blue">#ff1976D2</color>

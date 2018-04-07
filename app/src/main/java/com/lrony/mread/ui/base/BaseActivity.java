@@ -3,6 +3,7 @@ package com.lrony.mread.ui.base;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.annotation.IdRes;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
@@ -23,6 +24,24 @@ public class BaseActivity extends SupportActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    public void bindOnClickLister(View rootView, View.OnClickListener listener, @IdRes int... ids) {
+        for (int id : ids) {
+            View view = rootView.findViewById(id);
+            if (view != null) {
+                view.setOnClickListener(listener);
+            }
+        }
+    }
+
+    public void bindOnClickLister(View.OnClickListener listener, @IdRes int... ids) {
+        for (int id : ids) {
+            View view = findViewById(id);
+            if (view != null) {
+                view.setOnClickListener(listener);
+            }
+        }
     }
 
     public void bindOnClickLister(View.OnClickListener listener, View... views) {

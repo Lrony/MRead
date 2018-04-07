@@ -1,5 +1,6 @@
 package com.lrony.mread.service;
 
+import com.lrony.mread.data.bean.BookDetailPackage;
 import com.lrony.mread.data.bean.BookSortPackage;
 import com.lrony.mread.data.bean.BookSubSortPackage;
 import com.lrony.mread.data.bean.HotWordPackage;
@@ -9,6 +10,7 @@ import com.lrony.mread.data.bean.SortBookPackage;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -67,4 +69,12 @@ public interface BookApi {
      */
     @GET("/book/fuzzy-search")
     Call<SearchBookPackage> getSearchBookPackage(@Query("query") String query);
+
+    /**
+     * 书籍详情
+     * @param bookId
+     * @return
+     */
+    @GET("/book/{bookId}")
+    Call<BookDetailPackage> getBookDetail(@Path("bookId") String bookId);
 }

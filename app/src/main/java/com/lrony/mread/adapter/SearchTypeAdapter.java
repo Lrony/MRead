@@ -27,6 +27,16 @@ public class SearchTypeAdapter extends RecyclerView.Adapter<SearchTypeAdapter.Vi
         this.datas = datas;
     }
 
+    private OnItemClickListener mOnItemClickListener;
+
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        mOnItemClickListener = onItemClickListener;
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -36,7 +46,7 @@ public class SearchTypeAdapter extends RecyclerView.Adapter<SearchTypeAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         holder.name.setText(datas.getBooks().get(position).getTitle());
         holder.shortIntro.setText(datas.getBooks().get(position).getShortIntro());
         holder.author.setText(datas.getBooks().get(position).getAuthor());
@@ -46,6 +56,15 @@ public class SearchTypeAdapter extends RecyclerView.Adapter<SearchTypeAdapter.Vi
                 .load(Constant.IMG_BASE_URL + datas.getBooks().get(position).getCover())
                 .resize(102, 64)
                 .into(holder.photo);
+
+        if (mOnItemClickListener != null) {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mOnItemClickListener.onItemClick(holder.itemView, position);
+                }
+            });
+        }
     }
 
     @Override

@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 
+import com.lrony.mread.data.bean.BookDetailPackage;
+import com.lrony.mread.ui.comment.DetailActivity;
 import com.lrony.mread.ui.search.SearchActivity;
 
 /**
@@ -36,5 +38,13 @@ public class AppRouter {
 
     public static void showSearchActivity(Context context, String keyword) {
         context.startActivity(SearchActivity.newIntent(context, keyword));
+    }
+
+    public static void showBookDetailActivity(Context context) {
+        showBookDetailActivity(context, null);
+    }
+
+    public static void showBookDetailActivity(Context context, BookDetailPackage book) {
+        context.startActivity(DetailActivity.newIntent(context, book));
     }
 }
