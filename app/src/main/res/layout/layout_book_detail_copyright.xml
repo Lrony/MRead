@@ -27,11 +27,11 @@
         android:textSize="@dimen/text_size_small" />
 
     <TextView
-        android:id="@+id/tv_create_date_copyright"
+        android:id="@+id/tv_retention_ratio_copyright"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="@string/book_create_date_copyright"
+        android:text="@string/book_retention_ratio_copyright"
         android:textColor="@color/man_text_2"
         android:textSize="@dimen/text_size_small" />
 

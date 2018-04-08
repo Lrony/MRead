@@ -24,6 +24,7 @@
         若小说含有不良信息请书友积极告知客服 5414115@qq.com
     </string>
     <string name="book_create_date_copyright">上架时间：</string>
+    <string name="book_retention_ratio_copyright">读者留存率：</string>
     <string name="word_count_copyright">字数：</string>
     <string name="more_book_info">小说更多信息</string>
 </resources>

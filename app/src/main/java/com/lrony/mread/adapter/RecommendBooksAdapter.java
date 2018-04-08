@@ -6,25 +6,27 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lrony.mread.R;
-import com.lrony.mread.data.bean.SearchBookPackage;
+import com.lrony.mread.data.bean.RecommendBooksPackage;
+import com.lrony.mread.ui.widget.MaskableImageView;
 import com.lrony.mread.util.Constant;
 import com.squareup.picasso.Picasso;
 
 /**
- * Created by lrony on 2018/4/7.
+ * Created by Lrony on 18-4-8.
  */
-public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder> {
+public class RecommendBooksAdapter extends RecyclerView.Adapter<RecommendBooksAdapter.ViewHolder> {
 
     private Context context;
-    private SearchBookPackage datas;
+    private RecommendBooksPackage datas;
+    private int showCount;
 
-    public SearchAdapter(Context context, SearchBookPackage datas) {
+    public RecommendBooksAdapter(Context context, RecommendBooksPackage datas, int showCount) {
         this.context = context;
         this.datas = datas;
+        this.showCount = showCount;
     }
 
     private OnItemClickListener mOnItemClickListener;
@@ -40,21 +42,16 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View root = LayoutInflater.from(context).inflate(R.layout.item_list_search_book
-                , parent, false);
+        View root = LayoutInflater.from(context).inflate(R.layout.grid_item_bookcase_book, parent, false);
         return new ViewHolder(root);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
-        holder.name.setText(datas.getBooks().get(position).getTitle());
-        holder.shortIntro.setText(datas.getBooks().get(position).getShortIntro());
-        holder.author.setText(datas.getBooks().get(position).getAuthor());
-        holder.minorCate.setText(datas.getBooks().get(position).getCat());
-
+        holder.title.setText(datas.getBooks().get(position).getTitle());
         Picasso.get()
                 .load(Constant.IMG_BASE_URL + datas.getBooks().get(position).getCover())
-                .resize(102, 64)
+                .resize(90, 120)
                 .into(holder.photo);
 
         if (mOnItemClickListener != null) {
@@ -64,37 +61,39 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
                     mOnItemClickListener.onItemClick(holder.itemView, position);
                 }
             });
+            holder.photo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mOnItemClickListener.onItemClick(holder.photo, position);
+                }
+            });
         }
     }
 
     @Override
     public int getItemCount() {
-        return datas.getBooks().size();
+        if (datas != null) {
+            if (datas.getBooks().size() >= showCount) {
+                return showCount;
+            }
+            return datas.getBooks().size();
+        }
+        return 0;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private ImageView photo;
-        private TextView name;
-        private TextView shortIntro;
-        private TextView author;
-        private TextView minorCate;
+        private MaskableImageView photo;
+        private TextView title;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            photo = itemView.findViewById(R.id.img_photo);
-            name = itemView.findViewById(R.id.tv_name);
-            shortIntro = itemView.findViewById(R.id.tv_shortIntro);
-            author = itemView.findViewById(R.id.tv_author);
-            minorCate = itemView.findViewById(R.id.tv_minorCate);
+            photo = itemView.findViewById(R.id.iv_cover);
+            title = itemView.findViewById(R.id.tv_title);
         }
     }
 
-    public void clear() {
-        if (datas != null) datas.getBooks().clear();
-    }
-
-    public void refreshItems(SearchBookPackage data) {
+    public void refreshItems(RecommendBooksPackage data) {
         datas = data;
         notifyDataSetChanged();
     }

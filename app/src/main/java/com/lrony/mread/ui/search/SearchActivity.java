@@ -16,14 +16,17 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.lrony.mread.AppRouter;
 import com.lrony.mread.R;
 import com.lrony.mread.adapter.KeyWordAdapter;
 import com.lrony.mread.adapter.SearchAdapter;
+import com.lrony.mread.data.bean.BookDetailPackage;
 import com.lrony.mread.data.bean.KeyWordPackage;
 import com.lrony.mread.data.bean.SearchBookPackage;
 import com.lrony.mread.service.BookApi;
 import com.lrony.mread.ui.base.BaseActivity;
 import com.lrony.mread.util.Constant;
+import com.lrony.mread.util.ToastUtil;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -158,6 +161,13 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 searchBook();
             }
         });
+
+        mSearchAdapter.setOnItemClickListener(new SearchAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                getBookInfo(mSearchDatas.getBooks().get(position).get_id());
+            }
+        });
     }
 
     @Override
@@ -175,6 +185,21 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 break;
 
         }
+    }
+
+    private void getBookInfo(String id) {
+        Call<BookDetailPackage> call = mBookApi.getBookDetail(id);
+        call.enqueue(new Callback<BookDetailPackage>() {
+            @Override
+            public void onResponse(Call<BookDetailPackage> call, Response<BookDetailPackage> response) {
+                AppRouter.showBookDetailActivity(SearchActivity.this, response.body());
+            }
+
+            @Override
+            public void onFailure(Call<BookDetailPackage> call, Throwable t) {
+                ToastUtil.showToast("书籍详情获取失败");
+            }
+        });
     }
 
     private void keyWords() {

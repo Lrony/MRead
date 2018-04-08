@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.search.SearchActivity" />
-        <activity android:name=".ui.comment.DetailActivity"></activity>
+        <activity android:name=".ui.comment.DetailActivity" />
     </application>
 
 </manifest>

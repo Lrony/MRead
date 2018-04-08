@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by lrony on 2018/4/7.
  */
-public class BookDetailPackage {
+public class BookDetailPackage extends BaseBean {
     /**
      * _id : 5702151c1c8e4db9483762d6
      * title : 放开那个女巫

@@ -1,10 +1,12 @@
 package com.lrony.mread.service;
 
+import com.lrony.mread.adapter.RecommendBookListPackage;
 import com.lrony.mread.data.bean.BookDetailPackage;
 import com.lrony.mread.data.bean.BookSortPackage;
 import com.lrony.mread.data.bean.BookSubSortPackage;
 import com.lrony.mread.data.bean.HotWordPackage;
 import com.lrony.mread.data.bean.KeyWordPackage;
+import com.lrony.mread.data.bean.RecommendBooksPackage;
 import com.lrony.mread.data.bean.SearchBookPackage;
 import com.lrony.mread.data.bean.SortBookPackage;
 
@@ -70,8 +72,30 @@ public interface BookApi {
     @GET("/book/fuzzy-search")
     Call<SearchBookPackage> getSearchBookPackage(@Query("query") String query);
 
+    /*************************书籍详情**********************************/
+
+    /**
+     * 书籍推荐书籍
+     *
+     * @param bookId
+     * @return
+     */
+    @GET("/book/{bookId}/recommend")
+    Call<RecommendBooksPackage> getRecommendBooksPackage(@Path("bookId") String bookId);
+
+    /**
+     * 书籍推荐书单
+     *
+     * @param bookId
+     * @param limit
+     * @return
+     */
+    @GET("/book-list/{bookId}/recommend")
+    Call<RecommendBookListPackage> getRecommendBookListPackage(@Path("bookId") String bookId, @Query("limit") String limit);
+
     /**
      * 书籍详情
+     *
      * @param bookId
      * @return
      */
