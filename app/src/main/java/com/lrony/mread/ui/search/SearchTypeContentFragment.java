@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +16,7 @@ import com.lrony.mread.data.bean.BookDetailPackage;
 import com.lrony.mread.data.bean.SortBookPackage;
 import com.lrony.mread.service.BookApi;
 import com.lrony.mread.ui.base.BaseFragment;
+import com.lrony.mread.ui.widget.LoadRecyclerView;
 import com.lrony.mread.util.Constant;
 import com.lrony.mread.util.ToastUtil;
 
@@ -35,13 +36,20 @@ public class SearchTypeContentFragment extends BaseFragment implements SwipeRefr
     private String mSearchTypeID;
 
     private SwipeRefreshLayout mRefreshView;
-    private RecyclerView mRecyclerView;
+    private LoadRecyclerView mRecyclerView;
 
     private SortBookPackage mDatas;
 
     private SearchTypeAdapter mAdapter;
 
     private BookApi mBookApi;
+
+    private boolean mIsLoadData = false;
+
+    // 每页显示的数量
+    private int mPageCount = 10;
+    // 当前页数
+    private static int mPage = 0;
 
     public static SearchTypeContentFragment newInstance(String billId) {
         Bundle args = new Bundle();
@@ -91,32 +99,57 @@ public class SearchTypeContentFragment extends BaseFragment implements SwipeRefr
                 getBookInfo(mDatas.getBooks().get(position).get_id());
             }
         });
+
+        mRecyclerView.setonLoadMoreListener(new LoadRecyclerView.onLoadMore() {
+            @Override
+            public void onLoadMore() {
+                if (!mIsLoadData) {
+                    mPage += 1;
+                    getBooks(mPage);
+                }
+            }
+        });
     }
 
     private void initData() {
-        getAllBook();
+        getBooks(mPage);
     }
 
-    private void getAllBook() {
+    private void getBooks(int page) {
+        Log.d(TAG, "getBooks: page = " + page);
+        mIsLoadData = true;
         mRefreshView.setRefreshing(true);
         // http://api.zhuishushenqi.com/book/by-categories
         // ?gender=male&type=hot&major=%E5%A5%87%E5%B9%BB&minor=&start=&limit=50
         Call<SortBookPackage> call = mBookApi.getSortBookPackage("male"
-                , "hot", mSearchTypeID, "", 0, 10);
+                , "hot", mSearchTypeID, "", mPage * mPageCount, mPageCount);
         call.enqueue(new Callback<SortBookPackage>() {
             @Override
             public void onResponse(Call<SortBookPackage> call, Response<SortBookPackage> response) {
                 if (response.body() != null) {
-                    mDatas = response.body();
+                    if (mDatas == null) {
+                        mDatas = response.body();
+                    } else {
+                        int bookcount = response.body().getBooks().size();
+                        if (bookcount > 0) {
+                            for (int i = 0; i < bookcount; i++) {
+                                mDatas.getBooks().add(response.body().getBooks().get(i));
+                            }
+                        } else {
+                            ToastUtil.showToast("没有更多啦");
+                        }
+                    }
                     mAdapter.refreshItems(mDatas);
                 }
                 mRefreshView.setRefreshing(false);
+                mIsLoadData = false;
             }
 
             @Override
             public void onFailure(Call<SortBookPackage> call, Throwable t) {
                 ToastUtil.showToast("获取失败");
                 mRefreshView.setRefreshing(false);
+                mIsLoadData = false;
             }
         });
     }
@@ -138,6 +171,6 @@ public class SearchTypeContentFragment extends BaseFragment implements SwipeRefr
 
     @Override
     public void onRefresh() {
-        getAllBook();
+        getBooks(mPage);
     }
 }
