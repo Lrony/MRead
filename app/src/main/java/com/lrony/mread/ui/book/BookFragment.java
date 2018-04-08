@@ -7,16 +7,18 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.lrony.mread.AppRouter;
 import com.lrony.mread.R;
 import com.lrony.mread.ui.base.BaseFragment;
 
 /**
  * Created by lrony on 2018/4/7.
  */
-public class BookFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
+public class BookFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, Toolbar.OnMenuItemClickListener {
 
     private static final String TAG = "BookFragment";
 
@@ -56,10 +58,21 @@ public class BookFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
     private void initListener() {
         mRefreshView.setOnRefreshListener(this);
+        mToolbar.setOnMenuItemClickListener(this);
     }
 
     @Override
     public void onRefresh() {
         mRefreshView.setRefreshing(false);
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_add:
+                AppRouter.showSearchActivity(getContext());
+                break;
+        }
+        return false;
     }
 }

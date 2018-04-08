@@ -182,4 +182,11 @@ public class DetailActivity extends BaseActivity implements View.OnClickListener
     public void onClick(View v) {
 
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mBook = null;
+        mRecommendBookList = null;
+    }
 }
