@@ -128,7 +128,7 @@ public class SearchFragment extends BaseFragment implements View.OnClickListener
                     }
                     refreshStatus(STATUS_OK);
                 } else {
-                    ToastUtil.showToast("接口请求失败");
+                    ToastUtil.showToast(R.string.book_type_api_error);
                     refreshStatus(STATUS_ERROR);
                 }
             }

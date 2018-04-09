@@ -97,7 +97,7 @@ public class DetailActivity extends BaseActivity implements View.OnClickListener
         mRvRecommendBook.setNestedScrollingEnabled(false);
         bindOnClickLister(this, R.id.fl_add_bookcase, R.id.fl_download_book, R.id.fl_open_book, R.id.ll_book_detail_catalog);
 
-        mRecommendBookListAdapter = new RecommendBooksAdapter(this, mRecommendBookList,6);
+        mRecommendBookListAdapter = new RecommendBooksAdapter(this, mRecommendBookList, 6);
         mRvRecommendBook.setLayoutManager(new GridLayoutManager(this, 3));
         mRvRecommendBook.setNestedScrollingEnabled(false);
         mRvRecommendBook.setAdapter(mRecommendBookListAdapter);
@@ -145,7 +145,7 @@ public class DetailActivity extends BaseActivity implements View.OnClickListener
             @Override
             public void onResponse(Call<BookDetailPackage> call, Response<BookDetailPackage> response) {
                 if (response.body().getTitle() == null) {
-                    ToastUtil.showToast("书籍详情获取失败");
+                    ToastUtil.showToast(R.string.book_info_get_error);
                     return;
                 }
                 Log.d(TAG, "onResponse: response.title = " + response.body().getTitle());
@@ -155,7 +155,7 @@ public class DetailActivity extends BaseActivity implements View.OnClickListener
 
             @Override
             public void onFailure(Call<BookDetailPackage> call, Throwable t) {
-                ToastUtil.showToast("书籍详情获取失败");
+                ToastUtil.showToast(R.string.book_info_get_error);
             }
         });
     }
@@ -173,7 +173,7 @@ public class DetailActivity extends BaseActivity implements View.OnClickListener
 
             @Override
             public void onFailure(Call<RecommendBooksPackage> call, Throwable t) {
-                ToastUtil.showToast("相关书籍获取失败");
+                ToastUtil.showToast(R.string.book_recommend_get_error);
             }
         });
     }

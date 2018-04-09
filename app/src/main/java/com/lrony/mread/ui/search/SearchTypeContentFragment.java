@@ -136,7 +136,7 @@ public class SearchTypeContentFragment extends BaseFragment implements SwipeRefr
                                 mDatas.getBooks().add(response.body().getBooks().get(i));
                             }
                         } else {
-                            ToastUtil.showToast("没有更多啦");
+                            ToastUtil.showToast(R.string.book_type_no_more);
                         }
                     }
                     mAdapter.refreshItems(mDatas);
@@ -147,7 +147,7 @@ public class SearchTypeContentFragment extends BaseFragment implements SwipeRefr
 
             @Override
             public void onFailure(Call<SortBookPackage> call, Throwable t) {
-                ToastUtil.showToast("获取失败");
+                ToastUtil.showToast(R.string.book_type_get_error);
                 mRefreshView.setRefreshing(false);
                 mIsLoadData = false;
             }
@@ -164,7 +164,7 @@ public class SearchTypeContentFragment extends BaseFragment implements SwipeRefr
 
             @Override
             public void onFailure(Call<BookDetailPackage> call, Throwable t) {
-                ToastUtil.showToast("书籍详情获取失败");
+                ToastUtil.showToast(R.string.book_info_get_error);
             }
         });
     }

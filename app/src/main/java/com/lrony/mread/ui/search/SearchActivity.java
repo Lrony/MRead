@@ -197,7 +197,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
 
             @Override
             public void onFailure(Call<BookDetailPackage> call, Throwable t) {
-                ToastUtil.showToast("书籍详情获取失败");
+                ToastUtil.showToast(R.string.book_info_get_error);
             }
         });
     }

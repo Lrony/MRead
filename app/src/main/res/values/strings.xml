@@ -17,6 +17,11 @@
     <!--book-->
     <string name="book_unfinished">连载中</string>
     <string name="book_finished">已完结</string>
+    <string name="book_info_get_error">书籍详情获取失败</string>
+    <string name="book_recommend_get_error">相关书籍获取失败</string>
+    <string name="book_type_get_error">获取失败</string>
+    <string name="book_type_no_more">没有更多了</string>
+    <string name="book_type_api_error">接口请求失败</string>
 
     <string name="book_copyright_info">
         免责声明：本小说为转载作品,所有章节均由网友上传,转载至本站只是为了宣传本书让更多读者欣赏。
