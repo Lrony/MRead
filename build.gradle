@@ -4,7 +4,7 @@ ext {
     //项目版本
     configuration = [
             package              : "com.lrony.mread",
-            buildToolsVersion    : "27.1.1",
+            buildToolsVersion    : "27.0.1",
             compileVersion       : 27,
             minSdk               : 15,
             targetSdk            : 27,
@@ -14,7 +14,7 @@ ext {
 
     //对一些库的版本进行统一管理
     libraries = [
-            supportVersion      : "27.1.1",
+            supportVersion      : "27.0.1",
             navigationBarVersion: "2.0.4",
             retrofitVersion     : "2.4.0",
     ]
