@@ -22,8 +22,23 @@ public class BaseActivity extends SupportActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    public void onBackPressedSupport() {
+        super.onBackPressedSupport();
     }
 
     public void bindOnClickLister(View rootView, View.OnClickListener listener, @IdRes int... ids) {

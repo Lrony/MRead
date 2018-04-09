@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.RecyclerView;
@@ -25,7 +26,7 @@ import com.zchu.reader.PageView;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
-public class ReadActivity extends BaseActivity {
+public class ReadActivity extends BaseActivity implements View.OnClickListener {
 
     private static final String TAG = "ReadActivityActivity";
 
@@ -54,6 +55,8 @@ public class ReadActivity extends BaseActivity {
     private Animation mTopOutAnim;
     private Animation mBottomInAnim;
     private Animation mBottomOutAnim;
+
+    private BottomSheetDialog mReadSettingDialog;
 
     //控制屏幕常亮
     private PowerManager.WakeLock mWakeLock;
@@ -85,6 +88,7 @@ public class ReadActivity extends BaseActivity {
         readSectionProgress = findViewById(R.id.ll_section_progress);
         readTvSectionProgress = findViewById(R.id.tv_section_progress);
         readSbChapterProgress.setEnabled(false);
+        bindOnClickLister(this, readTvPreChapter, readTvNextChapter, readTvCategory, readTvNightMode, readTvSetting);
     }
 
     private void initView() {
@@ -127,6 +131,34 @@ public class ReadActivity extends BaseActivity {
                 return false;
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mWakeLock.acquire();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mWakeLock.release();
+    }
+
+    private void openReadSetting(Context context) {
+        if (mReadSettingDialog == null) {
+            mReadSettingDialog = new ReaderSettingDialog(context, readView);
+        }
+        mReadSettingDialog.show();
+    }
+
+    @Override
+    public void onBackPressedSupport() {
+        if (appBar.getVisibility() == VISIBLE) {
+            toggleMenu(true);
+            return;
+        }
+        super.onBackPressedSupport();
     }
 
     /**
@@ -232,6 +264,16 @@ public class ReadActivity extends BaseActivity {
         SystemBarUtils.hideStableStatusBar(this);
         if (isFullScreen) {
             SystemBarUtils.hideStableNavBar(this);
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.read_tv_setting:
+                toggleMenu(true);
+                openReadSetting(this);
+                break;
         }
     }
 }

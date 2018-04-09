@@ -32,6 +32,27 @@
     <color name="read_icon_primary">@color/md_blue_grey_100</color>
     <color name="read_menu_text">@color/md_blue_grey_400</color>
     <color name="read_menu_container_bg">#fa263238</color>
+    <!--night mode-->
+    <color name="read_theme_night_page_background">#001622</color>
+    <color name="read_theme_night_text">#204353</color>
+    <!-- default-->
+    <color name="read_theme_default_page_background">#CEC29C</color>
+    <color name="read_theme_default_text">#212121</color>
+    <!--white-->
+    <color name="read_theme_white_page_background">#F5F4F0</color>
+    <color name="read_theme_white_text">#3D3D3D</color>
+    <!--amber-->
+    <color name="read_theme_amber_page_background">#C5B284</color>
+    <color name="read_theme_amber_text">#3A342B</color>
+    <!--green-->
+    <color name="read_theme_green_page_background">#CCE8CF</color>
+    <color name="read_theme_green_text">#333333</color>
+    <!--brown-->
+    <color name="read_theme_brown_page_background">#3A3131</color>
+    <color name="read_theme_brown_text">#95938F</color>
+    <!--black-->
+    <color name="read_theme_black_page_background">#001C29</color>
+    <color name="read_theme_black_text">#637079</color>
 
     <!--通用颜色-->
     <color name="blue">#ff1976D2</color>
