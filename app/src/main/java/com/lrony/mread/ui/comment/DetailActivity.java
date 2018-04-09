@@ -180,7 +180,16 @@ public class DetailActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()) {
+            case R.id.fl_add_bookcase:
+                break;
+            case R.id.fl_download_book:
+                break;
+            case R.id.fl_open_book:
+                break;
+            case R.id.ll_book_detail_catalog:
+                break;
+        }
     }
 
     @Override
