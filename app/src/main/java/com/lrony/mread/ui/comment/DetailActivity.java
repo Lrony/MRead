@@ -18,6 +18,7 @@ import com.lrony.mread.data.bean.RecommendBooksPackage;
 import com.lrony.mread.service.BookApi;
 import com.lrony.mread.ui.base.BaseActivity;
 import com.lrony.mread.ui.help.ToolbarHelper;
+import com.lrony.mread.ui.read.ReadActivity;
 import com.lrony.mread.ui.widget.ShapeTextView;
 import com.lrony.mread.util.Constant;
 import com.lrony.mread.util.StringUtils;
@@ -186,6 +187,8 @@ public class DetailActivity extends BaseActivity implements View.OnClickListener
             case R.id.fl_download_book:
                 break;
             case R.id.fl_open_book:
+                Intent intent = new Intent(DetailActivity.this, ReadActivity.class);
+                startActivity(intent);
                 break;
             case R.id.ll_book_detail_catalog:
                 break;

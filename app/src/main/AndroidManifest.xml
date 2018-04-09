@@ -21,6 +21,7 @@
         </activity>
         <activity android:name=".ui.search.SearchActivity" />
         <activity android:name=".ui.comment.DetailActivity" />
+        <activity android:name=".ui.read.ReadActivity"></activity>
     </application>
 
 </manifest>

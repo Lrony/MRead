@@ -27,6 +27,12 @@
     <color name="textAssistInverted">#8affffff</color>
     <color name="textError">#ffe7492e</color>
 
+    <!-- read -->
+    <color name="read_text_primary">@color/md_blue_grey_100</color>
+    <color name="read_icon_primary">@color/md_blue_grey_100</color>
+    <color name="read_menu_text">@color/md_blue_grey_400</color>
+    <color name="read_menu_container_bg">#fa263238</color>
+
     <!--通用颜色-->
     <color name="blue">#ff1976D2</color>
     <color name="blue_light">#ff178BC2</color>
