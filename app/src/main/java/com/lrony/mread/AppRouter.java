@@ -5,10 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 
-import com.lrony.mread.data.bean.BookDetailPackage;
-import com.lrony.mread.ui.comment.DetailActivity;
-import com.lrony.mread.ui.search.SearchActivity;
-
 /**
  * Created by lrony on 2018/4/7.
  * app路由，界面跳转帮助类，所有的界面跳转通过此类进行跳转,包括组件交互
@@ -30,21 +26,5 @@ public class AppRouter {
             localIntent.putExtra("com.android.settings.ApplicationPkgName", context.getPackageName());
         }
         context.startActivity(localIntent);
-    }
-
-    public static void showSearchActivity(Context context) {
-        showSearchActivity(context, null);
-    }
-
-    public static void showSearchActivity(Context context, String keyword) {
-        context.startActivity(SearchActivity.newIntent(context, keyword));
-    }
-
-    public static void showBookDetailActivity(Context context) {
-        showBookDetailActivity(context, null);
-    }
-
-    public static void showBookDetailActivity(Context context, BookDetailPackage book) {
-        context.startActivity(DetailActivity.newIntent(context, book));
     }
 }
