@@ -4,7 +4,7 @@ ext {
     //项目版本
     configuration = [
             package              : "com.lrony.mread",
-            buildToolsVersion    : "27.0.1",
+            buildToolsVersion    : "27.0.3",
             compileVersion       : 27,
             minSdk               : 15,
             targetSdk            : 27,
