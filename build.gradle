@@ -15,7 +15,6 @@ ext {
     //对一些库的版本进行统一管理
     libraries = [
             supportVersion      : "27.0.1",
-            navigationBarVersion: "2.0.4",
             retrofitVersion     : "2.4.0",
     ]
 
