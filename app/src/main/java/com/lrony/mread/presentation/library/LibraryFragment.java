@@ -3,6 +3,7 @@ package com.lrony.mread.presentation.library;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
+import com.lrony.mread.R;
 import com.lrony.mread.mvp.MvpFragment;
 
 /**
@@ -25,6 +26,6 @@ public class LibraryFragment extends MvpFragment<LibraryContract.Presenter> impl
 
     @Override
     public int getLayoutId() {
-        return 0;
+        return R.layout.fragment_library;
     }
 }
