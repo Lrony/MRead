@@ -167,6 +167,7 @@ abstract class BottomNavigationTab extends FrameLayout {
         }
     }
 
+    // delete animation
     public void select(boolean setActiveColor) {
         isActive = true;
 
@@ -206,6 +207,7 @@ abstract class BottomNavigationTab extends FrameLayout {
         }
     }
 
+    // delete animation
     public void unSelect(boolean setActiveColor) {
         isActive = false;
 
