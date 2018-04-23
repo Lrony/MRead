@@ -16,7 +16,8 @@ import com.lrony.mread.presentation.self.SelfFragment;
 
 import me.yokeyword.fragmentation.SupportFragment;
 
-public class MainActivity extends MvpActivity<MainContract.Presenter> implements MainContract.View, BottomNavigationBar.OnTabSelectedListener {
+public class MainActivity extends MvpActivity<MainContract.Presenter> implements MainContract.View
+        , BottomNavigationBar.OnTabSelectedListener {
 
     private static final String TAG = "MainActivity";
 
@@ -36,6 +37,7 @@ public class MainActivity extends MvpActivity<MainContract.Presenter> implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // 代码规范，必须调用
         getPresenter().start();
 
         initFragment();
@@ -44,6 +46,7 @@ public class MainActivity extends MvpActivity<MainContract.Presenter> implements
     }
 
     private void initFragment() {
+        Log.d(TAG, "initFragment");
         // Fragment Init
         SupportFragment firstFragment = findFragment(HomeFragment.class);
         if (firstFragment == null) {
@@ -66,6 +69,7 @@ public class MainActivity extends MvpActivity<MainContract.Presenter> implements
     }
 
     private void initView() {
+        Log.d(TAG, "initView");
         mNavigationBar = findViewById(R.id.bottom_navigation_bar);
         mNavigationBar.addItem(new BottomNavigationItem(R.drawable.ic_home, R.string.navigation_home))
                 .addItem(new BottomNavigationItem(R.drawable.ic_hot, R.string.navigation_search))
@@ -76,6 +80,7 @@ public class MainActivity extends MvpActivity<MainContract.Presenter> implements
     }
 
     private void initListener() {
+        Log.d(TAG, "initListener");
         mNavigationBar.setTabSelectedListener(this);
     }
 
@@ -110,11 +115,11 @@ public class MainActivity extends MvpActivity<MainContract.Presenter> implements
 
     @Override
     public void onTabUnselected(int position) {
-
+        Log.d(TAG, "onTabUnselected: " + position);
     }
 
     @Override
     public void onTabReselected(int position) {
-
+        Log.d(TAG, "onTabReselected: " + position);
     }
 }

@@ -46,7 +46,7 @@ dependencies {
     implementation 'me.yokeyword:fragmentation:1.3.3'
     implementation 'me.yokeyword:fragmentation-swipeback:1.3.3'
     implementation 'me.zhanghai.android.materialprogressbar:library:1.4.1'
-    // WEB
+    // NET
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.squareup.retrofit2:retrofit:' + libs.retrofitVersion
     implementation 'com.squareup.retrofit2:converter-gson:' + libs.retrofitVersion
