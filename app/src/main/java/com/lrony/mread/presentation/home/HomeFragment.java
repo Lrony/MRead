@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.classic.common.MultipleStatusView;
 import com.lrony.mread.R;
 import com.lrony.mread.data.bean.Status;
@@ -26,8 +27,7 @@ import java.util.List;
  * Created by Lrony on 18-4-23.
  */
 public class HomeFragment extends MvpFragment<HomeContract.Presenter> implements HomeContract.View
-        , SwipeRefreshLayout.OnRefreshListener, Toolbar.OnMenuItemClickListener
-        , BaseQuickAdapter.OnItemLongClickListener, BaseQuickAdapter.OnItemClickListener {
+        , SwipeRefreshLayout.OnRefreshListener, Toolbar.OnMenuItemClickListener {
 
     private static final String TAG = "HomeFragment";
 
@@ -109,9 +109,8 @@ public class HomeFragment extends MvpFragment<HomeContract.Presenter> implements
                 showToast("More");
             }
         });
+
         mRecyclerView.setAdapter(mAdapter);
-
-
     }
 
     private void initListener() {
@@ -119,8 +118,7 @@ public class HomeFragment extends MvpFragment<HomeContract.Presenter> implements
         mRefreshView.setOnRefreshListener(this);
         mToolbar.setOnMenuItemClickListener(this);
 
-        mAdapter.setOnItemClickListener(this);
-        mAdapter.setOnItemLongClickListener(this);
+        mRecyclerView.addOnItemTouchListener(mOnitemClickListener);
     }
 
     @Override
@@ -145,21 +143,24 @@ public class HomeFragment extends MvpFragment<HomeContract.Presenter> implements
         return false;
     }
 
+    private OnItemClickListener mOnitemClickListener = new OnItemClickListener() {
+
+        @Override
+        public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+            showToast(position + "");
+        }
+
+        @Override
+        public void onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
+            super.onItemLongClick(adapter, view, position);
+            showToast("Long: " + position);
+        }
+    };
+
     private View.OnClickListener mRetryClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             showToast("Retry");
         }
     };
-
-    @Override
-    public boolean onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
-        showToast("Long: " + position);
-        return true;
-    }
-
-    @Override
-    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        showToast(position + "");
-    }
 }
