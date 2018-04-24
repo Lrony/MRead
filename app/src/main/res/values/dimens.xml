@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 字体规范-->
+    <dimen name="text_size_micro">10.0sp</dimen>
+    <dimen name="text_size_small">12.0sp</dimen>
+    <dimen name="text_size_medium">14.0sp</dimen>
+    <dimen name="text_size_large">16.0sp</dimen>
+    <dimen name="text_size_xlarge">18.0sp</dimen>
+    <dimen name="text_size_extra_large">22.0sp</dimen>
+
+</resources>

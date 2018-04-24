@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -12,6 +14,7 @@ import android.view.View;
 
 import com.lrony.mread.R;
 import com.lrony.mread.mvp.MvpFragment;
+import com.lrony.mread.util.DensityUtil;
 
 /**
  * Created by Lrony on 18-4-23.
@@ -61,7 +64,22 @@ public class HomeFragment extends MvpFragment<HomeContract.Presenter> implements
 
         mToolbar.setTitle(R.string.app_title);
         mToolbar.inflateMenu(R.menu.menu_home);
+
         mRefreshView.setColorSchemeResources(R.color.colorAccent);
+
+        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        mRecyclerView.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_OVERLAY);
+        ((SimpleItemAnimator) mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
+        int i = getResources().getDisplayMetrics().widthPixels;
+        int y = DensityUtil.dp2px(getContext(), 90);
+        int p = DensityUtil.dp2px(getContext(), 15);
+        int padding = (3 * y + 2 * 3 * p + 2 * p - i) / (2 * 3);
+        mRecyclerView.setPadding(
+                padding,
+                DensityUtil.dp2px(getContext(), 8),
+                padding,
+                DensityUtil.dp2px(getContext(), 8)
+        );
     }
 
     private void initListener() {

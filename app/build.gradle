@@ -45,6 +45,7 @@ dependencies {
     // UI
     implementation 'me.yokeyword:fragmentation:1.3.3'
     implementation 'me.zhanghai.android.materialprogressbar:library:1.4.1'
+    implementation 'com.classic.common:multiple-status-view:1.4'
     // NET
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.squareup.retrofit2:retrofit:' + libs.retrofitVersion
