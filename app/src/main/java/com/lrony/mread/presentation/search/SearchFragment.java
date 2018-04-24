@@ -133,11 +133,6 @@ public class SearchFragment extends MvpFragment<SearchContract.Presenter> implem
     }
 
     @Override
-    public void showMessage(int id) {
-        showToast(id);
-    }
-
-    @Override
     public void showError() {
         mProgress.setVisibility(View.GONE);
         mImgType.setVisibility(View.GONE);

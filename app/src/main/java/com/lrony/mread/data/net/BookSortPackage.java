@@ -1,4 +1,4 @@
-package com.lrony.mread.data.bean;
+package com.lrony.mread.data.net;
 
 import java.util.List;
 

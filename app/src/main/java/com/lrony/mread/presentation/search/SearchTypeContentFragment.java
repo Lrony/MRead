@@ -10,12 +10,15 @@ import android.view.View;
 
 import com.classic.common.MultipleStatusView;
 import com.lrony.mread.R;
+import com.lrony.mread.data.bean.Book;
 import com.lrony.mread.mvp.MvpFragment;
+
+import java.util.List;
 
 /**
  * Created by Lrony on 18-4-24.
  */
-public class SearchTypeContentFragment extends MvpFragment<SearchTypeContentContract.Presenter> implements SearchTypeContentContract.View {
+public class SearchTypeContentFragment extends MvpFragment<SearchTypeContentContract.Presenter> implements SearchTypeContentContract.View, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "SearchTypeContentFragme";
 
@@ -24,6 +27,11 @@ public class SearchTypeContentFragment extends MvpFragment<SearchTypeContentCont
     private MultipleStatusView mStatusView;
     private SwipeRefreshLayout mRefreshView;
     private RecyclerView mRecyclerView;
+
+    // 每页显示的数量
+    private int mPageCount = 10;
+    // 当前页数
+    private static int mPage = 0;
 
     public static SearchTypeContentFragment newInstance(String billId) {
         Bundle args = new Bundle();
@@ -36,10 +44,12 @@ public class SearchTypeContentFragment extends MvpFragment<SearchTypeContentCont
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        init();
         getPresenter().start();
 
         initView(view);
         initListener();
+        loadData(true);
     }
 
     private void initView(View view) {
@@ -54,6 +64,7 @@ public class SearchTypeContentFragment extends MvpFragment<SearchTypeContentCont
 
     private void initListener() {
         Log.d(TAG, "initListener");
+        mRefreshView.setOnRefreshListener(this);
     }
 
     @NonNull
@@ -75,7 +86,58 @@ public class SearchTypeContentFragment extends MvpFragment<SearchTypeContentCont
     private View.OnClickListener mRetryClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            showToast("Retry");
+            loadData(true);
         }
     };
+
+    private void loadData(boolean refresh) {
+        Log.d(TAG, "loadData: mSearchTypeID = " + mSearchTypeID
+                + ", start = " + mPage * mPageCount);
+
+        getPresenter().loadData(refresh, "male"
+                , "hot", mSearchTypeID, "", mPage * mPageCount, mPageCount);
+    }
+
+    private void loadMoreData() {
+
+    }
+
+    private void setSwipeRefresh(boolean refresh) {
+        mRefreshView.setRefreshing(refresh);
+    }
+
+    @Override
+    public void onRefresh() {
+        loadData(false);
+    }
+
+    @Override
+    public void showContent(List<Book> books) {
+        mStatusView.showContent();
+        setSwipeRefresh(false);
+    }
+
+    @Override
+    public void showLoading() {
+        mStatusView.showLoading();
+        setSwipeRefresh(false);
+    }
+
+    @Override
+    public void showError() {
+        mStatusView.showError();
+        setSwipeRefresh(false);
+    }
+
+    @Override
+    public void showEmpty() {
+        mStatusView.showEmpty();
+        setSwipeRefresh(false);
+    }
+
+    @Override
+    public void showNoNetWork() {
+        mStatusView.showNoNetwork();
+        setSwipeRefresh(false);
+    }
 }

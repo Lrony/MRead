@@ -19,6 +19,12 @@ public abstract class MvpFragment<P extends MvpPresenter> extends BaseFragment i
     }
 
     @Override
+    public void showToast(int id) {
+        super.showToast(id);
+        ToastUtil.showToast(id);
+    }
+
+    @Override
     public Context provideContext() {
         return this.getContext();
     }
@@ -37,7 +43,7 @@ public abstract class MvpFragment<P extends MvpPresenter> extends BaseFragment i
 
     /**
      * Subclass can get the bound presenter by calling this method.
-     *
+     * <p>
      * 子类通过调用该方法，获得绑定的presenter
      *
      * @return Bound presenter

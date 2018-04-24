@@ -22,8 +22,6 @@ public interface SearchContract {
 
         String getSelectedTab();
 
-        void showMessage(@StringRes int id);
-
         void showError();
 
         void showLoading();

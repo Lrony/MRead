@@ -1,8 +1,5 @@
 package com.lrony.mread.data.net;
 
-import com.lrony.mread.data.bean.BookSortPackage;
-import com.lrony.mread.data.bean.SortBookPackage;
-
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;

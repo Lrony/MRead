@@ -1,7 +1,7 @@
 package com.lrony.mread.presentation.search;
 
 import com.lrony.mread.R;
-import com.lrony.mread.data.bean.BookSortPackage;
+import com.lrony.mread.data.net.BookSortPackage;
 import com.lrony.mread.data.net.BookApi;
 import com.lrony.mread.mvp.MvpBasePresenter;
 import com.lrony.mread.util.Constant;
@@ -67,7 +67,7 @@ public class SearchPresenter extends MvpBasePresenter<SearchContract.View> imple
                 // View无效
                 if (!isViewAttached()) return;
 
-                getView().showMessage(R.string.search_type_get_error);
+                getView().showToast(R.string.search_type_get_error);
                 getView().showError();
             }
         });
