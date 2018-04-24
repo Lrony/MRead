@@ -4,13 +4,16 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 
 import com.lrony.mread.R;
 import com.lrony.mread.mvp.MvpFragment;
+import com.lrony.mread.ui.help.BaseFragmentAdapter;
 
+import me.yokeyword.fragmentation.SupportFragment;
 import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
 
 /**
@@ -50,6 +53,8 @@ public class SearchFragment extends MvpFragment<SearchContract.Presenter> implem
 
         initView(view);
         initListener(view);
+
+        getPresenter().loadData();
     }
 
     private void initView(View view) {
@@ -65,6 +70,12 @@ public class SearchFragment extends MvpFragment<SearchContract.Presenter> implem
         view.findViewById(R.id.fl_action).setOnClickListener(this);
     }
 
+    private void setAdapter(final PagerAdapter adapter) {
+        mViewPager.setOffscreenPageLimit(adapter.getCount() - 1);
+        mViewPager.setAdapter(adapter);
+        mTab.setupWithViewPager(mViewPager);
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -77,5 +88,39 @@ public class SearchFragment extends MvpFragment<SearchContract.Presenter> implem
                 showToast("Action");
                 break;
         }
+    }
+
+    @Override
+    public void setTabContent(@NonNull SupportFragment[] fragments, @NonNull String[] titles) {
+        if (mViewPager.getAdapter() == null) {
+            BaseFragmentAdapter adapter = new BaseFragmentAdapter(getChildFragmentManager());
+            adapter.setFragmentPages(fragments);
+            adapter.setPageTitles(titles);
+            setAdapter(adapter);
+        } else {
+            BaseFragmentAdapter adapter = (BaseFragmentAdapter) mViewPager.getAdapter();
+            adapter.setFragmentPages(fragments);
+            adapter.setPageTitles(titles);
+            mViewPager.setOffscreenPageLimit(adapter.getCount() - 1);
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void setSelectedTab(String title) {
+        BaseFragmentAdapter adapter = (BaseFragmentAdapter) mViewPager.getAdapter();
+        String[] pageTitles = adapter.getPageTitles();
+        for (int i = 0; i < pageTitles.length; i++) {
+            if (pageTitles[i].equals(title)) {
+                mViewPager.setCurrentItem(i, false);
+                break;
+            }
+        }
+    }
+
+    @Override
+    public String getSelectedTab() {
+        BaseFragmentAdapter adapter = (BaseFragmentAdapter) mViewPager.getAdapter();
+        return adapter.getPageTitles()[mViewPager.getCurrentItem()];
     }
 }

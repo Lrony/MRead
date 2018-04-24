@@ -11,4 +11,9 @@ public class SearchPresenter extends MvpBasePresenter<SearchContract.View> imple
     public void start() {
         super.start();
     }
+
+    @Override
+    public void loadData() {
+
+    }
 }
