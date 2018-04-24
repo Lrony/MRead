@@ -19,6 +19,8 @@ public interface SearchContract {
         void setSelectedTab(String title);
 
         String getSelectedTab();
+
+        void showToast(int size);
     }
 
     interface Presenter extends MvpPresenter<View> {

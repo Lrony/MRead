@@ -123,4 +123,9 @@ public class SearchFragment extends MvpFragment<SearchContract.Presenter> implem
         BaseFragmentAdapter adapter = (BaseFragmentAdapter) mViewPager.getAdapter();
         return adapter.getPageTitles()[mViewPager.getCurrentItem()];
     }
+
+    @Override
+    public void showToast(int size) {
+        showToast(""+size);
+    }
 }
