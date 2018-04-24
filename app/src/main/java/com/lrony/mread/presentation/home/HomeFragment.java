@@ -26,7 +26,8 @@ import java.util.List;
  * Created by Lrony on 18-4-23.
  */
 public class HomeFragment extends MvpFragment<HomeContract.Presenter> implements HomeContract.View
-        , SwipeRefreshLayout.OnRefreshListener, Toolbar.OnMenuItemClickListener {
+        , SwipeRefreshLayout.OnRefreshListener, Toolbar.OnMenuItemClickListener
+        , BaseQuickAdapter.OnItemLongClickListener, BaseQuickAdapter.OnItemClickListener {
 
     private static final String TAG = "HomeFragment";
 
@@ -101,7 +102,7 @@ public class HomeFragment extends MvpFragment<HomeContract.Presenter> implements
         for (int i = 0; i < 20; i++) {
             data.add(new Status(i + ""));
         }
-        mAdapter = new HomeBookAdapter(data);
+        mAdapter = new HomeBookAdapter(data, getContext());
         mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
@@ -117,6 +118,9 @@ public class HomeFragment extends MvpFragment<HomeContract.Presenter> implements
         Log.d(TAG, "initListener");
         mRefreshView.setOnRefreshListener(this);
         mToolbar.setOnMenuItemClickListener(this);
+
+        mAdapter.setOnItemClickListener(this);
+        mAdapter.setOnItemLongClickListener(this);
     }
 
     @Override
@@ -147,4 +151,15 @@ public class HomeFragment extends MvpFragment<HomeContract.Presenter> implements
             showToast("Retry");
         }
     };
+
+    @Override
+    public boolean onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
+        showToast("Long: " + position);
+        return true;
+    }
+
+    @Override
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        showToast(position + "");
+    }
 }
