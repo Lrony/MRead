@@ -12,13 +12,13 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <android.support.v4.view.ViewPager
-            android:id="@+id/vp_explore"
+            android:id="@+id/vp_search"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </FrameLayout>
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/appbar_explore"
+        android:id="@+id/appbar_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:elevation="@dimen/elevation_app_bar"
@@ -39,7 +39,7 @@
             android:orientation="horizontal">
 
             <android.support.design.widget.TabLayout
-                android:id="@+id/tab_explore"
+                android:id="@+id/tab_search"
                 android:layout_width="0dp"
                 android:layout_height="40.0dp"
                 android:layout_weight="1"
