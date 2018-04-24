@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.AppCompatImageView;
 import android.util.Log;
 import android.view.View;
 
@@ -26,6 +27,7 @@ public class SearchFragment extends MvpFragment<SearchContract.Presenter> implem
     private ViewPager mViewPager;
     private TabLayout mTab;
     private MaterialProgressBar mProgress;
+    private AppCompatImageView mImgType, mImgRetry;
 
     public static SearchFragment newInstance() {
         Bundle args = new Bundle();
@@ -62,6 +64,8 @@ public class SearchFragment extends MvpFragment<SearchContract.Presenter> implem
         mViewPager = view.findViewById(R.id.vp_search);
         mTab = view.findViewById(R.id.tab_search);
         mProgress = view.findViewById(R.id.progress);
+        mImgType = view.findViewById(R.id.iv_book_type_more);
+        mImgRetry = view.findViewById(R.id.iv_book_type_retry);
     }
 
     private void initListener(View view) {
@@ -85,7 +89,11 @@ public class SearchFragment extends MvpFragment<SearchContract.Presenter> implem
                 break;
             case R.id.fl_action:
                 Log.d(TAG, "onClick: Action");
-                showToast("Action");
+                if (mImgType.getVisibility() == View.VISIBLE) {
+                    showToast("Type");
+                } else if (mImgRetry.getVisibility() == View.VISIBLE) {
+                    getPresenter().loadData();
+                }
                 break;
         }
     }
@@ -125,7 +133,28 @@ public class SearchFragment extends MvpFragment<SearchContract.Presenter> implem
     }
 
     @Override
-    public void showToast(int size) {
-        showToast(""+size);
+    public void showMessage(int id) {
+        showToast(id);
+    }
+
+    @Override
+    public void showError() {
+        mProgress.setVisibility(View.GONE);
+        mImgType.setVisibility(View.GONE);
+        mImgRetry.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showLoading() {
+        mProgress.setVisibility(View.VISIBLE);
+        mImgType.setVisibility(View.GONE);
+        mImgRetry.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showContent() {
+        mProgress.setVisibility(View.GONE);
+        mImgType.setVisibility(View.VISIBLE);
+        mImgRetry.setVisibility(View.GONE);
     }
 }

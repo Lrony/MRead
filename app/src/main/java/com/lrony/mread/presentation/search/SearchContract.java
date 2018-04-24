@@ -1,6 +1,8 @@
 package com.lrony.mread.presentation.search;
 
+import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 
 import com.lrony.mread.mvp.MvpPresenter;
 import com.lrony.mread.mvp.MvpView;
@@ -20,7 +22,13 @@ public interface SearchContract {
 
         String getSelectedTab();
 
-        void showToast(int size);
+        void showMessage(@StringRes int id);
+
+        void showError();
+
+        void showLoading();
+
+        void showContent();
     }
 
     interface Presenter extends MvpPresenter<View> {

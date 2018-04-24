@@ -1,5 +1,6 @@
 package com.lrony.mread.presentation.search;
 
+import com.lrony.mread.R;
 import com.lrony.mread.data.bean.BookSortPackage;
 import com.lrony.mread.data.net.BookApi;
 import com.lrony.mread.mvp.MvpBasePresenter;
@@ -31,28 +32,43 @@ public class SearchPresenter extends MvpBasePresenter<SearchContract.View> imple
 
     @Override
     public void loadData() {
+        // View无效
+        if (!isViewAttached()) return;
+        getView().showLoading();
+
         Call<BookSortPackage> call = bookApi.getBookSortPackage();
         call.enqueue(new Callback<BookSortPackage>() {
             @Override
             public void onResponse(Call<BookSortPackage> call, Response<BookSortPackage> response) {
+                // View无效
+                if (!isViewAttached()) return;
+
                 if (response.body() != null) {
                     int size = response.body().getMale().size();
-                    getView().showToast(size);
                     SupportFragment[] fragments = null;
                     String[] titles = null;
                     fragments = new SupportFragment[size];
                     titles = new String[size];
-//                    for (int i = 0; i < size; i++) {
-//                        String name = response.body().getMale().get(i).getName();
-//                        fragments[i] = SearchTypeFragment.newInstance(name);
-//                        titles[i] = name;
-//                    }
+                    for (int i = 0; i < size; i++) {
+                        String name = response.body().getMale().get(i).getName();
+                        fragments[i] = SearchTypeFragment.newInstance(name);
+                        titles[i] = name;
+                    }
+                    if (fragments != null) {
+                        getView().setTabContent(fragments, titles);
+                    }
+
+                    getView().showContent();
                 }
             }
 
             @Override
             public void onFailure(Call<BookSortPackage> call, Throwable t) {
+                // View无效
+                if (!isViewAttached()) return;
 
+                getView().showMessage(R.string.search_type_get_error);
+                getView().showError();
             }
         });
     }

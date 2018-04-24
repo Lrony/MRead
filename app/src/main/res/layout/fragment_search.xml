@@ -59,8 +59,8 @@
 
                 <android.support.v7.widget.AppCompatImageView
                     android:id="@+id/iv_book_type_more"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:visibility="gone"
                     app:srcCompat="@drawable/ic_vector_more_horiz"
