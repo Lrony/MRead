@@ -8,4 +8,5 @@
     <dimen name="text_size_xlarge">18.0sp</dimen>
     <dimen name="text_size_extra_large">22.0sp</dimen>
 
+    <dimen name="elevation_app_bar">0dp</dimen>
 </resources>
