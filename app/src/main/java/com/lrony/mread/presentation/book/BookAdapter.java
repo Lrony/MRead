@@ -18,6 +18,6 @@ public class BookAdapter extends CommonAdapter<Book> {
 
     @Override
     protected void convert(CommonViewHolder helper, Book item) {
-
+        helper.setText(R.id.tv_title, item.getTitle());
     }
 }

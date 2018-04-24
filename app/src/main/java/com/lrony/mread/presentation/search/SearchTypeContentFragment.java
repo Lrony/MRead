@@ -3,7 +3,9 @@ package com.lrony.mread.presentation.search;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -12,7 +14,10 @@ import com.classic.common.MultipleStatusView;
 import com.lrony.mread.R;
 import com.lrony.mread.data.bean.Book;
 import com.lrony.mread.mvp.MvpFragment;
+import com.lrony.mread.presentation.book.BookAdapter;
+import com.lrony.mread.ui.help.RecyclerViewItemDecoration;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,6 +32,10 @@ public class SearchTypeContentFragment extends MvpFragment<SearchTypeContentCont
     private MultipleStatusView mStatusView;
     private SwipeRefreshLayout mRefreshView;
     private RecyclerView mRecyclerView;
+
+    private BookAdapter mBookAdapter;
+
+    private List<Book> mBooks = new ArrayList<>();
 
     // 每页显示的数量
     private int mPageCount = 10;
@@ -60,6 +69,17 @@ public class SearchTypeContentFragment extends MvpFragment<SearchTypeContentCont
         mRecyclerView = view.findViewById(R.id.recycler_view);
 
         mRefreshView.setColorSchemeResources(R.color.colorAccent);
+
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()
+                , LinearLayoutManager.VERTICAL, false));
+        mRecyclerView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorForeground));
+        mRecyclerView.addItemDecoration(new RecyclerViewItemDecoration.Builder(getContext())
+                .color(ContextCompat.getColor(getContext(), R.color.colorDivider))
+                .thickness(1)
+                .create());
+        mBookAdapter = new BookAdapter(mBooks);
+        mRecyclerView.setAdapter(mBookAdapter);
+
     }
 
     private void initListener() {
@@ -113,6 +133,11 @@ public class SearchTypeContentFragment extends MvpFragment<SearchTypeContentCont
 
     @Override
     public void showContent(List<Book> books) {
+        Log.d(TAG, "showContent: "+books.size());
+        mBooks.clear();
+        mBooks = books;
+        mBookAdapter.notifyDataSetChanged();
+
         mStatusView.showContent();
         setSwipeRefresh(false);
     }
