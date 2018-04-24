@@ -8,4 +8,7 @@
     <string name="navigation_search">精选</string>
     <string name="navigation_library">书库</string>
     <string name="navigation_self">我的</string>
+
+    <string name="menu_home_search">搜索</string>
+    <string name="menu_home_more">更多</string>
 </resources>
