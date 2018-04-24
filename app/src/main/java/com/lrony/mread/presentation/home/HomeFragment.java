@@ -1,6 +1,7 @@
 package com.lrony.mread.presentation.home;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -27,7 +28,7 @@ import java.util.List;
  * Created by Lrony on 18-4-23.
  */
 public class HomeFragment extends MvpFragment<HomeContract.Presenter> implements HomeContract.View
-        , SwipeRefreshLayout.OnRefreshListener, Toolbar.OnMenuItemClickListener {
+        , SwipeRefreshLayout.OnRefreshListener, Toolbar.OnMenuItemClickListener, BaseQuickAdapter.RequestLoadMoreListener {
 
     private static final String TAG = "HomeFragment";
 
@@ -37,6 +38,9 @@ public class HomeFragment extends MvpFragment<HomeContract.Presenter> implements
     private RecyclerView mRecyclerView;
 
     private HomeBookAdapter mAdapter;
+
+    // TestData
+    List<Status> mTestData = new ArrayList<>();
 
     public static HomeFragment newInstance() {
         Bundle args = new Bundle();
@@ -97,19 +101,11 @@ public class HomeFragment extends MvpFragment<HomeContract.Presenter> implements
     }
 
     private void initAdapter() {
-        // TestData
-        List<Status> data = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            data.add(new Status(i + ""));
-        }
-        mAdapter = new HomeBookAdapter(data, getContext());
-        mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
-            @Override
-            public void onLoadMoreRequested() {
-                showToast("More");
-            }
-        });
 
+        for (int i = 0; i < 20; i++) {
+            mTestData.add(new Status(i + ""));
+        }
+        mAdapter = new HomeBookAdapter(mTestData, getContext());
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -118,6 +114,7 @@ public class HomeFragment extends MvpFragment<HomeContract.Presenter> implements
         mRefreshView.setOnRefreshListener(this);
         mToolbar.setOnMenuItemClickListener(this);
 
+        mAdapter.setOnLoadMoreListener(this);
         mRecyclerView.addOnItemTouchListener(mOnitemClickListener);
     }
 
@@ -165,4 +162,16 @@ public class HomeFragment extends MvpFragment<HomeContract.Presenter> implements
             showToast("Retry");
         }
     };
+
+    @Override
+    public void onLoadMoreRequested() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mTestData.add(new Status("111"));
+                mAdapter.loadMoreEnd();
+                mAdapter.notifyDataSetChanged();
+            }
+        }, 3000);
+    }
 }

@@ -1,5 +1,7 @@
 package com.lrony.mread.presentation.search;
 
+import android.util.Log;
+
 import com.lrony.mread.R;
 import com.lrony.mread.data.bean.Book;
 import com.lrony.mread.data.net.SortBookPackage;
@@ -20,6 +22,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class SearchTypeContentPresenter extends MvpBasePresenter<SearchTypeContentContract.View> implements SearchTypeContentContract.Presenter {
 
+    private static final String TAG = "SearchTypeContentPresen";
+
     private BookApi bookApi;
 
     @Override
@@ -34,6 +38,7 @@ public class SearchTypeContentPresenter extends MvpBasePresenter<SearchTypeConte
 
     @Override
     public void loadData(final boolean refresh, String gender, String type, String major, String minor, int start, int limit) {
+        Log.d(TAG, "loadData: start = " + start + ",limit = " + limit);
         // View无效
         if (!isViewAttached()) return;
         if (refresh) getView().showLoading();
@@ -42,6 +47,7 @@ public class SearchTypeContentPresenter extends MvpBasePresenter<SearchTypeConte
         call.enqueue(new Callback<SortBookPackage>() {
             @Override
             public void onResponse(Call<SortBookPackage> call, Response<SortBookPackage> response) {
+                Log.d(TAG, "onResponse: "+response.body().getBooks().size());
                 // View无效
                 if (!isViewAttached()) return;
 
@@ -64,8 +70,11 @@ public class SearchTypeContentPresenter extends MvpBasePresenter<SearchTypeConte
                             , bookBean.getLastChapter());
                     books.add(book);
                 }
-
-                getView().showContent(books);
+                if (books.size() <= 0) {
+                    getView().loadMoreEnd();
+                } else {
+                    getView().showContent(books);
+                }
             }
 
             @Override

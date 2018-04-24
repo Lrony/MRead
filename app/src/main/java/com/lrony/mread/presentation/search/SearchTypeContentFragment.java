@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.classic.common.MultipleStatusView;
 import com.lrony.mread.R;
 import com.lrony.mread.data.bean.Book;
@@ -23,7 +24,7 @@ import java.util.List;
 /**
  * Created by Lrony on 18-4-24.
  */
-public class SearchTypeContentFragment extends MvpFragment<SearchTypeContentContract.Presenter> implements SearchTypeContentContract.View, SwipeRefreshLayout.OnRefreshListener {
+public class SearchTypeContentFragment extends MvpFragment<SearchTypeContentContract.Presenter> implements SearchTypeContentContract.View, SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
 
     private static final String TAG = "SearchTypeContentFragme";
 
@@ -77,7 +78,7 @@ public class SearchTypeContentFragment extends MvpFragment<SearchTypeContentCont
                 .color(ContextCompat.getColor(getContext(), R.color.colorDivider))
                 .thickness(1)
                 .create());
-        mBookAdapter = new BookAdapter(mBooks);
+        mBookAdapter = new BookAdapter(mBooks, getContext());
         mRecyclerView.setAdapter(mBookAdapter);
 
     }
@@ -85,6 +86,8 @@ public class SearchTypeContentFragment extends MvpFragment<SearchTypeContentCont
     private void initListener() {
         Log.d(TAG, "initListener");
         mRefreshView.setOnRefreshListener(this);
+
+        mBookAdapter.setOnLoadMoreListener(this);
     }
 
     @NonNull
@@ -119,7 +122,8 @@ public class SearchTypeContentFragment extends MvpFragment<SearchTypeContentCont
     }
 
     private void loadMoreData() {
-
+        mPage += 1;
+        loadData(false);
     }
 
     private void setSwipeRefresh(boolean refresh) {
@@ -132,12 +136,12 @@ public class SearchTypeContentFragment extends MvpFragment<SearchTypeContentCont
     }
 
     @Override
-    public void showContent(List<Book> books) {
-        Log.d(TAG, "showContent: "+books.size());
-        mBooks.clear();
-        mBooks = books;
+    public void showContent(ArrayList<Book> books) {
+        Log.d(TAG, "showContent: " + books.size());
+        for (int i = 0; i < books.size(); i++) {
+            mBooks.add(books.get(i));
+        }
         mBookAdapter.notifyDataSetChanged();
-
         mStatusView.showContent();
         setSwipeRefresh(false);
     }
@@ -164,5 +168,15 @@ public class SearchTypeContentFragment extends MvpFragment<SearchTypeContentCont
     public void showNoNetWork() {
         mStatusView.showNoNetwork();
         setSwipeRefresh(false);
+    }
+
+    @Override
+    public void loadMoreEnd() {
+        mBookAdapter.loadMoreEnd();
+    }
+
+    @Override
+    public void onLoadMoreRequested() {
+        loadMoreData();
     }
 }

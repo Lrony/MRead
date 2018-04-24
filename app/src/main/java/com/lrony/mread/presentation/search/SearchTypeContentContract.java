@@ -4,6 +4,7 @@ import com.lrony.mread.data.bean.Book;
 import com.lrony.mread.mvp.MvpPresenter;
 import com.lrony.mread.mvp.MvpView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,7 +18,7 @@ public interface SearchTypeContentContract {
          * 显示内容VIEW
          * @param books
          */
-        void showContent(List<Book> books);
+        void showContent(ArrayList<Book> books);
 
         /**
          * 显示加载中VIEW
@@ -38,6 +39,11 @@ public interface SearchTypeContentContract {
          * 显示网络异常VIEW
          */
         void showNoNetWork();
+
+        /**
+         * 无更多数据
+         */
+        void loadMoreEnd();
 
     }
 

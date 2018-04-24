@@ -65,7 +65,7 @@
         tools:text="茶叶蛋" />
 
     <com.lrony.mread.ui.widget.ShapeTextView
-        android:id="@+id/tv_is_finish"
+        android:id="@+id/tv_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/cover"
@@ -87,13 +87,14 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/cover"
         android:layout_marginRight="8dp"
-        android:layout_toLeftOf="@id/tv_is_finish"
+        android:layout_toLeftOf="@id/tv_type"
         android:paddingBottom="1.5dp"
         android:paddingLeft="6dp"
         android:paddingRight="6dp"
         android:paddingTop="1.5dp"
         android:textColor="@color/textAssistSecondary"
         android:textSize="@dimen/text_size_micro"
+        android:visibility="invisible"
         app:super_cornerRadius="2dp"
         app:super_strokeColor="@color/textAssistSecondary"
         app:super_strokeWidth="1px"
