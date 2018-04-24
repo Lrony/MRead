@@ -12,9 +12,14 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lrony.mread.R;
+import com.lrony.mread.data.bean.Status;
 import com.lrony.mread.mvp.MvpFragment;
 import com.lrony.mread.util.DensityUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Lrony on 18-4-23.
@@ -27,6 +32,8 @@ public class HomeFragment extends MvpFragment<HomeContract.Presenter> implements
     private Toolbar mToolbar;
     private SwipeRefreshLayout mRefreshView;
     private RecyclerView mRecyclerView;
+
+    private HomeBookAdapter mAdapter;
 
     public static HomeFragment newInstance() {
         Bundle args = new Bundle();
@@ -80,6 +87,26 @@ public class HomeFragment extends MvpFragment<HomeContract.Presenter> implements
                 padding,
                 DensityUtil.dp2px(getContext(), 8)
         );
+
+        initAdapter();
+    }
+
+    private void initAdapter() {
+        // TestData
+        List<Status> data = new ArrayList<>();
+        for (int i = 0; i < 20; i++) {
+            data.add(new Status(i+""));
+        }
+        mAdapter = new HomeBookAdapter(data);
+        mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                showToast("More");
+            }
+        });
+        mRecyclerView.setAdapter(mAdapter);
+
+
     }
 
     private void initListener() {
