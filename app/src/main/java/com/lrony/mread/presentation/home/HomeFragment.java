@@ -147,12 +147,14 @@ public class HomeFragment extends MvpFragment<HomeContract.Presenter> implements
 
         @Override
         public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+            Log.d(TAG, "onSimpleItemClick: " + position);
             showToast(position + "");
         }
 
         @Override
         public void onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
             super.onItemLongClick(adapter, view, position);
+            Log.d(TAG, "onItemLongClick: " + position);
             showToast("Long: " + position);
         }
     };
