@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.classic.common.MultipleStatusView;
 import com.lrony.mread.R;
 import com.lrony.mread.data.bean.Status;
 import com.lrony.mread.mvp.MvpFragment;
@@ -30,6 +31,7 @@ public class HomeFragment extends MvpFragment<HomeContract.Presenter> implements
     private static final String TAG = "HomeFragment";
 
     private Toolbar mToolbar;
+    private MultipleStatusView mStatusView;
     private SwipeRefreshLayout mRefreshView;
     private RecyclerView mRecyclerView;
 
@@ -66,8 +68,10 @@ public class HomeFragment extends MvpFragment<HomeContract.Presenter> implements
     private void initView(View view) {
         Log.d(TAG, "initView");
         mToolbar = view.findViewById(R.id.home_toolbar);
-        mRefreshView = view.findViewById(R.id.home_refresh);
-        mRecyclerView = view.findViewById(R.id.home_recycler);
+        mStatusView = view.findViewById(R.id.multiple_status_view);
+        mStatusView.setOnRetryClickListener(mRetryClickListener);
+        mRefreshView = view.findViewById(R.id.refresh_view);
+        mRecyclerView = view.findViewById(R.id.recycler_view);
 
         mToolbar.setTitle(R.string.app_title);
         mToolbar.inflateMenu(R.menu.menu_home);
@@ -95,7 +99,7 @@ public class HomeFragment extends MvpFragment<HomeContract.Presenter> implements
         // TestData
         List<Status> data = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
-            data.add(new Status(i+""));
+            data.add(new Status(i + ""));
         }
         mAdapter = new HomeBookAdapter(data);
         mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
@@ -136,4 +140,11 @@ public class HomeFragment extends MvpFragment<HomeContract.Presenter> implements
         }
         return false;
     }
+
+    private View.OnClickListener mRetryClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            showToast("Retry");
+        }
+    };
 }
