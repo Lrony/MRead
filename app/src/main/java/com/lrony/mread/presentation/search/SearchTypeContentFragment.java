@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.classic.common.MultipleStatusView;
 import com.lrony.mread.R;
 import com.lrony.mread.data.bean.Book;
@@ -88,6 +89,7 @@ public class SearchTypeContentFragment extends MvpFragment<SearchTypeContentCont
         mRefreshView.setOnRefreshListener(this);
 
         mBookAdapter.setOnLoadMoreListener(this);
+        mRecyclerView.addOnItemTouchListener(mOnitemClickListener);
     }
 
     @NonNull
@@ -106,6 +108,12 @@ public class SearchTypeContentFragment extends MvpFragment<SearchTypeContentCont
         Log.d(TAG, "init: " + mMajor);
     }
 
+    private void loadData(boolean firstLoad, boolean showRefreshView) {
+        Log.d(TAG, "loadData: firstLoad=" + firstLoad + ",showRefreshView=" + showRefreshView);
+        if (showRefreshView) mStatusView.showLoading();
+        getPresenter().loadData(firstLoad, mGender, mType, mMajor, mMinor, mStart, mLimit);
+    }
+
     private View.OnClickListener mRetryClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -113,11 +121,20 @@ public class SearchTypeContentFragment extends MvpFragment<SearchTypeContentCont
         }
     };
 
-    private void loadData(boolean firstLoad, boolean showRefreshView) {
-        Log.d(TAG, "loadData: firstLoad=" + firstLoad + ",showRefreshView=" + showRefreshView);
-        if (showRefreshView) mStatusView.showLoading();
-        getPresenter().loadData(firstLoad, mGender, mType, mMajor, mMinor, mStart, mLimit);
-    }
+    private OnItemClickListener mOnitemClickListener = new OnItemClickListener() {
+
+        @Override
+        public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+            Log.d(TAG, "onSimpleItemClick: " + position);
+            showToast(mBooks.get(position).getTitle());
+        }
+
+        @Override
+        public void onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
+            super.onItemLongClick(adapter, view, position);
+            Log.d(TAG, "onItemLongClick: " + position);
+        }
+    };
 
     @Override
     public void onRefresh() {
