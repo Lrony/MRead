@@ -21,7 +21,7 @@
 
         <ImageView
             android:id="@+id/iv_cover"
-            android:layout_width="80dp"
+            android:layout_width="78dp"
             android:layout_height="110dp"
             android:scaleType="centerCrop"
             tools:src="@drawable/ic_book_cover_default" />
@@ -54,14 +54,24 @@
         android:textSize="@dimen/text_size_small"
         tools:text="网易旗下利用大数据技术提供移动互联网应用的子公司,过去8年,先后推出有道词典、有道翻译官、有道云笔记、惠惠网、有道推广、有道精品课、有道口语大师等系列产品,总.cas sac as  s" />
 
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/acimg_author"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:layout_alignBottom="@id/cover"
+        android:layout_alignLeft="@id/tv_title"
+        android:paddingBottom="1dp"
+        app:srcCompat="@drawable/ic_vector_author" />
+
     <TextView
         android:id="@+id/tv_author"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/cover"
-        android:layout_alignLeft="@id/tv_title"
+        android:layout_alignBottom="@id/acimg_author"
+        android:layout_marginLeft="3dp"
+        android:layout_toRightOf="@id/acimg_author"
         android:textColor="@color/textAssistSecondary"
-        android:textSize="@dimen/text_size_small"
+        android:textSize="@dimen/text_size_micro"
         tools:text="茶叶蛋" />
 
     <com.lrony.mread.ui.widget.ShapeTextView
@@ -75,7 +85,7 @@
         android:paddingRight="6dp"
         android:paddingTop="1.5dp"
         android:textColor="@color/md_red_200"
-        android:textSize="@dimen/text_size_small"
+        android:textSize="@dimen/text_size_micro"
         app:super_cornerRadius="2dp"
         app:super_strokeColor="@color/md_red_200"
         app:super_strokeWidth="1px"
@@ -93,7 +103,7 @@
         android:paddingRight="6dp"
         android:paddingTop="1.5dp"
         android:textColor="@color/textAssistSecondary"
-        android:textSize="@dimen/text_size_small"
+        android:textSize="@dimen/text_size_micro"
         app:super_cornerRadius="2dp"
         app:super_strokeColor="@color/textAssistSecondary"
         app:super_strokeWidth="1px"
