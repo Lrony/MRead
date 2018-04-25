@@ -114,28 +114,6 @@ public class SearchTypeContentFragment extends MvpFragment<SearchTypeContentCont
         getPresenter().loadData(firstLoad, mGender, mType, mMajor, mMinor, mStart, mLimit);
     }
 
-    private View.OnClickListener mRetryClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            loadData(true, true);
-        }
-    };
-
-    private OnItemClickListener mOnitemClickListener = new OnItemClickListener() {
-
-        @Override
-        public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-            Log.d(TAG, "onSimpleItemClick: " + position);
-            showToast(mBooks.get(position).getTitle());
-        }
-
-        @Override
-        public void onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
-            super.onItemLongClick(adapter, view, position);
-            Log.d(TAG, "onItemLongClick: " + position);
-        }
-    };
-
     @Override
     public void onRefresh() {
         Log.d(TAG, "onRefresh");
@@ -190,4 +168,26 @@ public class SearchTypeContentFragment extends MvpFragment<SearchTypeContentCont
         Log.d(TAG, "complete");
         mRefreshView.setRefreshing(false);
     }
+
+    private View.OnClickListener mRetryClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            loadData(true, true);
+        }
+    };
+
+    private OnItemClickListener mOnitemClickListener = new OnItemClickListener() {
+
+        @Override
+        public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+            Log.d(TAG, "onSimpleItemClick: " + position);
+            showToast(mBooks.get(position).getTitle());
+        }
+
+        @Override
+        public void onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
+            super.onItemLongClick(adapter, view, position);
+            Log.d(TAG, "onItemLongClick: " + position);
+        }
+    };
 }

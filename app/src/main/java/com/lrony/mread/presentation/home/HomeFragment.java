@@ -140,6 +140,18 @@ public class HomeFragment extends MvpFragment<HomeContract.Presenter> implements
         return false;
     }
 
+    @Override
+    public void onLoadMoreRequested() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mTestData.add(new Status("111"));
+                mAdapter.loadMoreEnd();
+                mAdapter.notifyDataSetChanged();
+            }
+        }, 3000);
+    }
+
     private OnItemClickListener mOnitemClickListener = new OnItemClickListener() {
 
         @Override
@@ -162,16 +174,4 @@ public class HomeFragment extends MvpFragment<HomeContract.Presenter> implements
             showToast("Retry");
         }
     };
-
-    @Override
-    public void onLoadMoreRequested() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mTestData.add(new Status("111"));
-                mAdapter.loadMoreEnd();
-                mAdapter.notifyDataSetChanged();
-            }
-        }, 3000);
-    }
 }
