@@ -70,6 +70,7 @@ public class MainActivity extends MvpActivity<MainContract.Presenter> implements
     private void initView() {
         Log.d(TAG, "initView");
         mNavigationBar = findViewById(R.id.bottom_navigation_bar);
+        mNavigationBar.setBarBackgroundColor(R.color.colorForeground);
         mNavigationBar.addItem(new BottomNavigationItem(R.drawable.ic_vector_home, R.string.navigation_home))
                 .addItem(new BottomNavigationItem(R.drawable.ic_vector_hot, R.string.navigation_search))
                 .addItem(new BottomNavigationItem(R.drawable.ic_vector_list, R.string.navigation_library))

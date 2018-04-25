@@ -5,7 +5,7 @@
     <color name="colorAccent">#009386</color>
 
     <color name="colorGrounding">#202020</color><!--界面底色-->
-    <color name="colorForeground">#303030</color><!--界面底色-->
+    <color name="colorForeground">#303030</color><!--界面前景色-->
     <color name="colorDivider">#000000</color> <!-- 分割线颜色-->
 
     <color name="colorRipple">#ff484848</color><!--点击时水波纹颜色-->
