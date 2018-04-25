@@ -37,17 +37,16 @@ public class SearchTypeContentPresenter extends MvpBasePresenter<SearchTypeConte
     }
 
     @Override
-    public void loadData(final boolean refresh, String gender, String type, String major, String minor, int start, int limit) {
-        Log.d(TAG, "loadData: start = " + start + ",limit = " + limit);
+    public void loadData(final boolean firstLoad, String gender, String type, String major, String minor, int start, int limit) {
+        Log.d(TAG, "loadData: firstLoad=" + firstLoad + ",gender=" + gender + ",type=" + type + ",major=" + major + ",minor=" + minor + ",start=" + start + ",limit=" + limit);
+
         // View无效
         if (!isViewAttached()) return;
-        if (refresh) getView().showLoading();
 
         Call<SortBookPackage> call = bookApi.getSortBookPackage(gender, type, major, minor, start, limit);
         call.enqueue(new Callback<SortBookPackage>() {
             @Override
             public void onResponse(Call<SortBookPackage> call, Response<SortBookPackage> response) {
-                Log.d(TAG, "onResponse: "+response.body().getBooks().size());
                 // View无效
                 if (!isViewAttached()) return;
 
@@ -70,10 +69,12 @@ public class SearchTypeContentPresenter extends MvpBasePresenter<SearchTypeConte
                             , bookBean.getLastChapter());
                     books.add(book);
                 }
-                if (books.size() <= 0) {
-                    getView().loadMoreEnd();
+
+                if (firstLoad) {
+                    getView().finishRefresh(books);
+                    getView().complete();
                 } else {
-                    getView().showContent(books);
+                    getView().finishLoad(books);
                 }
             }
 
@@ -82,10 +83,13 @@ public class SearchTypeContentPresenter extends MvpBasePresenter<SearchTypeConte
                 // View无效
                 if (!isViewAttached()) return;
 
-                if (refresh) {
-                    getView().showError();
-                } else {
+                if (firstLoad) {
                     getView().showToast(R.string.search_type_date_get_error);
+                    getView().complete();
+                    getView().showRefreshError();
+                } else {
+                    getView().showToast(R.string.search_type_load_error);
+                    getView().showLoadError();
                 }
             }
         });

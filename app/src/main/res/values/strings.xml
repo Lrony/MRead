@@ -12,7 +12,7 @@
     <string name="menu_home_search">搜索</string>
     <string name="menu_home_more">更多</string>
 
-    <string name="search_type_get_error">分类获取失败</string>
+    <string name="search_type_load_error">加载更多失败</string>
     <string name="search_type_date_get_error">数据获取失败</string>
     <string name="search_book_edit_hint">搜索在线书城</string>
 </resources>

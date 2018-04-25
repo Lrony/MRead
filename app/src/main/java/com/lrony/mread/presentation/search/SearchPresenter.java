@@ -67,7 +67,7 @@ public class SearchPresenter extends MvpBasePresenter<SearchContract.View> imple
                 // View无效
                 if (!isViewAttached()) return;
 
-                getView().showToast(R.string.search_type_get_error);
+                getView().showToast(R.string.search_type_date_get_error);
                 getView().showError();
             }
         });

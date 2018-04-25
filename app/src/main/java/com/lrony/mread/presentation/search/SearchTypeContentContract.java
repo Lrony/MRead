@@ -14,43 +14,22 @@ public interface SearchTypeContentContract {
 
     interface View extends MvpView {
 
-        /**
-         * 显示内容VIEW
-         * @param books
-         */
-        void showContent(ArrayList<Book> books);
+        void finishRefresh(ArrayList<Book> books);
 
-        /**
-         * 显示加载中VIEW
-         */
-        void showLoading();
+        void finishLoad(ArrayList<Book> books);
 
-        /**
-         * 显示错误VIEW
-         */
-        void showError();
+        void showRefreshError();
 
-        /**
-         * 显示无内容VIEW
-         */
-        void showEmpty();
+        void showLoadError();
 
-        /**
-         * 显示网络异常VIEW
-         */
-        void showNoNetWork();
-
-        /**
-         * 无更多数据
-         */
-        void loadMoreEnd();
-
+        void complete();
     }
 
     interface Presenter extends MvpPresenter<View> {
 
         /**
-         * @param refresh 是否需要显示刷新控件
+         *
+         * @param firstLoad 是否为第一次加载x
          * @param gender
          * @param type
          * @param major
@@ -58,6 +37,6 @@ public interface SearchTypeContentContract {
          * @param start
          * @param limit
          */
-        void loadData(boolean refresh, String gender, String type, String major, String minor, int start, int limit);
+        void loadData(boolean firstLoad, String gender, String type, String major, String minor, int start, int limit);
     }
 }

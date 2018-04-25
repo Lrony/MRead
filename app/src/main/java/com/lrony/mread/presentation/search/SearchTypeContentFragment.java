@@ -28,8 +28,6 @@ public class SearchTypeContentFragment extends MvpFragment<SearchTypeContentCont
 
     private static final String TAG = "SearchTypeContentFragme";
 
-    private String mSearchTypeID;
-
     private MultipleStatusView mStatusView;
     private SwipeRefreshLayout mRefreshView;
     private RecyclerView mRecyclerView;
@@ -38,10 +36,12 @@ public class SearchTypeContentFragment extends MvpFragment<SearchTypeContentCont
 
     private List<Book> mBooks = new ArrayList<>();
 
-    // 每页显示的数量
-    private int mPageCount = 10;
-    // 当前页数
-    private static int mPage = 0;
+    private String mGender = "male";
+    private String mMajor = "";
+    private String mType = "hot";
+    private String mMinor = "";
+    private int mStart = 0;
+    private int mLimit = 15;
 
     public static SearchTypeContentFragment newInstance(String billId) {
         Bundle args = new Bundle();
@@ -59,7 +59,7 @@ public class SearchTypeContentFragment extends MvpFragment<SearchTypeContentCont
 
         initView(view);
         initListener();
-        loadData(true);
+        loadData(true, true);
     }
 
     private void initView(View view) {
@@ -102,81 +102,75 @@ public class SearchTypeContentFragment extends MvpFragment<SearchTypeContentCont
     }
 
     private void init() {
-        mSearchTypeID = getArguments().getString(SearchTypeFragment.SEARCH_TYPE_ID);
-        Log.d(TAG, "init: " + mSearchTypeID);
+        mMajor = getArguments().getString(SearchTypeFragment.SEARCH_TYPE_ID);
+        Log.d(TAG, "init: " + mMajor);
     }
 
     private View.OnClickListener mRetryClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            loadData(true);
+            loadData(true, true);
         }
     };
 
-    private void loadData(boolean refresh) {
-        Log.d(TAG, "loadData: mSearchTypeID = " + mSearchTypeID
-                + ", start = " + mPage * mPageCount);
-
-        getPresenter().loadData(refresh, "male"
-                , "hot", mSearchTypeID, "", mPage * mPageCount, mPageCount);
-    }
-
-    private void loadMoreData() {
-        mPage += 1;
-        loadData(false);
-    }
-
-    private void setSwipeRefresh(boolean refresh) {
-        mRefreshView.setRefreshing(refresh);
+    private void loadData(boolean firstLoad, boolean showRefreshView) {
+        Log.d(TAG, "loadData: firstLoad=" + firstLoad + ",showRefreshView=" + showRefreshView);
+        if (showRefreshView) mStatusView.showLoading();
+        getPresenter().loadData(firstLoad, mGender, mType, mMajor, mMinor, mStart, mLimit);
     }
 
     @Override
     public void onRefresh() {
-        loadData(false);
-    }
-
-    @Override
-    public void showContent(ArrayList<Book> books) {
-        Log.d(TAG, "showContent: " + books.size());
-        for (int i = 0; i < books.size(); i++) {
-            mBooks.add(books.get(i));
-        }
-        mBookAdapter.notifyDataSetChanged();
-        mStatusView.showContent();
-        setSwipeRefresh(false);
-    }
-
-    @Override
-    public void showLoading() {
-        mStatusView.showLoading();
-        setSwipeRefresh(false);
-    }
-
-    @Override
-    public void showError() {
-        mStatusView.showError();
-        setSwipeRefresh(false);
-    }
-
-    @Override
-    public void showEmpty() {
-        mStatusView.showEmpty();
-        setSwipeRefresh(false);
-    }
-
-    @Override
-    public void showNoNetWork() {
-        mStatusView.showNoNetwork();
-        setSwipeRefresh(false);
-    }
-
-    @Override
-    public void loadMoreEnd() {
-        mBookAdapter.loadMoreEnd();
+        Log.d(TAG, "onRefresh");
+        mStart = 0;
+        loadData(true, false);
     }
 
     @Override
     public void onLoadMoreRequested() {
-        loadMoreData();
+        Log.d(TAG, "onLoadMoreRequested");
+        loadData(false, false);
+    }
+
+    @Override
+    public void finishRefresh(ArrayList<Book> books) {
+        Log.d(TAG, "finishRefresh: " + books);
+        if (books.isEmpty()) {
+            mStatusView.showEmpty();
+            return;
+        }
+        mBooks.clear();
+        mBooks.addAll(books);
+        mBookAdapter.notifyDataSetChanged();
+        mStatusView.showContent();
+        mStart = books.size();
+    }
+
+    @Override
+    public void finishLoad(ArrayList<Book> books) {
+        Log.d(TAG, "finishLoad: " + books);
+        for (Book book : books) {
+            mBooks.add(book);
+        }
+        mBookAdapter.loadMoreComplete();
+        mStart += mBooks.size();
+    }
+
+    @Override
+    public void showRefreshError() {
+        Log.d(TAG, "showRefreshError");
+        mStatusView.showError();
+    }
+
+    @Override
+    public void showLoadError() {
+        Log.d(TAG, "showLoadError");
+        mBookAdapter.loadMoreFail();
+    }
+
+    @Override
+    public void complete() {
+        Log.d(TAG, "complete");
+        mRefreshView.setRefreshing(false);
     }
 }
