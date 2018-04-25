@@ -78,7 +78,7 @@ public class HomeFragment extends MvpFragment<HomeContract.Presenter> implements
         mRefreshView = view.findViewById(R.id.refresh_view);
         mRecyclerView = view.findViewById(R.id.recycler_view);
 
-        mToolbar.setTitle(R.string.app_title);
+        mToolbar.setTitle(R.string.home_title);
         mToolbar.inflateMenu(R.menu.menu_home);
 
         mRefreshView.setColorSchemeResources(R.color.colorAccent);

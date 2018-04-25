@@ -1,8 +1,9 @@
 <resources>
-    <string name="app_name">MRead</string>
+    <string name="app_name">悦读</string>
     <string name="app_dev_default">--</string>
 
-    <string name="app_title">悦读</string>
+    <string name="home_title">悦读</string>
+    <string name="library_title">书库</string>
 
     <string name="navigation_home">首页</string>
     <string name="navigation_search">精选</string>
