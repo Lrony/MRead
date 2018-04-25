@@ -82,7 +82,7 @@
         tools:text="已完结" />
 
     <com.lrony.mread.ui.widget.ShapeTextView
-        android:id="@+id/tv_word_count"
+        android:id="@+id/tv_retention_ratio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/cover"
@@ -94,9 +94,8 @@
         android:paddingTop="1.5dp"
         android:textColor="@color/textAssistSecondary"
         android:textSize="@dimen/text_size_micro"
-        android:visibility="invisible"
         app:super_cornerRadius="2dp"
         app:super_strokeColor="@color/textAssistSecondary"
         app:super_strokeWidth="1px"
-        tools:text="2.5万字" />
+        tools:text="63.2%留存率" />
 </RelativeLayout>
