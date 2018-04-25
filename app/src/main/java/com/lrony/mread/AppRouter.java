@@ -1,15 +1,31 @@
 package com.lrony.mread;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.lrony.mread.util.DensityUtil;
 
 /**
  * Created by lrony on 2018/4/7.
  * app路由，界面跳转帮助类，所有的界面跳转通过此类进行跳转,包括组件交互
  */
 public class AppRouter {
+
+    /**
+     * 获取全局加载dialog
+     */
+    public static Dialog getLoadingDialog(Context context) {
+        Dialog dialog = new Dialog(context, R.style.AlertDialogStyle);
+        View view = LayoutInflater.from(context).inflate(R.layout.dialog_loading, null);
+        dialog.setContentView(view, new ViewGroup.LayoutParams(DensityUtil.dp2px(context, 96), DensityUtil.dp2px(context, 96)));
+        return dialog;
+    }
 
     /**
      * 跳转到当前应用设置界面
