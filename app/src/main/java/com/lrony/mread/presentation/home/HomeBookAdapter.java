@@ -10,6 +10,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.lrony.mread.R;
 import com.lrony.mread.data.bean.Status;
 import com.lrony.mread.ui.help.GlideApp;
+import com.lrony.mread.util.ImageLoader;
 
 import java.util.List;
 
@@ -28,9 +29,7 @@ public class HomeBookAdapter extends BaseQuickAdapter<Status, BaseViewHolder> {
     @Override
     protected void convert(BaseViewHolder helper, Status item) {
         helper.setText(R.id.tv_title, item.getText());
-        GlideApp.with(context)
-                .load("https://avatars1.githubusercontent.com/u/25895510?s=460&v=4")
-                .placeholder(R.drawable.ic_book_cover_default)
-                .into((ImageView) helper.getView(R.id.iv_cover));
+        ImageLoader.load(context, "https://avatars1.githubusercontent.com/u/25895510?s=460&v=4"
+                , (ImageView) helper.getView(R.id.iv_cover));
     }
 }
