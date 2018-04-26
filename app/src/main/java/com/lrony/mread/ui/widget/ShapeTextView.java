@@ -16,9 +16,15 @@ public class ShapeTextView extends AppCompatTextView {
 
     public ShapeTextView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        initSuperShapeView(attrs);
     }
 
     public ShapeTextView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        initSuperShapeView(attrs);
+    }
+
+    private void initSuperShapeView(AttributeSet attrs) {
+        new SuperConfig().beSuperView(attrs, this);
     }
 }

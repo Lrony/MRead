@@ -1,24 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="SuperShapeView">
-        <attr name="super_cornerRadius" format="dimension"/>
-        <attr name="super_strokeWidth" format="dimension"/>
+        <attr name="super_cornerRadius" format="dimension" />
+        <attr name="super_strokeWidth" format="dimension" />
 
-        <attr name="super_strokeColor" format="color|reference"/>
-        <attr name="super_strokeColor_pressed" format="color|reference"/>
-        <attr name="super_strokeColor_selected" format="color|reference"/>
+        <attr name="super_strokeColor" format="color|reference" />
+        <attr name="super_strokeColor_pressed" format="color|reference" />
+        <attr name="super_strokeColor_selected" format="color|reference" />
 
-        <attr name="super_solidColor" format="color|reference"/>
-        <attr name="super_solidColor_pressed" format="color|reference"/>
-        <attr name="super_solidColor_selected" format="color|reference"/>
+        <attr name="super_solidColor" format="color|reference" />
+        <attr name="super_solidColor_pressed" format="color|reference" />
+        <attr name="super_solidColor_selected" format="color|reference" />
 
-        <attr name="super_dashWidth" format="dimension"/>
-        <attr name="super_dashGap" format="dimension"/>
+        <attr name="super_dashWidth" format="dimension" />
+        <attr name="super_dashGap" format="dimension" />
 
-        <attr name="super_topLeftRadius" format="dimension"/>
-        <attr name="super_topRightRadius" format="dimension"/>
-        <attr name="super_bottomLeftRadius" format="dimension"/>
-        <attr name="super_bottomRightRadius" format="dimension"/>
+        <attr name="super_topLeftRadius" format="dimension" />
+        <attr name="super_topRightRadius" format="dimension" />
+        <attr name="super_bottomLeftRadius" format="dimension" />
+        <attr name="super_bottomRightRadius" format="dimension" />
 
+    </declare-styleable>
+
+    <declare-styleable name="MineRowView">
+        <attr name="mine_icon" format="color|reference" />
+        <attr name="mine_title" format="string" />
+        <attr name="mine_divider_visibility" format="boolean" />
+        <attr name="mine_arrow_visibility" format="boolean" />
     </declare-styleable>
 </resources>
