@@ -13,6 +13,7 @@ import com.lrony.mread.App;
 import com.lrony.mread.R;
 import com.lrony.mread.mvp.MvpFragment;
 import com.lrony.mread.pref.AppConfig;
+import com.lrony.mread.util.Shares;
 
 /**
  * Created by Lrony on 18-4-23.
@@ -80,7 +81,8 @@ public class SelfFragment extends MvpFragment<SelfContract.Presenter> implements
             }
         });
         bindOnClickLister(view, this
-                , R.id.self_app_night_mode);
+                , R.id.self_app_night_mode
+                , R.id.self_app_share);
     }
 
     @Override
@@ -102,6 +104,9 @@ public class SelfFragment extends MvpFragment<SelfContract.Presenter> implements
                     mSwNightMode.setChecked(true);
                 }
                 activity.recreate();
+                break;
+            case R.id.self_app_share:
+                Shares.share(getContext(), R.string.share);
                 break;
         }
     }
