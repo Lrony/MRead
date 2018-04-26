@@ -10,6 +10,7 @@ import android.support.v7.widget.AppCompatImageView;
 import android.util.Log;
 import android.view.View;
 
+import com.classic.common.MultipleStatusView;
 import com.lrony.mread.R;
 import com.lrony.mread.mvp.MvpFragment;
 import com.lrony.mread.ui.help.BaseFragmentAdapter;
@@ -28,6 +29,7 @@ public class SearchFragment extends MvpFragment<SearchContract.Presenter> implem
     private TabLayout mTab;
     private MaterialProgressBar mProgress;
     private AppCompatImageView mImgType, mImgRetry;
+    private MultipleStatusView mStatusView;
 
     public static SearchFragment newInstance() {
         Bundle args = new Bundle();
@@ -66,6 +68,8 @@ public class SearchFragment extends MvpFragment<SearchContract.Presenter> implem
         mProgress = view.findViewById(R.id.progress);
         mImgType = view.findViewById(R.id.iv_book_type_more);
         mImgRetry = view.findViewById(R.id.iv_book_type_retry);
+        mStatusView = view.findViewById(R.id.multiple_status_view);
+        mStatusView.setOnRetryClickListener(mRetryClickListener);
     }
 
     private void initListener(View view) {
@@ -132,11 +136,19 @@ public class SearchFragment extends MvpFragment<SearchContract.Presenter> implem
         return adapter.getPageTitles()[mViewPager.getCurrentItem()];
     }
 
+    private View.OnClickListener mRetryClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            getPresenter().loadData();
+        }
+    };
+
     @Override
     public void showError() {
         mProgress.setVisibility(View.GONE);
         mImgType.setVisibility(View.GONE);
         mImgRetry.setVisibility(View.VISIBLE);
+        mStatusView.showError();
     }
 
     @Override
@@ -144,6 +156,7 @@ public class SearchFragment extends MvpFragment<SearchContract.Presenter> implem
         mProgress.setVisibility(View.VISIBLE);
         mImgType.setVisibility(View.GONE);
         mImgRetry.setVisibility(View.GONE);
+        mStatusView.showLoading();
     }
 
     @Override
@@ -151,5 +164,6 @@ public class SearchFragment extends MvpFragment<SearchContract.Presenter> implem
         mProgress.setVisibility(View.GONE);
         mImgType.setVisibility(View.VISIBLE);
         mImgRetry.setVisibility(View.GONE);
+        mStatusView.showContent();
     }
 }

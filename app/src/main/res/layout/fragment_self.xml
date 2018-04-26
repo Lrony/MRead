@@ -13,26 +13,23 @@
 
         <com.lrony.mread.ui.widget.MineRowView
             android:layout_width="wrap_content"
-            android:layout_height="48dp"
+            android:layout_height="@dimen/self_line_height"
             android:background="@drawable/bg_list_item"
             android:clickable="true"
             app:mine_icon="@drawable/ic_vector_author"
             app:mine_title="设置" />
 
         <com.lrony.mread.ui.widget.MineRowView
+            android:id="@+id/self_app_night_mode"
             android:layout_width="wrap_content"
-            android:layout_height="48dp"
+            android:layout_height="56dp"
             android:background="@drawable/bg_list_item"
             android:clickable="true"
+            app:mine_arrow_visibility="false"
             app:mine_icon="@drawable/ic_vector_author"
-            app:mine_title="设置" />
+            app:mine_title="夜间模式">
 
-        <com.lrony.mread.ui.widget.MineRowView
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:background="@drawable/bg_list_item"
-            android:clickable="true"
-            app:mine_icon="@drawable/ic_vector_author"
-            app:mine_title="设置" />
+            <include layout="@layout/compat_switch_night_mode" />
+        </com.lrony.mread.ui.widget.MineRowView>
     </LinearLayout>
 </ScrollView>

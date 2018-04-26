@@ -27,14 +27,4 @@ public class BaseSuperActivity extends SupportActivity {
         super.onSaveInstanceState(outState);
         // Status save
     }
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
 }

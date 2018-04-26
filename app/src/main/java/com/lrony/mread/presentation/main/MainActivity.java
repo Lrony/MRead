@@ -42,6 +42,19 @@ public class MainActivity extends MvpActivity<MainContract.Presenter> implements
         initFragment();
         initView();
         initListener();
+
+        if (savedInstanceState != null) {
+            mCurrentFrm = savedInstanceState.getInt("selectedTabId", PAGE_HOME);
+            mNavigationBar.selectTab(mCurrentFrm);
+        } else {
+            mNavigationBar.selectTab(PAGE_HOME);
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("selectedTabId", mCurrentFrm);
     }
 
     private void initFragment() {

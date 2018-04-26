@@ -5,17 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <FrameLayout
+    <com.classic.common.MultipleStatusView
+        android:id="@+id/multiple_status_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:foreground="@drawable/header_shadow"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        app:emptyView="@layout/custom_empty_view"
+        app:errorView="@layout/custom_error_view"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:loadingView="@layout/custom_loading_view"
+        app:noNetworkView="@layout/custom_no_network_view">
 
         <android.support.v4.view.ViewPager
             android:id="@+id/vp_search"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-    </FrameLayout>
+    </com.classic.common.MultipleStatusView>
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar_search"

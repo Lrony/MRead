@@ -2,7 +2,10 @@ package com.lrony.mread;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
+
+import com.lrony.mread.pref.AppConfig;
 
 import me.yokeyword.fragmentation.Fragmentation;
 import me.yokeyword.fragmentation.helper.ExceptionHandler;
@@ -42,10 +45,13 @@ public class App extends Application {
                     }
                 })
                 .install();
+
+
+        initTheme();
     }
 
-    public static void setNightMode(boolean isNight) {
-        if (isNight) {
+    private void initTheme() {
+        if (AppConfig.isNightMode()) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
