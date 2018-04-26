@@ -84,7 +84,7 @@ public class SearchTypeContentPresenter extends MvpBasePresenter<SearchTypeConte
                 if (!isViewAttached()) return;
 
                 if (firstLoad) {
-                    getView().showToast(R.string.search_type_date_get_error);
+                    // getView().showToast(R.string.search_type_date_get_error);
                     getView().complete();
                     getView().showRefreshError();
                 } else {
