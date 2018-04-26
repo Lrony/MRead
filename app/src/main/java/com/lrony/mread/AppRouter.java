@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.lrony.mread.data.bean.Book;
+import com.lrony.mread.presentation.book.BookDetailActivity;
 import com.lrony.mread.util.DensityUtil;
 
 /**
@@ -43,4 +45,8 @@ public class AppRouter {
         }
         context.startActivity(localIntent);
     }
+
+//    public static void showBookDetailActivity(Context context, Book book) {
+//        context.startActivity(BookDetailActivity.newIntent(context, book));
+//    }
 }
