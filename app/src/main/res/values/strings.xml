@@ -18,4 +18,6 @@
     <string name="search_type_load_error">加载更多失败</string>
     <string name="search_type_date_get_error">数据获取失败</string>
     <string name="search_book_edit_hint">搜索在线书城</string>
+
+    <string name="share">分享</string>
 </resources>
