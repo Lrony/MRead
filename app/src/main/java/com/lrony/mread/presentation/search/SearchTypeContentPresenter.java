@@ -88,7 +88,7 @@ public class SearchTypeContentPresenter extends MvpBasePresenter<SearchTypeConte
                     getView().complete();
                     getView().showRefreshError();
                 } else {
-                    getView().showToast(R.string.search_type_load_error);
+                    // getView().showToast(R.string.search_type_load_error);
                     getView().showLoadError();
                 }
             }
