@@ -38,10 +38,12 @@ public interface BookApi {
     @GET("/book/by-categories")
     Call<SortBookPackage> getSortBookPackage(@Query("gender") String gender, @Query("type") String type, @Query("major") String major, @Query("minor") String minor, @Query("start") int start, @Query("limit") int limit);
 
+
     /*************************书籍详情**********************************/
 
     /**
      * 书籍详情
+     *
      * @param bookId
      * @return
      */
@@ -56,5 +58,33 @@ public interface BookApi {
      */
     @GET("/book/{bookId}/recommend")
     Call<RecommendBooksPackage> getRecommendBooksPackage(@Path("bookId") String bookId);
+
+
+    /************************************搜索书籍******************************************************/
+
+    /**
+     * 热门搜索
+     * @return
+     */
+    @GET("/book/hot-word")
+    Call<HotWordPackage> getHotWordPackage();
+
+    /**
+     * 关键字自动补全
+     *
+     * @param query
+     * @return
+     */
+    @GET("/book/auto-complete")
+    Call<KeyWordPackage> getKeyWordPacakge(@Query("query") String query);
+
+    /**
+     * 书籍查询
+     *
+     * @param query:作者名或者书名
+     * @return
+     */
+    @GET("/book/fuzzy-search")
+    Call<SearchBookPackage> getSearchBookPackage(@Query("query") String query);
 
 }
