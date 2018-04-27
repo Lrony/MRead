@@ -47,6 +47,7 @@ public class App extends Application {
                 .install();
 
 
+        AppManager.init(this);
         initTheme();
     }
 

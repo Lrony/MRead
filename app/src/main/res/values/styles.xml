@@ -100,4 +100,9 @@
         <item name="android:clickable">true</item>
         <item name="android:paddingRight">8dp</item>
     </style>
+
+    <style name="AppTheme.Translucent">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
 </resources>

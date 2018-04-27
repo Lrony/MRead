@@ -18,11 +18,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.lrony.mread.AppManager;
+import com.lrony.mread.AppRouter;
 import com.lrony.mread.R;
 import com.lrony.mread.data.net.KeyWordPackage;
 import com.lrony.mread.data.net.SearchBookPackage;
 import com.lrony.mread.mvp.MvpActivity;
 import com.lrony.mread.presentation.book.BookDetailActivity;
+import com.lrony.mread.ui.help.BaseRecyclerAdapter;
 import com.lrony.mread.ui.help.RecyclerViewItemDecoration;
 import com.lrony.mread.util.InputMethodUtils;
 
@@ -39,6 +42,9 @@ public class SearchActivity extends MvpActivity<SearchContract.Presenter> implem
     private ImageView mIvActionClear;
     private EditText mEtSearch;
     private RecyclerView mRecyclerView;
+
+    private SearchBookPackage mSearchData;
+    private KeyWordPackage mKeyWordData;
 
     private SearchBookAdapter mSearchAdapter;
     private KeyWordAdapter mKeyWordAdapter;
@@ -141,6 +147,33 @@ public class SearchActivity extends MvpActivity<SearchContract.Presenter> implem
                 InputMethodUtils.showSoftInput(mEtSearch);
             }
         });
+
+        mSearchAdapter.setItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                AppRouter.showBookDetailActivity(SearchActivity.this, mSearchData.getBooks().get(position).get_id());
+                AppManager.getInstance().finishActivity();
+            }
+
+            @Override
+            public void onItemLongClick(int position) {
+
+            }
+        });
+
+        mKeyWordAdapter.setItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                mEtSearch.setText(mKeyWordData.getKeywords().get(position));
+                mEtSearch.setSelection(mKeyWordData.getKeywords().get(position).length());
+                goSearchResult();
+            }
+
+            @Override
+            public void onItemLongClick(int position) {
+
+            }
+        });
     }
 
     private void goSearchResult() {
@@ -195,6 +228,7 @@ public class SearchActivity extends MvpActivity<SearchContract.Presenter> implem
         mSearchAdapter.clear();
         mRecyclerView.removeAllViews();
 
+        mKeyWordData = keywords;
         mRecyclerView.setAdapter(mKeyWordAdapter);
         mKeyWordAdapter.refresh(keywords);
     }
@@ -205,6 +239,7 @@ public class SearchActivity extends MvpActivity<SearchContract.Presenter> implem
         mSearchAdapter.clear();
         mRecyclerView.removeAllViews();
 
+        mSearchData = books;
         mRecyclerView.setAdapter(mSearchAdapter);
         mSearchAdapter.refresh(books);
     }
