@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.classic.common.MultipleStatusView;
+import com.lrony.mread.AppRouter;
 import com.lrony.mread.R;
 import com.lrony.mread.mvp.MvpFragment;
 import com.lrony.mread.ui.help.BaseFragmentAdapter;
@@ -89,7 +90,7 @@ public class HotFragment extends MvpFragment<HotContract.Presenter> implements H
         switch (v.getId()) {
             case R.id.view_search:
                 Log.d(TAG, "onClick: Search");
-                showToast("Search");
+                AppRouter.showSearchActivity(getContext());
                 break;
             case R.id.fl_action:
                 Log.d(TAG, "onClick: Action");
