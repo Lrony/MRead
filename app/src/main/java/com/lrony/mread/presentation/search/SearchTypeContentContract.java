@@ -18,6 +18,8 @@ public interface SearchTypeContentContract {
 
         void finishLoad(ArrayList<Book> books);
 
+        void openBookDetail(Book book);
+
         void showRefreshError();
 
         void showLoadError();
@@ -38,5 +40,7 @@ public interface SearchTypeContentContract {
          * @param limit
          */
         void loadData(boolean firstLoad, String gender, String type, String major, String minor, int start, int limit);
+
+        void getBookInfo(Book book);
     }
 }

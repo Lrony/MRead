@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.lrony.mread.R;
 import com.lrony.mread.data.bean.Book;
+import com.lrony.mread.data.net.BookDetailPackage;
 import com.lrony.mread.data.net.SortBookPackage;
 import com.lrony.mread.data.net.BookApi;
 import com.lrony.mread.mvp.MvpBasePresenter;
@@ -66,7 +67,8 @@ public class SearchTypeContentPresenter extends MvpBasePresenter<SearchTypeConte
                             , bookBean.getBanned()
                             , bookBean.getLatelyFollower()
                             , bookBean.getRetentionRatio()
-                            , bookBean.getLastChapter());
+                            , bookBean.getLastChapter()
+                    );
                     books.add(book);
                 }
 
@@ -91,6 +93,42 @@ public class SearchTypeContentPresenter extends MvpBasePresenter<SearchTypeConte
                     // getView().showToast(R.string.search_type_load_error);
                     getView().showLoadError();
                 }
+            }
+        });
+    }
+
+    @Override
+    public void getBookInfo(final Book book) {
+        Log.d(TAG, "getBookInfo: " + book.getTitle());
+        // View无效
+        if (!isViewAttached()) return;
+
+        if (book == null) {
+            getView().showToast(R.string.bookdetail_open_error);
+            return;
+        }
+
+        Call<BookDetailPackage> call = bookApi.getBookDetail(book.getId());
+        call.enqueue(new Callback<BookDetailPackage>() {
+            @Override
+            public void onResponse(Call<BookDetailPackage> call, Response<BookDetailPackage> response) {
+                // View无效
+                if (!isViewAttached()) return;
+
+                book.setUpdated(response.body().getUpdated());
+                book.setFinished(!response.body().isIsSerial() ? true : false);
+                book.setWordCount(response.body().getWordCount());
+                book.setPostCount(response.body().getPostCount());
+
+                getView().openBookDetail(book);
+            }
+
+            @Override
+            public void onFailure(Call<BookDetailPackage> call, Throwable t) {
+                // View无效
+                if (!isViewAttached()) return;
+
+                getView().showToast(R.string.bookdetail_open_error);
             }
         });
     }

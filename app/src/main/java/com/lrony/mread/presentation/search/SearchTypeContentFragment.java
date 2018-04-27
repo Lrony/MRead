@@ -13,6 +13,7 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.classic.common.MultipleStatusView;
+import com.lrony.mread.AppRouter;
 import com.lrony.mread.R;
 import com.lrony.mread.data.bean.Book;
 import com.lrony.mread.mvp.MvpFragment;
@@ -152,6 +153,11 @@ public class SearchTypeContentFragment extends MvpFragment<SearchTypeContentCont
     }
 
     @Override
+    public void openBookDetail(Book book) {
+        AppRouter.showBookDetailActivity(getContext(), book);
+    }
+
+    @Override
     public void showRefreshError() {
         Log.d(TAG, "showRefreshError");
         mStatusView.showError();
@@ -181,7 +187,7 @@ public class SearchTypeContentFragment extends MvpFragment<SearchTypeContentCont
         @Override
         public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
             Log.d(TAG, "onSimpleItemClick: " + position);
-            showToast(mBooks.get(position).getTitle());
+            getPresenter().getBookInfo(mBooks.get(position));
         }
 
         @Override

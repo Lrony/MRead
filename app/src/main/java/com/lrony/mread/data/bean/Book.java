@@ -39,6 +39,34 @@ public class Book {
     private double retentionRatio;
     private String lastChapter;
 
+    // 需要另外获取
+    private String updated;
+    // isSerial 是否还在更新
+    private boolean isFinished;
+    private long wordCount;
+    private long postCount;
+
+    public Book(String id, String title, String author, String shortIntro, String cover, String site, String majorCate, String minorCate, String contentType, boolean allowMonthly, int banned, int latelyFollower, double retentionRatio, String lastChapter, String updated, boolean isFinished, long wordCount, long postCount) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.shortIntro = shortIntro;
+        this.cover = cover;
+        this.site = site;
+        this.majorCate = majorCate;
+        this.minorCate = minorCate;
+        this.contentType = contentType;
+        this.allowMonthly = allowMonthly;
+        this.banned = banned;
+        this.latelyFollower = latelyFollower;
+        this.retentionRatio = retentionRatio;
+        this.lastChapter = lastChapter;
+        this.updated = updated;
+        this.isFinished = isFinished;
+        this.wordCount = wordCount;
+        this.postCount = postCount;
+    }
+
     public Book(String id, String title, String author, String shortIntro, String cover, String site, String majorCate, String minorCate, String contentType, boolean allowMonthly, int banned, int latelyFollower, double retentionRatio, String lastChapter) {
         this.id = id;
         this.title = title;
@@ -169,5 +197,37 @@ public class Book {
 
     public void setLastChapter(String lastChapter) {
         this.lastChapter = lastChapter;
+    }
+
+    public String getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(String updated) {
+        this.updated = updated;
+    }
+
+    public boolean isFinished() {
+        return isFinished;
+    }
+
+    public void setFinished(boolean finished) {
+        isFinished = finished;
+    }
+
+    public long getWordCount() {
+        return wordCount;
+    }
+
+    public void setWordCount(long wordCount) {
+        this.wordCount = wordCount;
+    }
+
+    public long getPostCount() {
+        return postCount;
+    }
+
+    public void setPostCount(long postCount) {
+        this.postCount = postCount;
     }
 }
