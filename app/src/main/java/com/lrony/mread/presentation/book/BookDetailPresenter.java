@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.lrony.mread.R;
 import com.lrony.mread.data.net.BookApi;
+import com.lrony.mread.data.net.BookDetailPackage;
 import com.lrony.mread.data.net.RecommendBooksPackage;
 import com.lrony.mread.mvp.MvpBasePresenter;
 import com.lrony.mread.util.Constant;
@@ -31,6 +32,32 @@ public class BookDetailPresenter extends MvpBasePresenter<BookDetailContract.Vie
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         bookApi = retrofit.create(BookApi.class);
+    }
+
+    @Override
+    public void loadBookInfo(String id) {
+        Log.d(TAG, "loadBookInfo: " + id);
+        // View无效
+        if (!isViewAttached()) return;
+
+        Call<BookDetailPackage> call = bookApi.getBookDetail(id);
+        call.enqueue(new Callback<BookDetailPackage>() {
+            @Override
+            public void onResponse(Call<BookDetailPackage> call, Response<BookDetailPackage> response) {
+                // View无效
+                if (!isViewAttached()) return;
+
+                getView().finshLoadBookInfo(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<BookDetailPackage> call, Throwable t) {
+                // View无效
+                if (!isViewAttached()) return;
+
+                getView().showToast("加载失败");
+            }
+        });
     }
 
     @Override

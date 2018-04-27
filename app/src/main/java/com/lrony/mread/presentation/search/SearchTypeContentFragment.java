@@ -153,11 +153,6 @@ public class SearchTypeContentFragment extends MvpFragment<SearchTypeContentCont
     }
 
     @Override
-    public void openBookDetail(Book book) {
-        AppRouter.showBookDetailActivity(getContext(), book);
-    }
-
-    @Override
     public void showRefreshError() {
         Log.d(TAG, "showRefreshError");
         mStatusView.showError();
@@ -187,7 +182,7 @@ public class SearchTypeContentFragment extends MvpFragment<SearchTypeContentCont
         @Override
         public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
             Log.d(TAG, "onSimpleItemClick: " + position);
-            getPresenter().getBookInfo(mBooks.get(position));
+            AppRouter.showBookDetailActivity(getContext(), mBooks.get(position).getId());
         }
 
         @Override

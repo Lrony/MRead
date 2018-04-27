@@ -4,14 +4,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.lrony.mread.AppRouter;
 import com.lrony.mread.R;
-import com.lrony.mread.data.bean.Book;
+import com.lrony.mread.data.net.BookDetailPackage;
 import com.lrony.mread.data.net.RecommendBooksPackage;
 import com.lrony.mread.mvp.MvpActivity;
 import com.lrony.mread.ui.help.BaseRecyclerAdapter;
@@ -27,10 +29,14 @@ public class BookDetailActivity extends MvpActivity<BookDetailContract.Presenter
 
     private static final String TAG = "BookDetailActivity";
 
-    private static Book mBook;
+    private static final String K_EXTRA_BOOK = "book";
+
+    private BookDetailPackage mBook;
     private RecommendBooksPackage mRecommendBooks;
 
     private RecommendBookAdapter mRecommendAdapter;
+
+    private String mBookId;
 
     private ImageView mIvCover;
     private TextView mTvReadCount;
@@ -44,29 +50,34 @@ public class BookDetailActivity extends MvpActivity<BookDetailContract.Presenter
     private TextView mTvWordCountCopyright;
     private TextView mTvCreateDateCopyright;
 
-    public static Intent newIntent(Context context, Book book) {
+    public static Intent newIntent(Context context, String bookid) {
         Intent intent = new Intent(context, BookDetailActivity.class);
-        mBook = book;
+        intent.putExtra(K_EXTRA_BOOK, bookid);
         return intent;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        init();
         setContentView(R.layout.activity_book_detail);
         getPresenter().start();
-        ToolbarHelper.initToolbar(this, R.id.toolbar, true, mBook != null ? mBook.getTitle() : "书籍详情");
 
         initView();
         initListener();
 
-        getPresenter().loadRecommendBookList(mBook.getId());
+        getPresenter().loadBookInfo(mBookId);
+        getPresenter().loadRecommendBookList(mBookId);
     }
 
     @NonNull
     @Override
     public BookDetailContract.Presenter createPresenter() {
         return new BookDetailPresenter();
+    }
+
+    private void init() {
+        mBookId = getIntent().getStringExtra(K_EXTRA_BOOK);
     }
 
     private void initView() {
@@ -85,8 +96,6 @@ public class BookDetailActivity extends MvpActivity<BookDetailContract.Presenter
         mRvRecommendBook.setLayoutManager(new GridLayoutManager(this, 3));
         mRecommendAdapter = new RecommendBookAdapter(this, mRecommendBooks, 6);
         mRvRecommendBook.setAdapter(mRecommendAdapter);
-
-        initDisplay();
     }
 
     private void initListener() {
@@ -96,7 +105,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailContract.Presenter
         mRecommendAdapter.setItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                showToast("" + position);
+                AppRouter.showBookDetailActivity(BookDetailActivity.this, mRecommendBooks.getBooks().get(position).get_id());
             }
 
             @Override
@@ -106,13 +115,13 @@ public class BookDetailActivity extends MvpActivity<BookDetailContract.Presenter
         });
     }
 
-    private void initDisplay() {
+    private void refreshBookInfo() {
         if (mBook == null) return;
 
         ImageLoader.load(this, Constant.IMG_BASE_URL + mBook.getCover(), mIvCover);
+        ToolbarHelper.initToolbar(this, R.id.toolbar, true, mBook.getTitle());
         mTvReadCount.setText(StringUtils.formatCount(mBook.getPostCount()) + "人看过");
-        String isFinished = mBook.isFinished() ?
-                getString(R.string.bookdetail_finished) : getString(R.string.bookdetail_not_finished);
+        String isFinished = !mBook.isIsSerial() ? getString(R.string.bookdetail_finished) : getString(R.string.bookdetail_not_finished);
         mTvAuthor.setText(mBook.getMinorCate() + " | " + mBook.getAuthor());
         mTvIsFinish.setText(isFinished);
         mTvWordCount.setText(isFinished + " | " + StringUtils.formatCount(mBook.getWordCount()) + "字");
@@ -124,7 +133,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailContract.Presenter
             e.printStackTrace();
         }
         mTvCreateDateCopyright.setText(mTvCreateDateCopyright.getText().toString() + mBook.getRetentionRatio() + "%");
-        mTvDescribe.setText(mBook.getShortIntro());
+        mTvDescribe.setText(mBook.getLongIntro());
 
     }
 
@@ -134,17 +143,14 @@ public class BookDetailActivity extends MvpActivity<BookDetailContract.Presenter
     }
 
     @Override
-    public void finshLoadRecommendBookList(RecommendBooksPackage books) {
-        mRecommendBooks = books;
-        mRecommendAdapter.refresh(mRecommendBooks);
+    public void finshLoadBookInfo(BookDetailPackage book) {
+        mBook = book;
+        refreshBookInfo();
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mBook = null;
-        mRecommendBooks = null;
-        mRecommendAdapter = null;
-
+    public void finshLoadRecommendBookList(RecommendBooksPackage books) {
+        mRecommendBooks = books;
+        mRecommendAdapter.refresh(mRecommendBooks);
     }
 }

@@ -46,7 +46,7 @@ public class AppRouter {
         context.startActivity(localIntent);
     }
 
-    public static void showBookDetailActivity(Context context, Book book) {
-        context.startActivity(BookDetailActivity.newIntent(context, book));
+    public static void showBookDetailActivity(Context context, String bookid) {
+        context.startActivity(BookDetailActivity.newIntent(context, bookid));
     }
 }
