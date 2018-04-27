@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import com.lrony.mread.R;
 import com.lrony.mread.data.net.RecommendBooksPackage;
 import com.lrony.mread.ui.help.BaseRecyclerAdapter;
+import com.lrony.mread.ui.help.BaseViewHolder;
 import com.lrony.mread.util.Constant;
 import com.lrony.mread.util.ImageLoader;
 

@@ -14,6 +14,7 @@ import com.lrony.mread.R;
 import com.lrony.mread.data.bean.Book;
 import com.lrony.mread.data.net.RecommendBooksPackage;
 import com.lrony.mread.mvp.MvpActivity;
+import com.lrony.mread.ui.help.BaseRecyclerAdapter;
 import com.lrony.mread.ui.help.ToolbarHelper;
 import com.lrony.mread.ui.widget.ShapeTextView;
 import com.lrony.mread.util.Constant;
@@ -92,6 +93,17 @@ public class BookDetailActivity extends MvpActivity<BookDetailContract.Presenter
         bindOnClickLister(this, R.id.fl_add_bookcase, R.id.fl_download_book
                 , R.id.fl_open_book, R.id.ll_book_detail_catalog);
 
+        mRecommendAdapter.setItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                showToast("" + position);
+            }
+
+            @Override
+            public void onItemLongClick(int position) {
+                showToast("Long: " + position);
+            }
+        });
     }
 
     private void initDisplay() {
@@ -99,10 +111,11 @@ public class BookDetailActivity extends MvpActivity<BookDetailContract.Presenter
 
         ImageLoader.load(this, Constant.IMG_BASE_URL + mBook.getCover(), mIvCover);
         mTvReadCount.setText(StringUtils.formatCount(mBook.getPostCount()) + "人看过");
+        String isFinished = mBook.isFinished() ?
+                getString(R.string.bookdetail_finished) : getString(R.string.bookdetail_not_finished);
         mTvAuthor.setText(mBook.getMinorCate() + " | " + mBook.getAuthor());
-        mTvIsFinish.setText(mBook.isFinished() ?
-                getString(R.string.bookdetail_finished) : getString(R.string.bookdetail_not_finished));
-        mTvWordCount.setText(StringUtils.formatCount(mBook.getWordCount()) + "字");
+        mTvIsFinish.setText(isFinished);
+        mTvWordCount.setText(isFinished + " | " + StringUtils.formatCount(mBook.getWordCount()) + "字");
         mTvWordCountCopyright.setText(mTvWordCountCopyright.getText() + StringUtils.formatCount(mBook.getWordCount()) + "字");
         mTvCatalogTitle.setText("最新章节: " + mBook.getLastChapter());
         try {
