@@ -1,16 +1,15 @@
-package com.lrony.mread.presentation.search;
+package com.lrony.mread.presentation.hot;
 
 import com.lrony.mread.data.bean.Book;
 import com.lrony.mread.mvp.MvpPresenter;
 import com.lrony.mread.mvp.MvpView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Lrony on 18-4-24.
  */
-public interface SearchTypeContentContract {
+public interface HotTypeContentContract {
 
     interface View extends MvpView {
 

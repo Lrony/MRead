@@ -4,7 +4,6 @@ import android.support.annotation.NonNull;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.widget.Toast;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
@@ -12,7 +11,7 @@ import com.lrony.mread.R;
 import com.lrony.mread.mvp.MvpActivity;
 import com.lrony.mread.presentation.home.HomeFragment;
 import com.lrony.mread.presentation.library.LibraryFragment;
-import com.lrony.mread.presentation.search.SearchFragment;
+import com.lrony.mread.presentation.hot.HotFragment;
 import com.lrony.mread.presentation.self.SelfFragment;
 
 import me.yokeyword.fragmentation.SupportFragment;
@@ -65,7 +64,7 @@ public class MainActivity extends MvpActivity<MainContract.Presenter> implements
         SupportFragment firstFragment = findFragment(HomeFragment.class);
         if (firstFragment == null) {
             mFragments[PAGE_HOME] = HomeFragment.newInstance();
-            mFragments[PAGE_SEARCH] = SearchFragment.newInstance();
+            mFragments[PAGE_SEARCH] = HotFragment.newInstance();
             mFragments[PAGE_LIBRARY] = LibraryFragment.newInstance();
             mFragments[PAGE_SELF] = SelfFragment.newInstance();
 
@@ -76,7 +75,7 @@ public class MainActivity extends MvpActivity<MainContract.Presenter> implements
                     mFragments[PAGE_SELF]);
         } else {
             mFragments[PAGE_HOME] = firstFragment;
-            mFragments[PAGE_SEARCH] = findFragment(SearchFragment.class);
+            mFragments[PAGE_SEARCH] = findFragment(HotFragment.class);
             mFragments[PAGE_LIBRARY] = findFragment(LibraryFragment.class);
             mFragments[PAGE_SELF] = findFragment(SelfFragment.class);
         }

@@ -1,4 +1,4 @@
-package com.lrony.mread.presentation.search;
+package com.lrony.mread.presentation.hot;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -26,7 +26,7 @@ import java.util.List;
 /**
  * Created by Lrony on 18-4-24.
  */
-public class SearchTypeContentFragment extends MvpFragment<SearchTypeContentContract.Presenter> implements SearchTypeContentContract.View, SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
+public class HotTypeContentFragment extends MvpFragment<HotTypeContentContract.Presenter> implements HotTypeContentContract.View, SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
 
     private static final String TAG = "SearchTypeContentFragme";
 
@@ -45,10 +45,10 @@ public class SearchTypeContentFragment extends MvpFragment<SearchTypeContentCont
     private int mStart = 0;
     private int mLimit = 15;
 
-    public static SearchTypeContentFragment newInstance(String billId) {
+    public static HotTypeContentFragment newInstance(String billId) {
         Bundle args = new Bundle();
-        args.putString(SearchTypeFragment.SEARCH_TYPE_ID, billId);
-        SearchTypeContentFragment fragment = new SearchTypeContentFragment();
+        args.putString(HotTypeFragment.SEARCH_TYPE_ID, billId);
+        HotTypeContentFragment fragment = new HotTypeContentFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -95,8 +95,8 @@ public class SearchTypeContentFragment extends MvpFragment<SearchTypeContentCont
 
     @NonNull
     @Override
-    public SearchTypeContentContract.Presenter createPresenter() {
-        return new SearchTypeContentPresenter();
+    public HotTypeContentContract.Presenter createPresenter() {
+        return new HotTypeContentPresenter();
     }
 
     @Override
@@ -105,7 +105,7 @@ public class SearchTypeContentFragment extends MvpFragment<SearchTypeContentCont
     }
 
     private void init() {
-        mMajor = getArguments().getString(SearchTypeFragment.SEARCH_TYPE_ID);
+        mMajor = getArguments().getString(HotTypeFragment.SEARCH_TYPE_ID);
         Log.d(TAG, "init: " + mMajor);
     }
 

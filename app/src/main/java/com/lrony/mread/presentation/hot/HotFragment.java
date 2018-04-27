@@ -1,4 +1,4 @@
-package com.lrony.mread.presentation.search;
+package com.lrony.mread.presentation.hot;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -21,7 +21,7 @@ import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
 /**
  * Created by Lrony on 18-4-23.
  */
-public class SearchFragment extends MvpFragment<SearchContract.Presenter> implements SearchContract.View, View.OnClickListener {
+public class HotFragment extends MvpFragment<HotContract.Presenter> implements HotContract.View, View.OnClickListener {
 
     private static final String TAG = "SearchFragment";
 
@@ -31,17 +31,17 @@ public class SearchFragment extends MvpFragment<SearchContract.Presenter> implem
     private AppCompatImageView mImgType, mImgRetry;
     private MultipleStatusView mStatusView;
 
-    public static SearchFragment newInstance() {
+    public static HotFragment newInstance() {
         Bundle args = new Bundle();
-        SearchFragment fragment = new SearchFragment();
+        HotFragment fragment = new HotFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
     @NonNull
     @Override
-    public SearchContract.Presenter createPresenter() {
-        return new SearchPresenter();
+    public HotContract.Presenter createPresenter() {
+        return new HotPresenter();
     }
 
     @Override

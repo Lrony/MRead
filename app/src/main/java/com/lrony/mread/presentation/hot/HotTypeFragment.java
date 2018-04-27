@@ -1,4 +1,4 @@
-package com.lrony.mread.presentation.search;
+package com.lrony.mread.presentation.hot;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,17 +11,17 @@ import com.lrony.mread.base.BaseFragment;
 /**
  * Created by Lrony on 18-4-24.
  */
-public class SearchTypeFragment extends BaseFragment {
+public class HotTypeFragment extends BaseFragment {
 
     private static final String TAG = "SearchTypeFragment";
     public static final String SEARCH_TYPE_ID = "search_type_id";
 
     private String mSearchTypeID;
 
-    public static SearchTypeFragment newInstance(String billId) {
+    public static HotTypeFragment newInstance(String billId) {
         Bundle args = new Bundle();
         args.putString(SEARCH_TYPE_ID, billId);
-        SearchTypeFragment fragment = new SearchTypeFragment();
+        HotTypeFragment fragment = new HotTypeFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -47,8 +47,8 @@ public class SearchTypeFragment extends BaseFragment {
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
 
-        if (findChildFragment(SearchTypeContentFragment.class) == null) {
-            loadRootFragment(R.id.fl_container, SearchTypeContentFragment.newInstance(mSearchTypeID));
+        if (findChildFragment(HotTypeContentFragment.class) == null) {
+            loadRootFragment(R.id.fl_container, HotTypeContentFragment.newInstance(mSearchTypeID));
         }
     }
 }

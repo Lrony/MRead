@@ -1,10 +1,8 @@
-package com.lrony.mread.presentation.search;
+package com.lrony.mread.presentation.hot;
 
 import android.util.Log;
 
-import com.lrony.mread.R;
 import com.lrony.mread.data.bean.Book;
-import com.lrony.mread.data.net.BookDetailPackage;
 import com.lrony.mread.data.net.SortBookPackage;
 import com.lrony.mread.data.net.BookApi;
 import com.lrony.mread.mvp.MvpBasePresenter;
@@ -21,7 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * Created by Lrony on 18-4-24.
  */
-public class SearchTypeContentPresenter extends MvpBasePresenter<SearchTypeContentContract.View> implements SearchTypeContentContract.Presenter {
+public class HotTypeContentPresenter extends MvpBasePresenter<HotTypeContentContract.View> implements HotTypeContentContract.Presenter {
 
     private static final String TAG = "SearchTypeContentPresen";
 
