@@ -21,6 +21,7 @@ import com.lrony.mread.ui.help.ToolbarHelper;
 import com.lrony.mread.ui.widget.ShapeTextView;
 import com.lrony.mread.util.Constant;
 import com.lrony.mread.util.ImageLoader;
+import com.lrony.mread.util.ScreenUtil;
 import com.lrony.mread.util.StringUtils;
 
 import java.text.ParseException;
@@ -93,8 +94,8 @@ public class BookDetailActivity extends MvpActivity<BookDetailContract.Presenter
         mTvUpdateTime = findViewById(R.id.tv_update_time);
         mRvRecommendBook = findViewById(R.id.rv_recommend_book);
         mRvRecommendBook.setNestedScrollingEnabled(false);
-        mRvRecommendBook.setLayoutManager(new GridLayoutManager(this, 3));
-        mRecommendAdapter = new RecommendBookAdapter(this, mRecommendBooks, 6);
+        mRvRecommendBook.setLayoutManager(new GridLayoutManager(this, ScreenUtil.isLAndscape(this) ? 4 : 3));
+        mRecommendAdapter = new RecommendBookAdapter(this, mRecommendBooks, ScreenUtil.isLAndscape(this) ? 8 : 6);
         mRvRecommendBook.setAdapter(mRecommendAdapter);
     }
 

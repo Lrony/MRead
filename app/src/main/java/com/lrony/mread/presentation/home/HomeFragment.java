@@ -20,6 +20,7 @@ import com.lrony.mread.R;
 import com.lrony.mread.data.bean.Status;
 import com.lrony.mread.mvp.MvpFragment;
 import com.lrony.mread.util.DensityUtil;
+import com.lrony.mread.util.ScreenUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,7 +84,7 @@ public class HomeFragment extends MvpFragment<HomeContract.Presenter> implements
 
         mRefreshView.setColorSchemeResources(R.color.colorAccent);
 
-        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), ScreenUtil.isLAndscape(getContext()) ? 4 : 3));
         mRecyclerView.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_OVERLAY);
         ((SimpleItemAnimator) mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
         int i = getResources().getDisplayMetrics().widthPixels;

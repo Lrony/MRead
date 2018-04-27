@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.lrony.mread.data.bean.Book;
 import com.lrony.mread.presentation.book.BookDetailActivity;
+import com.lrony.mread.presentation.search.SearchActivity;
 import com.lrony.mread.util.DensityUtil;
 
 /**
@@ -48,5 +49,13 @@ public class AppRouter {
 
     public static void showBookDetailActivity(Context context, String bookid) {
         context.startActivity(BookDetailActivity.newIntent(context, bookid));
+    }
+
+    public static void showSearchActivity(Context context) {
+        showSearchActivity(context, null);
+    }
+
+    public static void showSearchActivity(Context context, String keyword) {
+        context.startActivity(SearchActivity.newIntent(context, keyword));
     }
 }
