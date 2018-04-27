@@ -49,9 +49,9 @@
         android:layout_alignLeft="@id/tv_title"
         android:layout_below="@+id/tv_title"
         android:layout_marginTop="10dp"
-        android:text="2000人读过"
         android:textColor="@color/textSecondaryInverted"
-        android:textSize="@dimen/text_size_medium" />
+        android:textSize="@dimen/text_size_medium"
+        tools:text="2000人读过" />
 
     <com.lrony.mread.ui.widget.ShapeTextView
         android:id="@+id/tv_is_finish"
