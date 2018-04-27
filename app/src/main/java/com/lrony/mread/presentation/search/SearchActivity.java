@@ -40,9 +40,6 @@ public class SearchActivity extends MvpActivity<SearchContract.Presenter> implem
     private EditText mEtSearch;
     private RecyclerView mRecyclerView;
 
-    private SearchBookPackage mSearchData;
-    private KeyWordPackage mKeyWordData;
-
     private SearchBookAdapter mSearchAdapter;
     private KeyWordAdapter mKeyWordAdapter;
 
@@ -90,8 +87,8 @@ public class SearchActivity extends MvpActivity<SearchContract.Presenter> implem
             mEtSearch.setSelection(mDefaultSearch.length());
         }
 
-        mSearchAdapter = new SearchBookAdapter(SearchActivity.this, mSearchData);
-        mKeyWordAdapter = new KeyWordAdapter(SearchActivity.this, mKeyWordData);
+        mSearchAdapter = new SearchBookAdapter(SearchActivity.this, null);
+        mKeyWordAdapter = new KeyWordAdapter(SearchActivity.this, null);
     }
 
     private void initListener() {
@@ -156,6 +153,12 @@ public class SearchActivity extends MvpActivity<SearchContract.Presenter> implem
                 getPresenter().loadSearchBook(trim);
             }
         }
+        mEtSearch.post(new Runnable() {
+            @Override
+            public void run() {
+                InputMethodUtils.hideSoftInput(mEtSearch);
+            }
+        });
     }
 
     private void getKeyWords() {
