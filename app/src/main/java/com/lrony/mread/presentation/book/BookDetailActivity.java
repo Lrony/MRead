@@ -138,4 +138,13 @@ public class BookDetailActivity extends MvpActivity<BookDetailContract.Presenter
         mRecommendBooks = books;
         mRecommendAdapter.refresh(mRecommendBooks);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mBook = null;
+        mRecommendBooks = null;
+        mRecommendAdapter = null;
+
+    }
 }
