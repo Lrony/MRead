@@ -4,19 +4,22 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.lrony.mread.AppManager;
 import com.lrony.mread.AppRouter;
 import com.lrony.mread.R;
 import com.lrony.mread.data.net.BookDetailPackage;
 import com.lrony.mread.data.net.RecommendBooksPackage;
 import com.lrony.mread.mvp.MvpActivity;
 import com.lrony.mread.ui.help.BaseRecyclerAdapter;
+import com.lrony.mread.ui.help.ProgressCancelListener;
+import com.lrony.mread.ui.help.ProgressDialogHandler;
 import com.lrony.mread.ui.help.ToolbarHelper;
 import com.lrony.mread.ui.widget.ShapeTextView;
 import com.lrony.mread.util.Constant;
@@ -26,7 +29,7 @@ import com.lrony.mread.util.StringUtils;
 
 import java.text.ParseException;
 
-public class BookDetailActivity extends MvpActivity<BookDetailContract.Presenter> implements BookDetailContract.View, View.OnClickListener {
+public class BookDetailActivity extends MvpActivity<BookDetailContract.Presenter> implements BookDetailContract.View, View.OnClickListener, ProgressCancelListener {
 
     private static final String TAG = "BookDetailActivity";
 
@@ -50,6 +53,11 @@ public class BookDetailActivity extends MvpActivity<BookDetailContract.Presenter
     private RecyclerView mRvRecommendBook;
     private TextView mTvWordCountCopyright;
     private TextView mTvCreateDateCopyright;
+
+    private ProgressDialogHandler mDialogHandler;
+
+    private boolean mInfoLoadOK = false;
+    private boolean mRecommendLoadOK = false;
 
     public static Intent newIntent(Context context, String bookid) {
         Intent intent = new Intent(context, BookDetailActivity.class);
@@ -79,9 +87,14 @@ public class BookDetailActivity extends MvpActivity<BookDetailContract.Presenter
 
     private void init() {
         mBookId = getIntent().getStringExtra(K_EXTRA_BOOK);
+        Log.d(TAG, "init: " + mBookId);
     }
 
     private void initView() {
+        Log.d(TAG, "initView");
+        mDialogHandler = new ProgressDialogHandler(this, this, true);
+        mDialogHandler.obtainMessage(ProgressDialogHandler.SHOW_PROGRESS_DIALOG).sendToTarget();
+
         mIvCover = findViewById(R.id.iv_cover);
         mTvReadCount = findViewById(R.id.tv_read_count);
         mTvIsFinish = findViewById(R.id.tv_is_finish);
@@ -100,6 +113,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailContract.Presenter
     }
 
     private void initListener() {
+        Log.d(TAG, "initListener");
         bindOnClickLister(this, R.id.fl_add_bookcase, R.id.fl_download_book
                 , R.id.fl_open_book, R.id.ll_book_detail_catalog);
 
@@ -117,6 +131,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailContract.Presenter
     }
 
     private void refreshBookInfo() {
+        Log.d(TAG, "refreshBookInfo");
         if (mBook == null) return;
 
         ImageLoader.load(this, Constant.IMG_BASE_URL + mBook.getCover(), mIvCover);
@@ -138,6 +153,15 @@ public class BookDetailActivity extends MvpActivity<BookDetailContract.Presenter
 
     }
 
+    private void jugeCloseDialog() {
+        Log.d(TAG, "jugeCloseDialog mInfoLoadOK: " + mInfoLoadOK + ",mRecommendLoadOK: " + mRecommendLoadOK);
+        if (mInfoLoadOK == true && mRecommendLoadOK == true) {
+            if (mDialogHandler != null) {
+                mDialogHandler.obtainMessage(ProgressDialogHandler.DISMISS_PROGRESS_DIALOG).sendToTarget();
+            }
+        }
+    }
+
     @Override
     public void onClick(View v) {
 
@@ -145,13 +169,28 @@ public class BookDetailActivity extends MvpActivity<BookDetailContract.Presenter
 
     @Override
     public void finshLoadBookInfo(BookDetailPackage book) {
+        Log.d(TAG, "finshLoadBookInfo");
         mBook = book;
         refreshBookInfo();
+        mInfoLoadOK = true;
+        jugeCloseDialog();
     }
 
     @Override
     public void finshLoadRecommendBookList(RecommendBooksPackage books) {
+        Log.d(TAG, "finshLoadRecommendBookList");
         mRecommendBooks = books;
         mRecommendAdapter.refresh(mRecommendBooks);
+        mRecommendLoadOK = true;
+        jugeCloseDialog();
+    }
+
+    @Override
+    public void onCancelProgress() {
+        Log.d(TAG, "onCancelProgress");
+        if (mDialogHandler != null) {
+            mDialogHandler.obtainMessage(ProgressDialogHandler.DISMISS_PROGRESS_DIALOG).sendToTarget();
+        }
+        AppManager.getInstance().finishActivity();
     }
 }
