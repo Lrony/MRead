@@ -21,7 +21,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class HotTypeContentPresenter extends MvpBasePresenter<HotTypeContentContract.View> implements HotTypeContentContract.Presenter {
 
-    private static final String TAG = "SearchTypeContentPresen";
+    private static final String TAG = "HotTypeContentPresenter";
 
     private BookApi bookApi;
 
@@ -36,11 +36,15 @@ public class HotTypeContentPresenter extends MvpBasePresenter<HotTypeContentCont
     }
 
     @Override
-    public void loadData(final boolean firstLoad, String gender, String type, String major, String minor, int start, int limit) {
-        Log.d(TAG, "loadData: firstLoad=" + firstLoad + ",gender=" + gender + ",type=" + type + ",major=" + major + ",minor=" + minor + ",start=" + start + ",limit=" + limit);
+    public void loadData(final boolean isLoadMore, String gender, String type, String major, String minor, int start, int limit) {
+        Log.d(TAG, "loadData: isLoadMore=" + isLoadMore + ",gender=" + gender + ",type=" + type + ",major=" + major + ",minor=" + minor + ",start=" + start + ",limit=" + limit);
 
         // View无效
         if (!isViewAttached()) return;
+
+        if (!isLoadMore) {
+            getView().loading();
+        }
 
         Call<SortBookPackage> call = bookApi.getSortBookPackage(gender, type, major, minor, start, limit);
         call.enqueue(new Callback<SortBookPackage>() {
@@ -70,12 +74,12 @@ public class HotTypeContentPresenter extends MvpBasePresenter<HotTypeContentCont
                     books.add(book);
                 }
 
-                if (firstLoad) {
-                    getView().finishRefresh(books);
-                    getView().complete();
+                if (isLoadMore) {
+                    getView().finishLoadMore(books);
                 } else {
                     getView().finishLoad(books);
                 }
+                getView().complete();
             }
 
             @Override
@@ -83,12 +87,10 @@ public class HotTypeContentPresenter extends MvpBasePresenter<HotTypeContentCont
                 // View无效
                 if (!isViewAttached()) return;
 
-                if (firstLoad) {
-                    // getView().showToast(R.string.search_type_date_get_error);
-                    getView().complete();
-                    getView().showRefreshError();
+                getView().complete();
+                if (isLoadMore) {
+                    getView().showLoadMoreError();
                 } else {
-                    // getView().showToast(R.string.search_type_load_error);
                     getView().showLoadError();
                 }
             }

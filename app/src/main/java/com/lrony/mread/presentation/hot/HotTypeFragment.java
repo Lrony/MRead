@@ -13,7 +13,7 @@ import com.lrony.mread.base.BaseFragment;
  */
 public class HotTypeFragment extends BaseFragment {
 
-    private static final String TAG = "SearchTypeFragment";
+    private static final String TAG = "HotTypeFragment";
     public static final String SEARCH_TYPE_ID = "search_type_id";
 
     private String mSearchTypeID;

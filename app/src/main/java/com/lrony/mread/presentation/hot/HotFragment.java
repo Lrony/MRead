@@ -24,7 +24,7 @@ import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
  */
 public class HotFragment extends MvpFragment<HotContract.Presenter> implements HotContract.View, View.OnClickListener {
 
-    private static final String TAG = "SearchFragment";
+    private static final String TAG = "HotFragment";
 
     private ViewPager mViewPager;
     private TabLayout mTab;

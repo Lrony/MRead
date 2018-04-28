@@ -28,7 +28,7 @@ import java.util.List;
  */
 public class HotTypeContentFragment extends MvpFragment<HotTypeContentContract.Presenter> implements HotTypeContentContract.View, BaseQuickAdapter.RequestLoadMoreListener {
 
-    private static final String TAG = "SearchTypeContentFragme";
+    private static final String TAG = "HotTypeContentFragment";
 
     private MultipleStatusView mStatusView;
     private RecyclerView mRecyclerView;
@@ -60,7 +60,7 @@ public class HotTypeContentFragment extends MvpFragment<HotTypeContentContract.P
 
         initView(view);
         initListener();
-        loadData(true, true);
+        loadData(false);
     }
 
     private void initView(View view) {
@@ -104,64 +104,21 @@ public class HotTypeContentFragment extends MvpFragment<HotTypeContentContract.P
         Log.d(TAG, "init: " + mMajor);
     }
 
-    private void loadData(boolean firstLoad, boolean showRefreshView) {
-        Log.d(TAG, "loadData: firstLoad=" + firstLoad + ",showRefreshView=" + showRefreshView);
-        if (showRefreshView) mStatusView.showLoading();
-        getPresenter().loadData(firstLoad, mGender, mType, mMajor, mMinor, mStart, mLimit);
+    private void loadData(boolean isLoadMore) {
+        Log.d(TAG, "loadData: firstLoad=" + isLoadMore);
+        getPresenter().loadData(isLoadMore, mGender, mType, mMajor, mMinor, mStart, mLimit);
     }
 
     @Override
     public void onLoadMoreRequested() {
         Log.d(TAG, "onLoadMoreRequested");
-        loadData(false, false);
-    }
-
-    @Override
-    public void finishRefresh(ArrayList<Book> books) {
-        Log.d(TAG, "finishRefresh: " + books);
-        if (books.isEmpty()) {
-            mStatusView.showEmpty();
-            return;
-        }
-        mBooks.clear();
-        mBooks.addAll(books);
-        mBookAdapter.notifyDataSetChanged();
-        mStatusView.showContent();
-        mStart = books.size();
-    }
-
-    @Override
-    public void finishLoad(ArrayList<Book> books) {
-        Log.d(TAG, "finishLoad: " + books);
-        for (Book book : books) {
-            mBooks.add(book);
-        }
-        mBookAdapter.loadMoreComplete();
-        mStart += mBooks.size();
-    }
-
-    @Override
-    public void showRefreshError() {
-        Log.d(TAG, "showRefreshError");
-        mStatusView.showError();
-    }
-
-    @Override
-    public void showLoadError() {
-        Log.d(TAG, "showLoadError");
-        mBookAdapter.loadMoreFail();
-    }
-
-    @Override
-    public void complete() {
-        Log.d(TAG, "complete");
-        mStatusView.showContent();
+        loadData(true);
     }
 
     private View.OnClickListener mRetryClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            loadData(true, true);
+            loadData(false);
         }
     };
 
@@ -179,4 +136,58 @@ public class HotTypeContentFragment extends MvpFragment<HotTypeContentContract.P
             Log.d(TAG, "onItemLongClick: " + position);
         }
     };
+
+    @Override
+    public void finishLoad(ArrayList<Book> books) {
+        Log.d(TAG, "finishLoad");
+        if (books.isEmpty()) {
+            mStatusView.showEmpty();
+            return;
+        }
+
+        mBooks.clear();
+        mBooks.addAll(books);
+        mBookAdapter.notifyDataSetChanged();
+        mStart = books.size();
+    }
+
+    @Override
+    public void finishLoadMore(ArrayList<Book> books) {
+        Log.d(TAG, "finishLoadMore");
+        if (books.isEmpty()) {
+            mBookAdapter.loadMoreEnd();
+            return;
+        }
+        for (Book book : books) {
+            mBooks.add(book);
+        }
+        mStart += mBooks.size();
+    }
+
+    @Override
+    public void showLoadError() {
+        Log.d(TAG, "showLoadError");
+        mStatusView.showError();
+    }
+
+    @Override
+    public void showLoadMoreError() {
+        Log.d(TAG, "showLoadMoreError");
+        mBookAdapter.loadMoreFail();
+    }
+
+    @Override
+    public void loading() {
+        super.loading();
+        Log.d(TAG, "loading");
+        mStatusView.showLoading();
+    }
+
+    @Override
+    public void complete() {
+        super.complete();
+        Log.d(TAG, "complete");
+        mStatusView.showContent();
+        mBookAdapter.loadMoreComplete();
+    }
 }

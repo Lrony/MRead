@@ -13,20 +13,20 @@ public interface HotTypeContentContract {
 
     interface View extends MvpView {
 
-        void finishRefresh(ArrayList<Book> books);
-
         void finishLoad(ArrayList<Book> books);
 
-        void showRefreshError();
+        void finishLoadMore(ArrayList<Book> books);
 
         void showLoadError();
+
+        void showLoadMoreError();
     }
 
     interface Presenter extends MvpPresenter<View> {
 
         /**
          *
-         * @param firstLoad 是否为第一次加载x
+         * @param isLoadMore 是否为加载更多
          * @param gender
          * @param type
          * @param major
@@ -34,6 +34,6 @@ public interface HotTypeContentContract {
          * @param start
          * @param limit
          */
-        void loadData(boolean firstLoad, String gender, String type, String major, String minor, int start, int limit);
+        void loadData(boolean isLoadMore, String gender, String type, String major, String minor, int start, int limit);
     }
 }
