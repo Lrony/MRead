@@ -10,5 +10,6 @@ public class MainPresenter extends MvpBasePresenter<MainContract.View> implement
     @Override
     public void start() {
         super.start();
+        // TODO 检查更新
     }
 }
