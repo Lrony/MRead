@@ -1,4 +1,4 @@
-package com.lrony.mread.presentation.book;
+package com.lrony.mread.presentation.book.detail;
 
 import com.lrony.mread.data.net.BookDetailPackage;
 import com.lrony.mread.data.net.RecommendBooksPackage;

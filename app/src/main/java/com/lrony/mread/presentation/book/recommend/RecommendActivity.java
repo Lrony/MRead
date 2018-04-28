@@ -1,16 +1,13 @@
-package com.lrony.mread.presentation.book;
+package com.lrony.mread.presentation.book.recommend;
 
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SimpleItemAnimator;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -23,8 +20,6 @@ import com.lrony.mread.data.net.RecommendBooksPackage;
 import com.lrony.mread.mvp.MvpActivity;
 import com.lrony.mread.ui.help.BaseRecyclerAdapter;
 import com.lrony.mread.ui.help.RecyclerViewItemDecoration;
-import com.lrony.mread.util.DensityUtil;
-import com.lrony.mread.util.ScreenUtil;
 
 public class RecommendActivity extends MvpActivity<RecommendContract.Presenter> implements RecommendContract.View {
 

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".presentation.book.BookDetailActivity">
+    tools:context=".presentation.book.detail.BookDetailActivity">
 
     <include layout="@layout/view_state_bar" />
 

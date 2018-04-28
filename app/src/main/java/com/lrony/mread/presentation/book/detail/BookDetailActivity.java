@@ -1,4 +1,4 @@
-package com.lrony.mread.presentation.book;
+package com.lrony.mread.presentation.book.detail;
 
 import android.content.Context;
 import android.content.Intent;

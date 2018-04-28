@@ -9,9 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.lrony.mread.data.bean.Book;
-import com.lrony.mread.presentation.book.BookDetailActivity;
-import com.lrony.mread.presentation.book.RecommendActivity;
+import com.lrony.mread.presentation.book.detail.BookDetailActivity;
+import com.lrony.mread.presentation.book.recommend.RecommendActivity;
 import com.lrony.mread.presentation.search.SearchActivity;
 import com.lrony.mread.util.DensityUtil;
 

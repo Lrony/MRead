@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lrony.mread.AppManager;
@@ -24,7 +23,6 @@ import com.lrony.mread.R;
 import com.lrony.mread.data.net.KeyWordPackage;
 import com.lrony.mread.data.net.SearchBookPackage;
 import com.lrony.mread.mvp.MvpActivity;
-import com.lrony.mread.presentation.book.BookDetailActivity;
 import com.lrony.mread.ui.help.BaseRecyclerAdapter;
 import com.lrony.mread.ui.help.RecyclerViewItemDecoration;
 import com.lrony.mread.util.InputMethodUtils;
