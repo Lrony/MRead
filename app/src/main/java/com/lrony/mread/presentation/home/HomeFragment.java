@@ -73,7 +73,7 @@ public class HomeFragment extends MvpFragment<HomeContract.Presenter> implements
 
     private void initView(View view) {
         Log.d(TAG, "initView");
-        mToolbar = view.findViewById(R.id.home_toolbar);
+        mToolbar = view.findViewById(R.id.toolbar);
         mStatusView = view.findViewById(R.id.multiple_status_view);
         mStatusView.setOnRetryClickListener(mRetryClickListener);
         mRefreshView = view.findViewById(R.id.refresh_view);

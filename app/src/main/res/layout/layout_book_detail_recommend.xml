@@ -1,21 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="8dp"
     android:background="@color/colorForeground"
-    android:orientation="vertical"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin">
+    android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginTop="16dp"
-        android:text="同类小说推荐"
-        android:textColor="@color/textPrimary"
-        android:textSize="@dimen/text_size_large" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:text="同类小说推荐"
+            android:textColor="@color/textPrimary"
+            android:textSize="@dimen/text_size_large" />
+
+        <RelativeLayout
+            android:id="@+id/rl_recommend_more"
+            android:layout_width="64dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:clickable="true"
+            android:padding="8dp"
+            android:paddingRight="@dimen/activity_horizontal_margin">
+
+            <TextView
+                android:id="@+id/tv_recommend_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/iv_recommend_arrow"
+                android:text="更多"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/text_size_small" />
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/iv_recommend_arrow"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_alignParentRight="true"
+                app:srcCompat="@drawable/ic_vector_small_arrow_right" />
+        </RelativeLayout>
+    </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_recommend_book"
@@ -24,6 +58,8 @@
         android:layout_marginBottom="10dp"
         android:enabled="false"
         android:minHeight="120dp"
-        android:nestedScrollingEnabled="false" />
+        android:nestedScrollingEnabled="false"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin" />
 
 </LinearLayout>

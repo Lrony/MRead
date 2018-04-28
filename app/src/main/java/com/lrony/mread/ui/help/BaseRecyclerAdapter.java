@@ -47,6 +47,15 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseVi
     }
 
     /**
+     * 刷新数据
+     * @param data
+     */
+    public void refresh(T data) {
+        this.data = data;
+        notifyDataSetChanged();
+    }
+
+    /**
      * 获取子item
      *
      * @return

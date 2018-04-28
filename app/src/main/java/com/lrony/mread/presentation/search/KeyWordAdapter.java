@@ -38,14 +38,4 @@ public class KeyWordAdapter extends BaseRecyclerAdapter<KeyWordPackage> {
     public void clear() {
         if (data != null) data.getKeywords().clear();
     }
-
-    /**
-     * 刷新数据
-     *
-     * @param data
-     */
-    public void refresh(KeyWordPackage data) {
-        this.data = data;
-        notifyDataSetChanged();
-    }
 }

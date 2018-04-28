@@ -45,14 +45,4 @@ public class RecommendBookAdapter extends BaseRecyclerAdapter<RecommendBooksPack
         }
         return data.getBooks().size();
     }
-
-    /**
-     * 刷新数据
-     *
-     * @param data
-     */
-    public void refresh(RecommendBooksPackage data) {
-        this.data = data;
-        notifyDataSetChanged();
-    }
 }

@@ -20,8 +20,6 @@ public interface HotTypeContentContract {
         void showRefreshError();
 
         void showLoadError();
-
-        void complete();
     }
 
     interface Presenter extends MvpPresenter<View> {

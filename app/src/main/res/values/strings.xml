@@ -5,6 +5,7 @@
 
     <string name="home_title">悦读</string>
     <string name="library_title">书库</string>
+    <string name="recommend_title">相关书籍</string>
 
     <string name="navigation_home">首页</string>
     <string name="navigation_search">精选</string>

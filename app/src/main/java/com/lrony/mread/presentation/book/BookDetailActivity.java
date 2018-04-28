@@ -115,7 +115,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailContract.Presenter
     private void initListener() {
         Log.d(TAG, "initListener");
         bindOnClickLister(this, R.id.fl_add_bookcase, R.id.fl_download_book
-                , R.id.fl_open_book, R.id.ll_book_detail_catalog);
+                , R.id.fl_open_book, R.id.ll_book_detail_catalog, R.id.rl_recommend_more);
 
         mRecommendAdapter.setItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
             @Override
@@ -164,7 +164,11 @@ public class BookDetailActivity extends MvpActivity<BookDetailContract.Presenter
 
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()) {
+            case R.id.rl_recommend_more:
+                AppRouter.showRecommendActivity(this, mBookId);
+                break;
+        }
     }
 
     @Override

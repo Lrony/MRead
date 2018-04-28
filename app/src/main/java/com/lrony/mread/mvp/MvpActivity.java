@@ -29,6 +29,31 @@ public abstract class MvpActivity<P extends MvpPresenter> extends BaseActivity i
     }
 
     @Override
+    public void loading() {
+
+    }
+
+    @Override
+    public void succeed() {
+
+    }
+
+    @Override
+    public void error() {
+
+    }
+
+    @Override
+    public void empty() {
+
+    }
+
+    @Override
+    public void complete() {
+
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         if (mPresenter != null) {
