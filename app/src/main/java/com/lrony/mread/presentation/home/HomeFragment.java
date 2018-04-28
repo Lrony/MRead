@@ -28,14 +28,12 @@ import java.util.List;
 /**
  * Created by Lrony on 18-4-23.
  */
-public class HomeFragment extends MvpFragment<HomeContract.Presenter> implements HomeContract.View
-        , SwipeRefreshLayout.OnRefreshListener, Toolbar.OnMenuItemClickListener, BaseQuickAdapter.RequestLoadMoreListener {
+public class HomeFragment extends MvpFragment<HomeContract.Presenter> implements HomeContract.View, Toolbar.OnMenuItemClickListener, BaseQuickAdapter.RequestLoadMoreListener {
 
     private static final String TAG = "HomeFragment";
 
     private Toolbar mToolbar;
     private MultipleStatusView mStatusView;
-    private SwipeRefreshLayout mRefreshView;
     private RecyclerView mRecyclerView;
 
     private HomeBookAdapter mAdapter;
@@ -76,13 +74,10 @@ public class HomeFragment extends MvpFragment<HomeContract.Presenter> implements
         mToolbar = view.findViewById(R.id.toolbar);
         mStatusView = view.findViewById(R.id.multiple_status_view);
         mStatusView.setOnRetryClickListener(mRetryClickListener);
-        mRefreshView = view.findViewById(R.id.refresh_view);
         mRecyclerView = view.findViewById(R.id.recycler_view);
 
         mToolbar.setTitle(R.string.home_title);
         mToolbar.inflateMenu(R.menu.menu_home);
-
-        mRefreshView.setColorSchemeResources(R.color.colorAccent);
 
         mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), ScreenUtil.isLAndscape(getContext()) ? 4 : 3));
         mRecyclerView.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_OVERLAY);
@@ -112,18 +107,10 @@ public class HomeFragment extends MvpFragment<HomeContract.Presenter> implements
 
     private void initListener() {
         Log.d(TAG, "initListener");
-        mRefreshView.setOnRefreshListener(this);
         mToolbar.setOnMenuItemClickListener(this);
 
         mAdapter.setOnLoadMoreListener(this);
         mRecyclerView.addOnItemTouchListener(mOnitemClickListener);
-    }
-
-    @Override
-    public void onRefresh() {
-        Log.d(TAG, "onRefresh");
-        mRefreshView.setRefreshing(false);
-        showToast("Refresh!");
     }
 
     @Override

@@ -31,7 +31,6 @@ public class RecommendActivity extends MvpActivity<RecommendContract.Presenter> 
 
     private Toolbar mToolbar;
     private MultipleStatusView mStatusView;
-    private SwipeRefreshLayout mRefreshView;
     private RecyclerView mRecyclerView;
 
     private RecommendBooksPackage mBooks;
@@ -73,12 +72,9 @@ public class RecommendActivity extends MvpActivity<RecommendContract.Presenter> 
         mToolbar = findViewById(R.id.toolbar);
         mStatusView = findViewById(R.id.multiple_status_view);
         mStatusView.setOnRetryClickListener(mRetryClickListener);
-        mRefreshView = findViewById(R.id.refresh_view);
         mRecyclerView = findViewById(R.id.recycler_view);
 
         mToolbar.setTitle(R.string.recommend_title);
-
-        mRefreshView.setColorSchemeResources(R.color.colorAccent);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.addItemDecoration(new RecyclerViewItemDecoration.Builder(this)
@@ -92,6 +88,7 @@ public class RecommendActivity extends MvpActivity<RecommendContract.Presenter> 
 
     private void initListener() {
         Log.d(TAG, "initListener");
+
         mAdapter.setItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
@@ -110,9 +107,13 @@ public class RecommendActivity extends MvpActivity<RecommendContract.Presenter> 
     private View.OnClickListener mRetryClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            showToast("Retry");
+            refreshData();
         }
     };
+
+    private void refreshData() {
+        getPresenter().loadRecommendBook(mBookId);
+    }
 
     @Override
     public void loading() {
@@ -130,7 +131,6 @@ public class RecommendActivity extends MvpActivity<RecommendContract.Presenter> 
     public void complete() {
         super.complete();
         mStatusView.showContent();
-        mRefreshView.setRefreshing(false);
     }
 
     @Override

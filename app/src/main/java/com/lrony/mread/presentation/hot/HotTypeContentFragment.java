@@ -26,12 +26,11 @@ import java.util.List;
 /**
  * Created by Lrony on 18-4-24.
  */
-public class HotTypeContentFragment extends MvpFragment<HotTypeContentContract.Presenter> implements HotTypeContentContract.View, SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
+public class HotTypeContentFragment extends MvpFragment<HotTypeContentContract.Presenter> implements HotTypeContentContract.View, BaseQuickAdapter.RequestLoadMoreListener {
 
     private static final String TAG = "SearchTypeContentFragme";
 
     private MultipleStatusView mStatusView;
-    private SwipeRefreshLayout mRefreshView;
     private RecyclerView mRecyclerView;
 
     private BookAdapter mBookAdapter;
@@ -68,10 +67,7 @@ public class HotTypeContentFragment extends MvpFragment<HotTypeContentContract.P
         Log.d(TAG, "initView");
         mStatusView = view.findViewById(R.id.multiple_status_view);
         mStatusView.setOnRetryClickListener(mRetryClickListener);
-        mRefreshView = view.findViewById(R.id.refresh_view);
         mRecyclerView = view.findViewById(R.id.recycler_view);
-
-        mRefreshView.setColorSchemeResources(R.color.colorAccent);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()
                 , LinearLayoutManager.VERTICAL, false));
@@ -87,7 +83,6 @@ public class HotTypeContentFragment extends MvpFragment<HotTypeContentContract.P
 
     private void initListener() {
         Log.d(TAG, "initListener");
-        mRefreshView.setOnRefreshListener(this);
 
         mBookAdapter.setOnLoadMoreListener(this);
         mRecyclerView.addOnItemTouchListener(mOnitemClickListener);
@@ -113,13 +108,6 @@ public class HotTypeContentFragment extends MvpFragment<HotTypeContentContract.P
         Log.d(TAG, "loadData: firstLoad=" + firstLoad + ",showRefreshView=" + showRefreshView);
         if (showRefreshView) mStatusView.showLoading();
         getPresenter().loadData(firstLoad, mGender, mType, mMajor, mMinor, mStart, mLimit);
-    }
-
-    @Override
-    public void onRefresh() {
-        Log.d(TAG, "onRefresh");
-        mStart = 0;
-        loadData(true, false);
     }
 
     @Override
@@ -167,7 +155,7 @@ public class HotTypeContentFragment extends MvpFragment<HotTypeContentContract.P
     @Override
     public void complete() {
         Log.d(TAG, "complete");
-        mRefreshView.setRefreshing(false);
+        mStatusView.showContent();
     }
 
     private View.OnClickListener mRetryClickListener = new View.OnClickListener() {
