@@ -19,6 +19,7 @@ import com.classic.common.MultipleStatusView;
 import com.lrony.mread.R;
 import com.lrony.mread.data.bean.Status;
 import com.lrony.mread.mvp.MvpFragment;
+import com.lrony.mread.ui.widget.CustomLoadMoreView;
 import com.lrony.mread.util.DensityUtil;
 import com.lrony.mread.util.ScreenUtil;
 
@@ -102,6 +103,7 @@ public class HomeFragment extends MvpFragment<HomeContract.Presenter> implements
             mTestData.add(new Status(i + ""));
         }
         mAdapter = new HomeBookAdapter(mTestData, getContext());
+        mAdapter.setLoadMoreView(new CustomLoadMoreView());
         mRecyclerView.setAdapter(mAdapter);
     }
 

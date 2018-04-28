@@ -106,7 +106,7 @@ public class SelfFragment extends MvpFragment<SelfContract.Presenter> implements
                 activity.recreate();
                 break;
             case R.id.self_app_share:
-                Shares.share(getContext(), R.string.share);
+                Shares.share(getContext(), R.string.share_content);
                 break;
         }
     }

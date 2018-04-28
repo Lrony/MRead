@@ -19,6 +19,7 @@ import com.lrony.mread.data.bean.Book;
 import com.lrony.mread.mvp.MvpFragment;
 import com.lrony.mread.presentation.book.BookAdapter;
 import com.lrony.mread.ui.help.RecyclerViewItemDecoration;
+import com.lrony.mread.ui.widget.CustomLoadMoreView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,6 +78,7 @@ public class HotTypeContentFragment extends MvpFragment<HotTypeContentContract.P
                 .thickness(1)
                 .create());
         mBookAdapter = new BookAdapter(mBooks, getContext());
+        mBookAdapter.setLoadMoreView(new CustomLoadMoreView());
         mRecyclerView.setAdapter(mBookAdapter);
 
     }

@@ -6,6 +6,7 @@
     <string name="home_title">悦读</string>
     <string name="library_title">书库</string>
     <string name="recommend_title">相关书籍</string>
+    <string name="hot_type_select_title">全部频道</string>
 
     <string name="navigation_home">首页</string>
     <string name="navigation_search">精选</string>
@@ -22,6 +23,7 @@
     <string name="search_book_edit_hint">搜索在线书城</string>
 
     <string name="share">分享</string>
+    <string name="share_content">发现了一款非常好用的小说App「悦读小说&amp;xxxxxx.com」，绿色健康、无广告，而且完全开源不收费，实在是太赞了! 推荐~：https://www.xxxxxx.com </string>
 
     <string name="bookdetail_book_more_info">小说更多信息</string>
     <string name="bookdetail_book_download">缓存全书</string>
@@ -40,4 +42,6 @@
     <string name="bookdetail_open_error">信息加载失败</string>
     <string name="bookdetail_recommend_book_list_load_error">推荐书籍获取失败</string>
 
+    <string name="load_more_failure">加载失败，点击重试</string>
+    <string name="list_the_end">没有更多数据</string>
 </resources>

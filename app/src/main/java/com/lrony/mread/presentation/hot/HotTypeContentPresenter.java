@@ -80,6 +80,15 @@ public class HotTypeContentPresenter extends MvpBasePresenter<HotTypeContentCont
                     getView().finishLoad(books);
                 }
                 getView().complete();
+
+//                // 测试代码
+//                if (isLoadMore){
+//                    getView().complete();
+//                    getView().showLoadMoreError();
+//                } else {
+//                    getView().finishLoad(books);
+//                    getView().complete();
+//                }
             }
 
             @Override
