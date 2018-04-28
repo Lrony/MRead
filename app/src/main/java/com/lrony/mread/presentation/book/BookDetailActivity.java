@@ -125,7 +125,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailContract.Presenter
 
             @Override
             public void onItemLongClick(int position) {
-                showToast("Long: " + position);
+
             }
         });
     }
