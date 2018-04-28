@@ -1,5 +1,7 @@
 package com.lrony.mread.data.bean;
 
+import android.telecom.Call;
+
 /**
  * Created by Lrony on 18-4-24.
  */
@@ -45,8 +47,9 @@ public class Book {
     private boolean isFinished;
     private long wordCount;
     private long postCount;
+    private int chaptersCount;
 
-    public Book(String id, String title, String author, String shortIntro, String cover, String site, String majorCate, String minorCate, String contentType, boolean allowMonthly, int banned, int latelyFollower, double retentionRatio, String lastChapter, String updated, boolean isFinished, long wordCount, long postCount) {
+    public Book(String id, String title, String author, String shortIntro, String cover, String site, String majorCate, String minorCate, String contentType, boolean allowMonthly, int banned, int latelyFollower, double retentionRatio, String lastChapter, String updated, boolean isFinished, long wordCount, long postCount, int chaptersCount) {
         this.id = id;
         this.title = title;
         this.author = author;
@@ -65,6 +68,7 @@ public class Book {
         this.isFinished = isFinished;
         this.wordCount = wordCount;
         this.postCount = postCount;
+        this.chaptersCount = chaptersCount;
     }
 
     public Book(String id, String title, String author, String shortIntro, String cover, String site, String majorCate, String minorCate, String contentType, boolean allowMonthly, int banned, int latelyFollower, double retentionRatio, String lastChapter) {
@@ -229,5 +233,13 @@ public class Book {
 
     public void setPostCount(long postCount) {
         this.postCount = postCount;
+    }
+
+    public int getChaptersCount() {
+        return chaptersCount;
+    }
+
+    public void setChaptersCount(int chaptersCount) {
+        this.chaptersCount = chaptersCount;
     }
 }

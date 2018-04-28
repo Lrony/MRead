@@ -14,6 +14,8 @@ import android.widget.TextView;
 import com.lrony.mread.AppManager;
 import com.lrony.mread.AppRouter;
 import com.lrony.mread.R;
+import com.lrony.mread.data.DBManger;
+import com.lrony.mread.data.bean.Book;
 import com.lrony.mread.data.net.BookDetailPackage;
 import com.lrony.mread.data.net.RecommendBooksPackage;
 import com.lrony.mread.mvp.MvpActivity;
@@ -26,6 +28,7 @@ import com.lrony.mread.util.Constant;
 import com.lrony.mread.util.ImageLoader;
 import com.lrony.mread.util.ScreenUtil;
 import com.lrony.mread.util.StringUtils;
+import com.lrony.mread.util.ToastUtil;
 
 import java.text.ParseException;
 
@@ -35,6 +38,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailContract.Presenter
 
     private static final String K_EXTRA_BOOK = "book";
 
+    private Book mBookBean = new Book();
     private BookDetailPackage mBook;
     private RecommendBooksPackage mRecommendBooks;
 
@@ -166,6 +170,8 @@ public class BookDetailActivity extends MvpActivity<BookDetailContract.Presenter
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fl_add_bookcase:
+                DBManger.getInstance().saveBookTb(mBookBean);
+                ToastUtil.showToast("已加入书架");
                 break;
             case R.id.fl_download_book:
                 break;
@@ -182,6 +188,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailContract.Presenter
     @Override
     public void finshLoadBookInfo(BookDetailPackage book) {
         Log.d(TAG, "finshLoadBookInfo");
+        refreshBookData(book);
         mBook = book;
         refreshBookInfo();
         mInfoLoadOK = true;
@@ -195,6 +202,20 @@ public class BookDetailActivity extends MvpActivity<BookDetailContract.Presenter
         mRecommendAdapter.refresh(mRecommendBooks);
         mRecommendLoadOK = true;
         jugeCloseDialog();
+    }
+
+    private void refreshBookData(BookDetailPackage book) {
+        mBookBean.setId(book.get_id());
+        mBookBean.setTitle(book.getTitle());
+        mBookBean.setAuthor(book.getAuthor());
+        mBookBean.setShortIntro(book.getLongIntro());
+        mBookBean.setCover(book.getCover());
+        mBookBean.setMajorCate(book.getMajorCate());
+        mBookBean.setMinorCate(book.getMinorCate());
+        mBookBean.setContentType(book.getContentType());
+        mBookBean.setAllowMonthly(book.isAllowMonthly());
+        mBookBean.setLatelyFollower(book.getLatelyFollower());
+        mBookBean.setRetentionRatio(book.getRetentionRatio());
     }
 
     @Override

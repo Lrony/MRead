@@ -75,7 +75,7 @@ public class BookDetailPackage {
     private int followerCount;
     private int wordCount;
     private int serializeWordCount;
-    private String retentionRatio;
+    private double retentionRatio;
     private String updated;
     private boolean isSerial;
     private int chaptersCount;
@@ -292,11 +292,11 @@ public class BookDetailPackage {
         this.serializeWordCount = serializeWordCount;
     }
 
-    public String getRetentionRatio() {
+    public double getRetentionRatio() {
         return retentionRatio;
     }
 
-    public void setRetentionRatio(String retentionRatio) {
+    public void setRetentionRatio(double retentionRatio) {
         this.retentionRatio = retentionRatio;
     }
 

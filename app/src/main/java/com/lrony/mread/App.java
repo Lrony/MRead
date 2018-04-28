@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 
+import com.lrony.mread.data.db.DBRepository;
 import com.lrony.mread.pref.AppConfig;
 
 import me.yokeyword.fragmentation.Fragmentation;
@@ -48,6 +49,7 @@ public class App extends Application {
 
 
         AppManager.init(this);
+        DBRepository.initDatabase(this);
         initTheme();
     }
 
