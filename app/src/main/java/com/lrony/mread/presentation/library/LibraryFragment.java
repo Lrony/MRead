@@ -17,6 +17,7 @@ import com.lrony.mread.R;
 import com.lrony.mread.mvp.MvpFragment;
 import com.lrony.mread.presentation.main.MainActivity;
 import com.lrony.mread.ui.help.BaseFragmentAdapter;
+import com.lrony.mread.ui.widget.CustomViewPager;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,7 +38,7 @@ public class LibraryFragment extends MvpFragment<LibraryContract.Presenter> impl
     private static final String TAG = "LibraryFragment";
 
     private Toolbar mToolbar;
-    private ViewPager mViewPager;
+    private CustomViewPager mViewPager;
     private VerticalTabLayout mTabLayout;
 
     public static LibraryFragment newInstance() {
