@@ -14,11 +14,9 @@ public interface LibraryContract {
 
     interface View extends MvpView {
 
-        void setTabContent(@NonNull SupportFragment[] fragments, @NonNull String[] titles);
     }
 
     interface Presenter extends MvpPresenter<View> {
 
-        void loadData();
     }
 }

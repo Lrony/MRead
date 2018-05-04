@@ -26,6 +26,14 @@ public interface BookApi {
     Call<BookSortPackage> getBookSortPackage();
 
     /**
+     * 获取二级分类
+     *
+     * @return
+     */
+    @GET("/cats/lv2")
+    Call<BookSubSortPackage> getBookSubSortPackage();
+
+    /**
      * 按分类获取书籍列表
      *
      * @param gender male、female

@@ -29,39 +29,4 @@ public class LibraryPresenter extends MvpBasePresenter<LibraryContract.View> imp
                 .build();
         bookApi = retrofit.create(BookApi.class);
     }
-
-    @Override
-    public void loadData() {
-        // View无效
-        if (!isViewAttached()) return;
-
-        Call<BookSortPackage> call = bookApi.getBookSortPackage();
-        call.enqueue(new Callback<BookSortPackage>() {
-            @Override
-            public void onResponse(Call<BookSortPackage> call, Response<BookSortPackage> response) {
-                // View无效
-                if (!isViewAttached()) return;
-
-                int size = response.body().getMale().size();
-                SupportFragment[] fragments = null;
-                String[] titles = null;
-                fragments = new SupportFragment[size];
-                titles = new String[size];
-                for (int i = 0; i < size; i++) {
-                    String name = response.body().getMale().get(i).getName();
-                    fragments[i] = HotTypeFragment.newInstance(name);
-                    titles[i] = name;
-                }
-                if (fragments != null) {
-                    getView().setTabContent(fragments, titles);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<BookSortPackage> call, Throwable t) {
-                // View无效
-                if (!isViewAttached()) return;
-            }
-        });
-    }
 }

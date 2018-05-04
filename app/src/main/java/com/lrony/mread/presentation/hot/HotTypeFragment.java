@@ -28,7 +28,7 @@ public class HotTypeFragment extends BaseFragment {
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_search_type;
+        return R.layout.fragment_framelayout;
     }
 
     @Override
