@@ -119,6 +119,13 @@ public class HomeFragment extends MvpFragment<HomeContract.Presenter> implements
         return false;
     }
 
+    @Override
+    public void onSupportVisible() {
+        super.onSupportVisible();
+        Log.d(TAG, "onSupportVisible");
+        getPresenter().doLoadData(false);
+    }
+
     private OnItemClickListener mOnitemClickListener = new OnItemClickListener() {
 
         @Override
