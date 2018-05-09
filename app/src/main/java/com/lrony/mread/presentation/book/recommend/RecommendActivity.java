@@ -20,6 +20,7 @@ import com.lrony.mread.data.net.RecommendBooksPackage;
 import com.lrony.mread.mvp.MvpActivity;
 import com.lrony.mread.ui.help.BaseRecyclerAdapter;
 import com.lrony.mread.ui.help.RecyclerViewItemDecoration;
+import com.lrony.mread.ui.help.ToolbarHelper;
 
 public class RecommendActivity extends MvpActivity<RecommendContract.Presenter> implements RecommendContract.View {
 
@@ -29,7 +30,6 @@ public class RecommendActivity extends MvpActivity<RecommendContract.Presenter> 
 
     private String mBookId;
 
-    private Toolbar mToolbar;
     private MultipleStatusView mStatusView;
     private RecyclerView mRecyclerView;
 
@@ -53,6 +53,7 @@ public class RecommendActivity extends MvpActivity<RecommendContract.Presenter> 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recommend);
         init();
+        ToolbarHelper.initToolbar(this, R.id.toolbar, true, R.string.recommend_title);
         getPresenter().start();
 
         initView();
@@ -69,12 +70,9 @@ public class RecommendActivity extends MvpActivity<RecommendContract.Presenter> 
 
     private void initView() {
         Log.d(TAG, "initView");
-        mToolbar = findViewById(R.id.toolbar);
         mStatusView = findViewById(R.id.multiple_status_view);
         mStatusView.setOnRetryClickListener(mRetryClickListener);
         mRecyclerView = findViewById(R.id.recycler_view);
-
-        mToolbar.setTitle(R.string.recommend_title);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.addItemDecoration(new RecyclerViewItemDecoration.Builder(this)
