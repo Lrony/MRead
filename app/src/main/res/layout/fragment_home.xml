@@ -7,12 +7,11 @@
 
     <include layout="@layout/view_toolbar_bar" />
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/refresh"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <include layout="@layout/recycler_status_view" />
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </FrameLayout>
 </android.support.design.widget.CoordinatorLayout>

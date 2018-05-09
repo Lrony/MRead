@@ -36,13 +36,13 @@ public class HotTypeContentPresenter extends MvpBasePresenter<HotTypeContentCont
     }
 
     @Override
-    public void loadData(final boolean isLoadMore, String gender, String type, String major, String minor, int start, int limit) {
-        Log.d(TAG, "loadData: isLoadMore=" + isLoadMore + ",gender=" + gender + ",type=" + type + ",major=" + major + ",minor=" + minor + ",start=" + start + ",limit=" + limit);
+    public void loadData(final boolean showStatusView, String gender, String type, String major, String minor, int start, int limit) {
+        Log.d(TAG, "loadData: showStatusView=" + showStatusView + ",gender=" + gender + ",type=" + type + ",major=" + major + ",minor=" + minor + ",start=" + start + ",limit=" + limit);
 
         // View无效
         if (!isViewAttached()) return;
 
-        if (!isLoadMore) {
+        if (showStatusView) {
             getView().loading();
         }
 
@@ -74,21 +74,8 @@ public class HotTypeContentPresenter extends MvpBasePresenter<HotTypeContentCont
                     books.add(book);
                 }
 
-                if (isLoadMore) {
-                    getView().finishLoadMore(books);
-                } else {
-                    getView().finishLoad(books);
-                }
+                getView().finishLoad(books);
                 getView().complete();
-
-//                // 测试代码
-//                if (isLoadMore){
-//                    getView().complete();
-//                    getView().showLoadMoreError();
-//                } else {
-//                    getView().finishLoad(books);
-//                    getView().complete();
-//                }
             }
 
             @Override
@@ -97,11 +84,55 @@ public class HotTypeContentPresenter extends MvpBasePresenter<HotTypeContentCont
                 if (!isViewAttached()) return;
 
                 getView().complete();
-                if (isLoadMore) {
-                    getView().showLoadMoreError();
-                } else {
-                    getView().showLoadError();
+                getView().showLoadError();
+            }
+        });
+    }
+
+    @Override
+    public void loadMoreData(String gender, String type, String major, String minor, int start, int limit) {
+        // View无效
+        if (!isViewAttached()) return;
+
+        Call<SortBookPackage> call = bookApi.getSortBookPackage(gender, type, major, minor, start, limit);
+        call.enqueue(new Callback<SortBookPackage>() {
+            @Override
+            public void onResponse(Call<SortBookPackage> call, Response<SortBookPackage> response) {
+                // View无效
+                if (!isViewAttached()) return;
+
+                ArrayList<Book> books = new ArrayList<>();
+                for (int i = 0; i < response.body().getBooks().size(); i++) {
+                    SortBookPackage.BooksBean bookBean = response.body().getBooks().get(i);
+                    Book book = new Book(bookBean.get_id()
+                            , bookBean.getTitle()
+                            , bookBean.getAuthor()
+                            , bookBean.getShortIntro()
+                            , bookBean.getCover()
+                            , bookBean.getSite()
+                            , bookBean.getMajorCate()
+                            , bookBean.getMinorCate()
+                            , bookBean.getContentType()
+                            , bookBean.isAllowMonthly()
+                            , bookBean.getBanned()
+                            , bookBean.getLatelyFollower()
+                            , bookBean.getRetentionRatio()
+                            , bookBean.getLastChapter()
+                    );
+                    books.add(book);
                 }
+
+                getView().finishLoadMore(books);
+                getView().complete();
+            }
+
+            @Override
+            public void onFailure(Call<SortBookPackage> call, Throwable t) {
+                // View无效
+                if (!isViewAttached()) return;
+
+                getView().complete();
+                getView().showLoadMoreError();
             }
         });
     }

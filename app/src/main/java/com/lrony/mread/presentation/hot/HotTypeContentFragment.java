@@ -27,12 +27,13 @@ import java.util.List;
 /**
  * Created by Lrony on 18-4-24.
  */
-public class HotTypeContentFragment extends MvpFragment<HotTypeContentContract.Presenter> implements HotTypeContentContract.View, BaseQuickAdapter.RequestLoadMoreListener {
+public class HotTypeContentFragment extends MvpFragment<HotTypeContentContract.Presenter> implements HotTypeContentContract.View, BaseQuickAdapter.RequestLoadMoreListener, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "HotTypeContentFragment";
 
     private MultipleStatusView mStatusView;
     private RecyclerView mRecyclerView;
+    private SwipeRefreshLayout mRefreshView;
 
     private BookAdapter mBookAdapter;
 
@@ -61,7 +62,7 @@ public class HotTypeContentFragment extends MvpFragment<HotTypeContentContract.P
 
         initView(view);
         initListener();
-        loadData(false);
+        loadData(true);
     }
 
     private void initView(View view) {
@@ -69,6 +70,9 @@ public class HotTypeContentFragment extends MvpFragment<HotTypeContentContract.P
         mStatusView = view.findViewById(R.id.multiple_status_view);
         mStatusView.setOnRetryClickListener(mRetryClickListener);
         mRecyclerView = view.findViewById(R.id.recycler_view);
+        mRefreshView = view.findViewById(R.id.refresh_view);
+
+        mRefreshView.setColorSchemeResources(R.color.colorAccent);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()
                 , LinearLayoutManager.VERTICAL, false));
@@ -88,6 +92,7 @@ public class HotTypeContentFragment extends MvpFragment<HotTypeContentContract.P
 
         mBookAdapter.setOnLoadMoreListener(this);
         mRecyclerView.addOnItemTouchListener(mOnitemClickListener);
+        mRefreshView.setOnRefreshListener(this);
     }
 
     @NonNull
@@ -106,21 +111,26 @@ public class HotTypeContentFragment extends MvpFragment<HotTypeContentContract.P
         Log.d(TAG, "init: " + mMajor);
     }
 
-    private void loadData(boolean isLoadMore) {
-        Log.d(TAG, "loadData: firstLoad=" + isLoadMore);
-        getPresenter().loadData(isLoadMore, mGender, mType, mMajor, mMinor, mStart, mLimit);
+    private void loadData(boolean showStatusView) {
+        Log.d(TAG, "loadData: showStatusView=" + showStatusView);
+        getPresenter().loadData(showStatusView, mGender, mType, mMajor, mMinor, mStart, mLimit);
+    }
+
+    private void loadMoreData() {
+        Log.d(TAG, "loadMoreData");
+        getPresenter().loadMoreData(mGender, mType, mMajor, mMinor, mStart, mLimit);
     }
 
     @Override
     public void onLoadMoreRequested() {
         Log.d(TAG, "onLoadMoreRequested");
-        loadData(true);
+        loadMoreData();
     }
 
     private View.OnClickListener mRetryClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            loadData(false);
+            loadData(true);
         }
     };
 
@@ -138,6 +148,12 @@ public class HotTypeContentFragment extends MvpFragment<HotTypeContentContract.P
             Log.d(TAG, "onItemLongClick: " + position);
         }
     };
+
+    @Override
+    public void onRefresh() {
+        mStart = 0;
+        loadData(false);
+    }
 
     @Override
     public void finishLoad(ArrayList<Book> books) {
@@ -191,5 +207,6 @@ public class HotTypeContentFragment extends MvpFragment<HotTypeContentContract.P
         Log.d(TAG, "complete");
         mStatusView.showContent();
         mBookAdapter.loadMoreComplete();
+        mRefreshView.setRefreshing(false);
     }
 }

@@ -78,10 +78,12 @@ public class HomeFragment extends MvpFragment<HomeContract.Presenter> implements
     private void initView(View view) {
         Log.d(TAG, "initView");
         mToolbar = view.findViewById(R.id.toolbar);
-        mRefreshView = view.findViewById(R.id.refresh);
+        mRefreshView = view.findViewById(R.id.refresh_view);
         mStatusView = view.findViewById(R.id.multiple_status_view);
         mStatusView.setOnRetryClickListener(mRetryClickListener);
         mRecyclerView = view.findViewById(R.id.recycler_view);
+
+        mRefreshView.setColorSchemeResources(R.color.colorAccent);
 
         mToolbar.setTitle(R.string.home_title);
         mToolbar.inflateMenu(R.menu.menu_home);

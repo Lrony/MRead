@@ -26,7 +26,7 @@ public interface HotTypeContentContract {
 
         /**
          *
-         * @param isLoadMore 是否为加载更多
+         * @param showStatusView 是否显示StatusView
          * @param gender
          * @param type
          * @param major
@@ -34,6 +34,8 @@ public interface HotTypeContentContract {
          * @param start
          * @param limit
          */
-        void loadData(boolean isLoadMore, String gender, String type, String major, String minor, int start, int limit);
+        void loadData(boolean showStatusView, String gender, String type, String major, String minor, int start, int limit);
+
+        void loadMoreData(String gender, String type, String major, String minor, int start, int limit);
     }
 }

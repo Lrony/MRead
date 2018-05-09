@@ -9,11 +9,17 @@
     app:loadingView="@layout/custom_loading_view"
     app:noNetworkView="@layout/custom_no_network_view">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refresh_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorGrounding"
-        android:clipChildren="false"
-        android:clipToPadding="false" />
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorGrounding"
+            android:clipChildren="false"
+            android:clipToPadding="false" />
+    </android.support.v4.widget.SwipeRefreshLayout>
 </com.classic.common.MultipleStatusView>
