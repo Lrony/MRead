@@ -22,7 +22,7 @@ import com.lrony.mread.ui.help.BaseRecyclerAdapter;
 import com.lrony.mread.ui.help.RecyclerViewItemDecoration;
 import com.lrony.mread.ui.help.ToolbarHelper;
 
-public class RecommendActivity extends MvpActivity<RecommendContract.Presenter> implements RecommendContract.View {
+public class RecommendActivity extends MvpActivity<RecommendContract.Presenter> implements RecommendContract.View, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "RecommendActivity";
 
@@ -32,6 +32,7 @@ public class RecommendActivity extends MvpActivity<RecommendContract.Presenter> 
 
     private MultipleStatusView mStatusView;
     private RecyclerView mRecyclerView;
+    private SwipeRefreshLayout mRefreshView;
 
     private RecommendBooksPackage mBooks;
 
@@ -59,7 +60,7 @@ public class RecommendActivity extends MvpActivity<RecommendContract.Presenter> 
         initView();
         initListener();
 
-        getPresenter().loadRecommendBook(mBookId);
+        getPresenter().loadRecommendBook(true, mBookId);
     }
 
     @NonNull
@@ -73,6 +74,9 @@ public class RecommendActivity extends MvpActivity<RecommendContract.Presenter> 
         mStatusView = findViewById(R.id.multiple_status_view);
         mStatusView.setOnRetryClickListener(mRetryClickListener);
         mRecyclerView = findViewById(R.id.recycler_view);
+        mRefreshView = findViewById(R.id.refresh_view);
+
+        mRefreshView.setColorSchemeResources(R.color.colorAccent);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.addItemDecoration(new RecyclerViewItemDecoration.Builder(this)
@@ -86,6 +90,8 @@ public class RecommendActivity extends MvpActivity<RecommendContract.Presenter> 
 
     private void initListener() {
         Log.d(TAG, "initListener");
+
+        mRefreshView.setOnRefreshListener(this);
 
         mAdapter.setItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
             @Override
@@ -105,12 +111,13 @@ public class RecommendActivity extends MvpActivity<RecommendContract.Presenter> 
     private View.OnClickListener mRetryClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            refreshData();
+            getPresenter().loadRecommendBook(true, mBookId);
         }
     };
 
-    private void refreshData() {
-        getPresenter().loadRecommendBook(mBookId);
+    @Override
+    public void onRefresh() {
+        getPresenter().loadRecommendBook(false, mBookId);
     }
 
     @Override
@@ -129,6 +136,7 @@ public class RecommendActivity extends MvpActivity<RecommendContract.Presenter> 
     public void complete() {
         super.complete();
         mStatusView.showContent();
+        mRefreshView.setRefreshing(false);
     }
 
     @Override

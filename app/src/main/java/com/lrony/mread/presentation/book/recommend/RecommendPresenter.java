@@ -29,11 +29,13 @@ public class RecommendPresenter extends MvpBasePresenter<RecommendContract.View>
     }
 
     @Override
-    public void loadRecommendBook(String id) {
+    public void loadRecommendBook(boolean showStatusView, String id) {
         // View无效
         if (!isViewAttached()) return;
 
-        getView().loading();
+        if (showStatusView){
+            getView().loading();
+        }
 
         Call<RecommendBooksPackage> call = bookApi.getRecommendBooksPackage(id);
         call.enqueue(new Callback<RecommendBooksPackage>() {
