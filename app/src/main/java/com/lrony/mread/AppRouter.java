@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.lrony.mread.presentation.book.catalog.BookCatalogActivity;
 import com.lrony.mread.presentation.book.detail.BookDetailActivity;
 import com.lrony.mread.presentation.book.recommend.RecommendActivity;
 import com.lrony.mread.presentation.common.PhotoActivity;
@@ -66,5 +67,9 @@ public class AppRouter {
 
     public static void showPhotoActivity(Context context, String title, String path) {
         context.startActivity(PhotoActivity.newIntent(context, title, path));
+    }
+
+    public static void showBookCatalogActivity(Context context, String id) {
+        context.startActivity(BookCatalogActivity.newIntent(context, id));
     }
 }

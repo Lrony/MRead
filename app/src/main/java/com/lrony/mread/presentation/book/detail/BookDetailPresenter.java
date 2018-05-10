@@ -40,6 +40,8 @@ public class BookDetailPresenter extends MvpBasePresenter<BookDetailContract.Vie
         // View无效
         if (!isViewAttached()) return;
 
+        getView().loading();
+
         Call<BookDetailPackage> call = bookApi.getBookDetail(id);
         call.enqueue(new Callback<BookDetailPackage>() {
             @Override

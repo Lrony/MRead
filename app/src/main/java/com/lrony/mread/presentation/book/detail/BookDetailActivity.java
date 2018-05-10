@@ -105,7 +105,6 @@ public class BookDetailActivity extends MvpActivity<BookDetailContract.Presenter
     private void initView() {
         Log.d(TAG, "initView");
         mDialogHandler = new ProgressDialogHandler(this, this, true);
-        mDialogHandler.obtainMessage(ProgressDialogHandler.SHOW_PROGRESS_DIALOG).sendToTarget();
 
         mIvCover = findViewById(R.id.iv_cover);
         mTvReadCount = findViewById(R.id.tv_read_count);
@@ -271,6 +270,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailContract.Presenter
             case R.id.fl_open_book:
                 break;
             case R.id.ll_book_detail_catalog:
+                AppRouter.showBookCatalogActivity(this, mBookId);
                 break;
             case R.id.rl_recommend_more:
                 AppRouter.showRecommendActivity(this, mBookId);
@@ -278,6 +278,16 @@ public class BookDetailActivity extends MvpActivity<BookDetailContract.Presenter
             case R.id.iv_cover:
                 AppRouter.showPhotoActivity(this, mBookBean.getTitle(), Constant.IMG_BASE_URL + mBookBean.getCover());
                 break;
+        }
+    }
+
+    @Override
+    public void loading() {
+        super.loading();
+        if (mDialogHandler != null) {
+            mDialogHandler.obtainMessage(ProgressDialogHandler.SHOW_PROGRESS_DIALOG).sendToTarget();
+        } else {
+            Log.d(TAG, "loading mDialogHandler is null");
         }
     }
 
