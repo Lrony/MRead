@@ -15,6 +15,7 @@ public interface BookApi {
     // 按分类获取书籍列表： http://api.zhuishushenqi.com/book/by-categories?gender=male&type=hot&major=%E5%A5%87%E5%B9%BB&minor=&start=&limit=50
     // 书籍详情: http://api.zhuishushenqi.com/book/59ba0dbb017336e411085a4e
     // 书籍推荐书籍: http://api.zhuishushenqi.com/book/59ba0dbb017336e411085a4e/recommend
+    // 书籍章节: http://api.zhuishushenqi.com/mix-atoc/59ba0dbb017336e411085a4e?view=chapters
 
     /*******************************分类***************************************/
     /**
@@ -66,6 +67,15 @@ public interface BookApi {
      */
     @GET("/book/{bookId}/recommend")
     Call<RecommendBooksPackage> getRecommendBooksPackage(@Path("bookId") String bookId);
+
+    /**
+     * 获取书籍的章节总列表
+     * @param bookId
+     * @param view 默认参数为:chapters
+     * @return
+     */
+    @GET("/mix-atoc/{bookId}")
+    Call<BookChapterPackage> getBookChapterPackage(@Path("bookId") String bookId, @Query("view") String view);
 
 
     /************************************搜索书籍******************************************************/
