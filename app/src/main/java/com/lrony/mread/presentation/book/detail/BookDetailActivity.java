@@ -276,7 +276,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailContract.Presenter
                 AppRouter.showRecommendActivity(this, mBookId);
                 break;
             case R.id.iv_cover:
-//                AppRouter.showPhotoActivity(this, mBookBean.getTitle(), Constant.IMG_BASE_URL + mBookBean.getCover());
+                AppRouter.showPhotoActivity(this, mBookBean.getTitle(), Constant.IMG_BASE_URL + mBookBean.getCover());
                 break;
         }
     }
