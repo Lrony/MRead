@@ -121,6 +121,10 @@ public final class DBManger {
         mDaoSession.getBookTbDao().delete(bookTb);
     }
 
+    public void deleteBookTb(String bookid) {
+        mDaoSession.getBookTbDao().deleteByKey(bookid);
+    }
+
     public void deleteBookTbs(Iterable<BookTb> entities) {
         mDaoSession.getBookTbDao().deleteInTx(entities);
     }

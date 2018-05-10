@@ -1,9 +1,11 @@
 package com.lrony.mread.presentation.book.detail;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -157,9 +159,16 @@ public class BookDetailActivity extends MvpActivity<BookDetailContract.Presenter
         mTvCreateDateCopyright.setText(mTvCreateDateCopyright.getText().toString() + mBook.getRetentionRatio() + "%");
         mTvDescribe.setText(mBook.getLongIntro());
 
+        refreshBookAddStatus();
+    }
+
+    private void refreshBookAddStatus() {
+        Log.d(TAG, "refreshBookAddStatus");
         if (DBManger.getInstance().bookIsHave(mBookBean)) {
+            Log.d(TAG, "refreshBookAddStatus: have it");
             mTvBookStatus.setText(R.string.bookdetail_add_book_have);
         } else {
+            Log.d(TAG, "refreshBookAddStatus: not have it");
             mTvBookStatus.setText(R.string.bookdetail_add_bookcase);
         }
     }
@@ -173,12 +182,34 @@ public class BookDetailActivity extends MvpActivity<BookDetailContract.Presenter
         }
     }
 
+    private void showComfirmDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("是否删除《" + mBookBean.getTitle() + "》");
+        builder.setNegativeButton("取消", null);
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                DBManger.getInstance().deleteBookTb(mBookId);
+                refreshBookAddStatus();
+            }
+        });
+        builder.setCancelable(false);
+        builder.show();
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fl_add_bookcase:
-                DBManger.getInstance().saveBookTb(mBookBean);
-                ToastUtil.showToast("已加入书架");
+
+                if (DBManger.getInstance().bookIsHave(mBookBean)) {
+                    showComfirmDialog();
+                } else {
+                    DBManger.getInstance().saveBookTb(mBookBean);
+                    ToastUtil.showToast("已加入书架");
+                }
+                refreshBookAddStatus();
+
                 break;
             case R.id.fl_download_book:
                 break;
