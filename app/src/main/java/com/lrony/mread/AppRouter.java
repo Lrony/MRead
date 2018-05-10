@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.lrony.mread.presentation.book.detail.BookDetailActivity;
 import com.lrony.mread.presentation.book.recommend.RecommendActivity;
+import com.lrony.mread.presentation.common.PhotoActivity;
 import com.lrony.mread.presentation.search.SearchActivity;
 import com.lrony.mread.util.DensityUtil;
 
@@ -61,5 +62,9 @@ public class AppRouter {
 
     public static void showRecommendActivity(Context context, String id) {
         context.startActivity(RecommendActivity.newIntent(context, id));
+    }
+
+    public static void showPhotoActivity(Context context, String title, String path) {
+        context.startActivity(PhotoActivity.newIntent(context, title, path));
     }
 }

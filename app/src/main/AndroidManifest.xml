@@ -29,7 +29,8 @@
             android:windowSoftInputMode="stateAlwaysVisible" />
         <activity android:name=".presentation.book.recommend.RecommendActivity" />
         <activity android:name=".presentation.hot.HotTypeSelectActivity" />
-        <activity android:name=".presentation.about.AboutActivity"></activity>
+        <activity android:name=".presentation.about.AboutActivity" />
+        <activity android:name=".presentation.common.PhotoActivity"></activity>
     </application>
 
 </manifest>

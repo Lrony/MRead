@@ -4,6 +4,7 @@ import android.content.Context;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.github.chrisbanes.photoview.PhotoView;
 import com.lrony.mread.R;
 import com.lrony.mread.ui.help.GlideApp;
 
@@ -18,6 +19,13 @@ public class ImageLoader {
                 .with(context)
                 .load(image)
                 .placeholder(R.drawable.ic_book_cover_default)
+                .into(view);
+    }
+
+    public static void load(Context context, String image, PhotoView view) {
+        GlideApp
+                .with(context)
+                .load(image)
                 .into(view);
     }
 

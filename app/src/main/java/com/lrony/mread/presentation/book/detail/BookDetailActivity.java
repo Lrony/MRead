@@ -191,6 +191,8 @@ public class BookDetailActivity extends MvpActivity<BookDetailContract.Presenter
 
             }
         });
+
+        mIvCover.setOnClickListener(this);
     }
 
     private void refreshBookInfo() {
@@ -272,6 +274,9 @@ public class BookDetailActivity extends MvpActivity<BookDetailContract.Presenter
                 break;
             case R.id.rl_recommend_more:
                 AppRouter.showRecommendActivity(this, mBookId);
+                break;
+            case R.id.iv_cover:
+//                AppRouter.showPhotoActivity(this, mBookBean.getTitle(), Constant.IMG_BASE_URL + mBookBean.getCover());
                 break;
         }
     }
