@@ -32,6 +32,7 @@ public class BookCatalogActivity extends MvpActivity<BookCatalogContract.Present
     private MultipleStatusView mStatusView;
     private SwipeRefreshLayout mRefreshView;
     private RecyclerView mRecyclerView;
+    private LinearLayoutManager mLinearLayoutManager;
 
     private BookCatalogAdapter mAdapter;
 
@@ -67,7 +68,8 @@ public class BookCatalogActivity extends MvpActivity<BookCatalogContract.Present
         mStatusView = findViewById(R.id.multiple_status_view);
         mStatusView.setOnRetryClickListener(mRetryClickListener);
         mRecyclerView = findViewById(R.id.recycler_view);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mLinearLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLinearLayoutManager);
         mRecyclerView.addItemDecoration(new RecyclerViewItemDecoration.Builder(this)
                 .color(ContextCompat.getColor(this, R.color.colorDivider))
                 .thickness(1)
@@ -77,6 +79,8 @@ public class BookCatalogActivity extends MvpActivity<BookCatalogContract.Present
 
         mAdapter = new BookCatalogAdapter(this, null);
         mRecyclerView.setAdapter(mAdapter);
+
+        setRecyclerReverserder(true);
     }
 
     private void initListener() {
@@ -91,6 +95,17 @@ public class BookCatalogActivity extends MvpActivity<BookCatalogContract.Present
             getPresenter().loadBookInfo(true, mBookId);
         }
     };
+
+    private void setRecyclerReverserder(boolean arg) {
+        Log.d(TAG, "setRecyclerReverserder");
+        if (mLinearLayoutManager != null) {
+            mLinearLayoutManager.setStackFromEnd(arg);
+            mLinearLayoutManager.setReverseLayout(arg);
+        } else {
+            Log.d(TAG, "setRecyclerReverserder mLinearLayoutManager is null");
+        }
+
+    }
 
     @NonNull
     @Override
