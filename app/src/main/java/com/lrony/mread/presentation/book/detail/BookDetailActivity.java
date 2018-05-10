@@ -8,7 +8,12 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.ActionMode;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -124,6 +129,56 @@ public class BookDetailActivity extends MvpActivity<BookDetailContract.Presenter
         Log.d(TAG, "initListener");
         bindOnClickLister(this, R.id.fl_add_bookcase, R.id.fl_download_book
                 , R.id.fl_open_book, R.id.ll_book_detail_catalog, R.id.rl_recommend_more);
+
+        mTvDescribe.setCustomSelectionActionModeCallback(new ActionMode.Callback() {
+            @Override
+            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                MenuInflater menuInflater = mode.getMenuInflater();
+                menuInflater.inflate(R.menu.textview_selection_action_menu, menu);
+                return true;
+            }
+
+            @Override
+            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                return false;
+            }
+
+            @Override
+            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.informal_search:
+
+                        if (mTvDescribe == null) return false;
+                        int min = 0;
+                        int max = mTvDescribe.length();
+                        if (mTvDescribe.isFocused()) {
+                            final int selStart = mTvDescribe.getSelectionStart();
+                            final int selEnd = mTvDescribe.getSelectionEnd();
+
+                            min = Math.max(0, Math.min(selStart, selEnd));
+                            max = Math.max(0, Math.max(selStart, selEnd));
+                        } else {
+                            Log.d(TAG, "onActionItemClicked: mTvDescribe not focused");
+                        }
+                        String content = String.valueOf(mTvDescribe.getText().subSequence(min, max));
+                        Log.d(TAG, "onActionItemClicked: select content is " + content);
+                        if (!TextUtils.isEmpty(content)) {
+                            AppRouter.showSearchActivity(BookDetailActivity.this, content);
+                        } else {
+                            Log.d(TAG, "onActionItemClicked: select content is empty");
+                        }
+
+
+                        break;
+                }
+                return false;
+            }
+
+            @Override
+            public void onDestroyActionMode(ActionMode mode) {
+
+            }
+        });
 
         mRecommendAdapter.setItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
             @Override

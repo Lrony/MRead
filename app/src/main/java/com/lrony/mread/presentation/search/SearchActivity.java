@@ -62,6 +62,11 @@ public class SearchActivity extends MvpActivity<SearchContract.Presenter> implem
 
         initView();
         initListener();
+
+        if (mDefaultSearch != null) {
+            mEtSearch.setText(mDefaultSearch);
+            mEtSearch.setSelection(mDefaultSearch.length());
+        }
     }
 
     @NonNull
@@ -85,11 +90,6 @@ public class SearchActivity extends MvpActivity<SearchContract.Presenter> implem
                 .color(ContextCompat.getColor(this, R.color.colorDivider))
                 .thickness(1)
                 .create());
-
-        if (mDefaultSearch != null) {
-            mEtSearch.setText(mDefaultSearch);
-            mEtSearch.setSelection(mDefaultSearch.length());
-        }
 
         mSearchAdapter = new SearchBookAdapter(SearchActivity.this, null);
         mKeyWordAdapter = new KeyWordAdapter(SearchActivity.this, null);
