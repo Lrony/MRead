@@ -150,7 +150,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailContract.Presenter
         mTvIsFinish.setText(isFinished);
         mTvWordCount.setText(isFinished + " | " + StringUtils.formatCount(mBook.getWordCount()) + "字");
         mTvWordCountCopyright.setText(mTvWordCountCopyright.getText() + StringUtils.formatCount(mBook.getWordCount()) + "字");
-        mTvCatalogTitle.setText("最新章节: " + mBook.getLastChapter());
+        mTvCatalogTitle.setText(getString(R.string.bookdetail_newchapter) + mBook.getLastChapter());
         try {
             mTvUpdateTime.setText(StringUtils.formatSomeAgo(StringUtils.dealDateFormat(mBook.getUpdated())) + "更新");
         } catch (ParseException e) {
@@ -184,16 +184,15 @@ public class BookDetailActivity extends MvpActivity<BookDetailContract.Presenter
 
     private void showComfirmDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("是否删除《" + mBookBean.getTitle() + "》");
-        builder.setNegativeButton("取消", null);
-        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+        builder.setMessage(getString(R.string.bookdetail_is_delete_book) + "《" + mBookBean.getTitle() + "》");
+        builder.setNegativeButton(R.string.commom_cancel, null);
+        builder.setPositiveButton(R.string.commom_confirm, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 DBManger.getInstance().deleteBookTb(mBookId);
                 refreshBookAddStatus();
             }
         });
-        builder.setCancelable(false);
         builder.show();
     }
 
@@ -206,7 +205,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailContract.Presenter
                     showComfirmDialog();
                 } else {
                     DBManger.getInstance().saveBookTb(mBookBean);
-                    ToastUtil.showToast("已加入书架");
+                    ToastUtil.showToast(R.string.bookdetail_add_book_ok);
                 }
                 refreshBookAddStatus();
 

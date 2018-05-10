@@ -8,6 +8,9 @@
     <string name="recommend_title">相关书籍</string>
     <string name="hot_type_select_title">全部频道</string>
 
+    <string name="commom_confirm">确认</string>
+    <string name="commom_cancel">取消</string>
+
     <string name="navigation_home">首页</string>
     <string name="navigation_search">精选</string>
     <string name="navigation_library">书库</string>
@@ -31,6 +34,7 @@
     <string name="bookdetail_add_book_have">已在书架</string>
     <string name="bookdetail_open_book">免费阅读</string>
     <string name="bookdetail_finished">已完结</string>
+    <string name="bookdetail_newchapter">最新章节: </string>
     <string name="bookdetail_not_finished">连载中</string>
     <string name="bookdetail_book_word_count">字数: </string>
     <string name="bookdetail_book_create_date">上架时间: </string>
@@ -42,6 +46,8 @@
     </string>
     <string name="bookdetail_open_error">信息加载失败</string>
     <string name="bookdetail_recommend_book_list_load_error">推荐书籍获取失败</string>
+    <string name="bookdetail_is_delete_book">是否从书架移除</string>
+    <string name="bookdetail_add_book_ok">已加入书架</string>
 
     <string name="load_more_failure">加载失败，点击重试</string>
     <string name="list_the_end">没有更多数据</string>
