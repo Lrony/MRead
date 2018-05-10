@@ -1,7 +1,6 @@
 package com.lrony.mread.presentation.book.catalog;
 
 import android.util.Log;
-
 import com.lrony.mread.data.net.BookApi;
 import com.lrony.mread.data.net.BookChapterPackage;
 import com.lrony.mread.mvp.MvpBasePresenter;

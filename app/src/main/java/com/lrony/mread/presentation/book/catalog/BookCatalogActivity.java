@@ -2,23 +2,22 @@ package com.lrony.mread.presentation.book.catalog;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.telecom.Call;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.classic.common.MultipleStatusView;
 import com.lrony.mread.R;
-import com.lrony.mread.data.bean.Book;
 import com.lrony.mread.data.net.BookChapterPackage;
-import com.lrony.mread.data.net.BookDetailPackage;
 import com.lrony.mread.mvp.MvpActivity;
 import com.lrony.mread.ui.help.ProgressDialogHandler;
 import com.lrony.mread.ui.help.ToolbarHelper;
+
+import java.util.List;
 
 public class BookCatalogActivity extends MvpActivity<BookCatalogContract.Presenter> implements BookCatalogContract.View {
 
@@ -27,8 +26,9 @@ public class BookCatalogActivity extends MvpActivity<BookCatalogContract.Present
 
     private String mBookId;
 
-    private TextView mTvSectionCount;
-    private LinearLayout mLlSectionSelection;
+    private MultipleStatusView mStatusView;
+    private SwipeRefreshLayout mRefreshView;
+    private RecyclerView mRecyclerView;
 
     private BookChapterPackage mChapter;
 
@@ -60,23 +60,24 @@ public class BookCatalogActivity extends MvpActivity<BookCatalogContract.Present
         Log.d(TAG, "initView");
         ToolbarHelper.initToolbar(this, R.id.toolbar, true, "目录");
 
-        mTvSectionCount = findViewById(R.id.tv_section_count);
-        mLlSectionSelection = findViewById(R.id.ll_section_selection);
-    }
+        mRefreshView = findViewById(R.id.refresh_view);
+        mStatusView = findViewById(R.id.multiple_status_view);
+        mStatusView.setOnRetryClickListener(mRetryClickListener);
+        mRecyclerView = findViewById(R.id.recycler_view);
 
-    private void refreshView() {
-        mTvSectionCount.setText("共" + mChapter.getMixToc().getChaptersCount1() + "章");
+        mRefreshView.setColorSchemeResources(R.color.colorAccent);
     }
 
     private void initListener() {
         Log.d(TAG, "initListener");
-        mLlSectionSelection.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
     }
+
+    private View.OnClickListener mRetryClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+        }
+    };
 
     @NonNull
     @Override
@@ -107,6 +108,5 @@ public class BookCatalogActivity extends MvpActivity<BookCatalogContract.Present
     @Override
     public void finshLoadBookInfo(BookChapterPackage chapter) {
         mChapter = chapter;
-        refreshView();
     }
 }
