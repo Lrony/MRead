@@ -57,6 +57,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailContract.Presenter
     private RecyclerView mRvRecommendBook;
     private TextView mTvWordCountCopyright;
     private TextView mTvCreateDateCopyright;
+    private TextView mTvBookStatus;
 
     private ProgressDialogHandler mDialogHandler;
 
@@ -114,6 +115,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailContract.Presenter
         mRvRecommendBook.setLayoutManager(new GridLayoutManager(this, ScreenUtil.isLAndscape(this) ? 4 : 3));
         mRecommendAdapter = new RecommendBookAdapter(this, mRecommendBooks, ScreenUtil.isLAndscape(this) ? 8 : 6);
         mRvRecommendBook.setAdapter(mRecommendAdapter);
+        mTvBookStatus = findViewById(R.id.tv_book_status);
     }
 
     private void initListener() {
@@ -155,6 +157,11 @@ public class BookDetailActivity extends MvpActivity<BookDetailContract.Presenter
         mTvCreateDateCopyright.setText(mTvCreateDateCopyright.getText().toString() + mBook.getRetentionRatio() + "%");
         mTvDescribe.setText(mBook.getLongIntro());
 
+        if (DBManger.getInstance().bookIsHave(mBookBean)) {
+            mTvBookStatus.setText(R.string.bookdetail_add_book_have);
+        } else {
+            mTvBookStatus.setText(R.string.bookdetail_add_bookcase);
+        }
     }
 
     private void jugeCloseDialog() {

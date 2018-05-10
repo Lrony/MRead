@@ -28,6 +28,7 @@
     <string name="bookdetail_book_more_info">小说更多信息</string>
     <string name="bookdetail_book_download">缓存全书</string>
     <string name="bookdetail_add_bookcase">加入书架</string>
+    <string name="bookdetail_add_book_have">已在书架</string>
     <string name="bookdetail_open_book">免费阅读</string>
     <string name="bookdetail_finished">已完结</string>
     <string name="bookdetail_not_finished">连载中</string>

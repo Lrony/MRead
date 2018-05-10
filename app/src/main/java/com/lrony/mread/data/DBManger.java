@@ -61,6 +61,26 @@ public final class DBManger {
         return bookTb.getId();
     }
 
+    /**
+     * 数据库书否存在书籍
+     *
+     * @param book
+     * @return
+     */
+    public boolean bookIsHave(Book book) {
+        return (loadBookTbById(book.getId()) == null ? false : true);
+    }
+
+    /**
+     * 数据库书否存在书籍
+     *
+     * @param bookTb
+     * @return
+     */
+    public boolean bookIsHave(BookTb bookTb) {
+        return (loadBookTbById(bookTb.getId()) == null ? false : true);
+    }
+
 //    以下为RxJava相关函数
 //    /**
 //     * 添加图书到书架
