@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -15,11 +17,12 @@ import com.lrony.mread.R;
 import com.lrony.mread.data.net.BookChapterPackage;
 import com.lrony.mread.mvp.MvpActivity;
 import com.lrony.mread.ui.help.ProgressDialogHandler;
+import com.lrony.mread.ui.help.RecyclerViewItemDecoration;
 import com.lrony.mread.ui.help.ToolbarHelper;
 
 import java.util.List;
 
-public class BookCatalogActivity extends MvpActivity<BookCatalogContract.Presenter> implements BookCatalogContract.View {
+public class BookCatalogActivity extends MvpActivity<BookCatalogContract.Presenter> implements BookCatalogContract.View, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "BookCatalogActivity";
     private static final String K_EXTRA_BOOK = "book";
@@ -30,9 +33,9 @@ public class BookCatalogActivity extends MvpActivity<BookCatalogContract.Present
     private SwipeRefreshLayout mRefreshView;
     private RecyclerView mRecyclerView;
 
-    private BookChapterPackage mChapter;
+    private BookCatalogAdapter mAdapter;
 
-    private ProgressDialogHandler mDialogHandler;
+    private BookChapterPackage mChapter;
 
     public static Intent newIntent(Context context, String bookid) {
         Intent intent = new Intent(context, BookCatalogActivity.class);
@@ -48,7 +51,7 @@ public class BookCatalogActivity extends MvpActivity<BookCatalogContract.Present
         getPresenter().start();
         initView();
         initListener();
-        getPresenter().loadBookInfo(mBookId);
+        getPresenter().loadBookInfo(true, mBookId);
     }
 
     private void init() {
@@ -64,18 +67,28 @@ public class BookCatalogActivity extends MvpActivity<BookCatalogContract.Present
         mStatusView = findViewById(R.id.multiple_status_view);
         mStatusView.setOnRetryClickListener(mRetryClickListener);
         mRecyclerView = findViewById(R.id.recycler_view);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.addItemDecoration(new RecyclerViewItemDecoration.Builder(this)
+                .color(ContextCompat.getColor(this, R.color.colorDivider))
+                .thickness(1)
+                .create());
 
         mRefreshView.setColorSchemeResources(R.color.colorAccent);
+
+        mAdapter = new BookCatalogAdapter(this, null);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     private void initListener() {
         Log.d(TAG, "initListener");
+
+        mRefreshView.setOnRefreshListener(this);
     }
 
     private View.OnClickListener mRetryClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
+            getPresenter().loadBookInfo(true, mBookId);
         }
     };
 
@@ -88,25 +101,36 @@ public class BookCatalogActivity extends MvpActivity<BookCatalogContract.Present
     @Override
     public void loading() {
         super.loading();
-        if (mDialogHandler != null) {
-            mDialogHandler.obtainMessage(ProgressDialogHandler.SHOW_PROGRESS_DIALOG).sendToTarget();
-        } else {
-            Log.d(TAG, "loading mDialogHandler is null");
-        }
+        mStatusView.showLoading();
     }
 
     @Override
     public void complete() {
         super.complete();
-        if (mDialogHandler != null) {
-            mDialogHandler.obtainMessage(ProgressDialogHandler.DISMISS_PROGRESS_DIALOG).sendToTarget();
-        } else {
-            Log.d(TAG, "complete mDialogHandler is null");
-        }
+        mStatusView.showContent();
+        mRefreshView.setRefreshing(false);
+    }
+
+    @Override
+    public void error() {
+        super.error();
+        mStatusView.showError();
+    }
+
+    @Override
+    public void empty() {
+        super.empty();
+        mStatusView.showEmpty();
     }
 
     @Override
     public void finshLoadBookInfo(BookChapterPackage chapter) {
         mChapter = chapter;
+        mAdapter.refresh(mChapter);
+    }
+
+    @Override
+    public void onRefresh() {
+        getPresenter().loadBookInfo(false, mBookId);
     }
 }

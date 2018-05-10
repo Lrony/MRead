@@ -18,6 +18,6 @@ public interface BookCatalogContract {
 
     interface Presenter extends MvpPresenter<View> {
 
-        void loadBookInfo(String id);
+        void loadBookInfo(boolean showRefreshView, String id);
     }
 }

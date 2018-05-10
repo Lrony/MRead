@@ -32,12 +32,13 @@ public class BookCatalogPresenter extends MvpBasePresenter<BookCatalogContract.V
     }
 
     @Override
-    public void loadBookInfo(String id) {
+    public void loadBookInfo(boolean showRefreshView, String id) {
         Log.d(TAG, "loadBookInfo: " + id);
         // View无效
         if (!isViewAttached()) return;
 
-        getView().loading();
+        if (showRefreshView) getView().loading();
+
         Call<BookChapterPackage> call = bookApi.getBookChapterPackage(id, "chapters");
         call.enqueue(new Callback<BookChapterPackage>() {
             @Override
@@ -54,8 +55,8 @@ public class BookCatalogPresenter extends MvpBasePresenter<BookCatalogContract.V
                 // View无效
                 if (!isViewAttached()) return;
 
-                getView().showToast("加载失败");
                 getView().complete();
+                getView().error();
             }
         });
     }
