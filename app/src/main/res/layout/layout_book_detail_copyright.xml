@@ -44,5 +44,6 @@
         android:lineSpacingExtra="6dp"
         android:text="@string/bookdetail_copyright"
         android:textColor="@color/textAssist"
+        android:textIsSelectable="true"
         android:textSize="@dimen/text_size_small" />
 </LinearLayout>
