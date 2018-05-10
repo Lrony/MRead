@@ -260,9 +260,8 @@ public class BookDetailActivity extends MvpActivity<BookDetailContract.Presenter
                     showComfirmDialog();
                 } else {
                     DBManger.getInstance().saveBookTb(mBookBean);
-                    ToastUtil.showToast(R.string.bookdetail_add_book_ok);
+                    refreshBookAddStatus();
                 }
-                refreshBookAddStatus();
 
                 break;
             case R.id.fl_download_book:
