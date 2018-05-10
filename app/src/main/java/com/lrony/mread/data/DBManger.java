@@ -6,13 +6,9 @@ import com.lrony.mread.data.db.DBRepository;
 import com.lrony.mread.data.db.table.BookTb;
 import com.lrony.mread.data.db.table.BookTbDao;
 import com.lrony.mread.data.db.table.DaoSession;
-import com.lrony.mread.event.AddBook2BookcaseEvent;
-import com.lrony.mread.rx.RxBus;
 import com.lrony.mread.util.DataConvertUtil;
 
 import java.util.List;
-
-import rx.Observable;
 
 /**
  * Created by Lrony on 18-4-28.
@@ -43,7 +39,6 @@ public final class DBManger {
             bookTb = DataConvertUtil.book2BookTb(book, null);
             bookTb.setSort((int) mDaoSession.getBookTbDao().count());
             mDaoSession.getBookTbDao().insert(bookTb);
-            RxBus.getDefault().post(new AddBook2BookcaseEvent(bookTb));
         } else {
             bookTb = DataConvertUtil.book2BookTb(book, bookTb);
             mDaoSession.getBookTbDao().update(bookTb);
@@ -60,12 +55,47 @@ public final class DBManger {
         if (loadBookTbById(bookTb.getId()) == null) {
             bookTb.setSort((int) mDaoSession.getBookTbDao().count());
             mDaoSession.getBookTbDao().insert(bookTb);
-            RxBus.getDefault().post(new AddBook2BookcaseEvent(bookTb));
         } else {
             mDaoSession.getBookTbDao().update(bookTb);
         }
         return bookTb.getId();
     }
+
+//    以下为RxJava相关函数
+//    /**
+//     * 添加图书到书架
+//     *
+//     * @return book 在数据库中的Id
+//     */
+//    public String saveBookTb(Book book) {
+//        BookTb bookTb = loadBookTbById(book.getId());
+//        if (bookTb == null) {
+//            bookTb = DataConvertUtil.book2BookTb(book, null);
+//            bookTb.setSort((int) mDaoSession.getBookTbDao().count());
+//            mDaoSession.getBookTbDao().insert(bookTb);
+//            RxBus.getDefault().post(new AddBook2BookcaseEvent(bookTb));
+//        } else {
+//            bookTb = DataConvertUtil.book2BookTb(book, bookTb);
+//            mDaoSession.getBookTbDao().update(bookTb);
+//        }
+//        return book.getId();
+//    }
+//
+//    /**
+//     * 添加图书到书架
+//     *
+//     * @return book 在数据库中的Id
+//     */
+//    public String saveBookTb(BookTb bookTb) {
+//        if (loadBookTbById(bookTb.getId()) == null) {
+//            bookTb.setSort((int) mDaoSession.getBookTbDao().count());
+//            mDaoSession.getBookTbDao().insert(bookTb);
+//            RxBus.getDefault().post(new AddBook2BookcaseEvent(bookTb));
+//        } else {
+//            mDaoSession.getBookTbDao().update(bookTb);
+//        }
+//        return bookTb.getId();
+//    }
 
     public void deleteBookTb(BookTb bookTb) {
         mDaoSession.getBookTbDao().delete(bookTb);
@@ -101,48 +131,70 @@ public final class DBManger {
         return mDaoSession.getBookTbDao().count();
     }
 
-    public List<BookTb> loadAllBookTb(){
+    public List<BookTb> loadAllBookTb() {
         return mDaoSession.getBookTbDao()
                 .queryBuilder()
                 .orderAsc(BookTbDao.Properties.Sort)
                 .list();
     }
 
-    public Observable<List<BookTb>> loadBookTb() {
-        return mDaoSession
-                .getBookTbDao()
-                .queryBuilder()
-                .orderAsc(BookTbDao.Properties.Sort)
-                .rx()
-                .list();
-    }
-
-    public Observable<List<BookTb>> loadBookTbOrderLatestRead() {
-        return mDaoSession
-                .getBookTbDao()
+    public List<BookTb> loadBookTbOrderLatestRead() {
+        return mDaoSession.getBookTbDao()
                 .queryBuilder()
                 .orderDesc(BookTbDao.Properties.LatestReadTimestamp, BookTbDao.Properties.Sort)
-                .rx()
                 .list();
     }
 
-    public Observable<List<BookTb>> loadBookTbOrderMostRead() {
-        return mDaoSession
-                .getBookTbDao()
+    public List<BookTb> loadBookTbOrderMostRead() {
+        return mDaoSession.getBookTbDao()
                 .queryBuilder()
                 .orderDesc(BookTbDao.Properties.ReadNumber, BookTbDao.Properties.Sort)
-                .rx()
                 .list();
     }
 
-    public Observable<List<BookTb>> loadBookTbOrderName() {
-        return mDaoSession
-                .getBookTbDao()
+    public List<BookTb> loadBookTbOrderName() {
+        return mDaoSession.getBookTbDao()
                 .queryBuilder()
                 .orderAsc(BookTbDao.Properties.Name, BookTbDao.Properties.Sort)
-                .rx()
                 .list();
     }
+
+//    以下为RxJava相关函数
+//    public Observable<List<BookTb>> loadBookTb() {
+//        return mDaoSession
+//                .getBookTbDao()
+//                .queryBuilder()
+//                .orderAsc(BookTbDao.Properties.Sort)
+//                .rx()
+//                .list();
+//    }
+//
+//    public Observable<List<BookTb>> loadBookTbOrderLatestRead() {
+//        return mDaoSession
+//                .getBookTbDao()
+//                .queryBuilder()
+//                .orderDesc(BookTbDao.Properties.LatestReadTimestamp, BookTbDao.Properties.Sort)
+//                .rx()
+//                .list();
+//    }
+//
+//    public Observable<List<BookTb>> loadBookTbOrderMostRead() {
+//        return mDaoSession
+//                .getBookTbDao()
+//                .queryBuilder()
+//                .orderDesc(BookTbDao.Properties.ReadNumber, BookTbDao.Properties.Sort)
+//                .rx()
+//                .list();
+//    }
+//
+//    public Observable<List<BookTb>> loadBookTbOrderName() {
+//        return mDaoSession
+//                .getBookTbDao()
+//                .queryBuilder()
+//                .orderAsc(BookTbDao.Properties.Name, BookTbDao.Properties.Sort)
+//                .rx()
+//                .list();
+//    }
 
     public void clearBookTbSort() {
         List<BookTb> bookTbs = mDaoSession
