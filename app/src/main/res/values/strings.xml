@@ -11,7 +11,7 @@
     <string name="commom_confirm">确认</string>
     <string name="commom_cancel">取消</string>
 
-    <string name="navigation_home">首页</string>
+    <string name="navigation_home">书架</string>
     <string name="navigation_search">精选</string>
     <string name="navigation_library">书库</string>
     <string name="navigation_self">我的</string>
