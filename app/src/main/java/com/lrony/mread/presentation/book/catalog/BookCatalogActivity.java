@@ -19,6 +19,7 @@ import com.classic.common.MultipleStatusView;
 import com.lrony.mread.R;
 import com.lrony.mread.data.net.BookChapterPackage;
 import com.lrony.mread.mvp.MvpActivity;
+import com.lrony.mread.ui.help.BaseRecyclerAdapter;
 import com.lrony.mread.ui.help.ProgressDialogHandler;
 import com.lrony.mread.ui.help.RecyclerViewItemDecoration;
 import com.lrony.mread.ui.help.ToolbarHelper;
@@ -91,6 +92,18 @@ public class BookCatalogActivity extends MvpActivity<BookCatalogContract.Present
         Log.d(TAG, "initListener");
 
         mRefreshView.setOnRefreshListener(this);
+
+        mAdapter.setItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                showToast(mChapter.getMixToc().getChapters().get(position).getTitle());
+            }
+
+            @Override
+            public void onItemLongClick(int position) {
+
+            }
+        });
     }
 
     private View.OnClickListener mRetryClickListener = new View.OnClickListener() {
