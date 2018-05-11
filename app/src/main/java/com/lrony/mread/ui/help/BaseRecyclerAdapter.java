@@ -20,6 +20,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseVi
     }
 
     private OnItemClickListener mItemClickListener;
+    private OnItemLongClickListener mItemLongClickListener;
 
     @Override
     public void onClick(View v) {
@@ -30,15 +31,17 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseVi
 
     @Override
     public boolean onLongClick(View v) {
-        if (mItemClickListener != null) {
-            mItemClickListener.onItemLongClick((Integer) v.getTag());
+        if (mItemLongClickListener != null) {
+            mItemLongClickListener.onItemLongClick((Integer) v.getTag());
         }
         return true;
     }
 
     public interface OnItemClickListener {
         void onItemClick(int position);
+    }
 
+    public interface OnItemLongClickListener {
         void onItemLongClick(int position);
     }
 
@@ -46,8 +49,13 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseVi
         mItemClickListener = itemClickListener;
     }
 
+    public void setItemLongClickListener(OnItemLongClickListener itemLongClickListener) {
+        mItemLongClickListener = itemLongClickListener;
+    }
+
     /**
      * 刷新数据
+     *
      * @param data
      */
     public void refresh(T data) {

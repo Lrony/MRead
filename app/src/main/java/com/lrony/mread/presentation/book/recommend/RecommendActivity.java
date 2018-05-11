@@ -99,11 +99,6 @@ public class RecommendActivity extends MvpActivity<RecommendContract.Presenter> 
                 AppRouter.showBookDetailActivity(RecommendActivity.this, mBooks.getBooks().get(position).get_id());
                 AppManager.getInstance().finishActivity();
             }
-
-            @Override
-            public void onItemLongClick(int position) {
-
-            }
         });
 
     }

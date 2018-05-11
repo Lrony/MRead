@@ -98,11 +98,6 @@ public class BookCatalogActivity extends MvpActivity<BookCatalogContract.Present
             public void onItemClick(int position) {
                 showToast(mChapter.getMixToc().getChapters().get(position).getTitle());
             }
-
-            @Override
-            public void onItemLongClick(int position) {
-
-            }
         });
     }
 

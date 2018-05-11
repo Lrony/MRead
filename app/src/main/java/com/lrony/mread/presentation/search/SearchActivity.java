@@ -152,11 +152,6 @@ public class SearchActivity extends MvpActivity<SearchContract.Presenter> implem
                 AppRouter.showBookDetailActivity(SearchActivity.this, mSearchData.getBooks().get(position).get_id());
                 AppManager.getInstance().finishActivity();
             }
-
-            @Override
-            public void onItemLongClick(int position) {
-
-            }
         });
 
         mKeyWordAdapter.setItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
@@ -165,11 +160,6 @@ public class SearchActivity extends MvpActivity<SearchContract.Presenter> implem
                 mEtSearch.setText(mKeyWordData.getKeywords().get(position));
                 mEtSearch.setSelection(mKeyWordData.getKeywords().get(position).length());
                 goSearchResult();
-            }
-
-            @Override
-            public void onItemLongClick(int position) {
-
             }
         });
     }

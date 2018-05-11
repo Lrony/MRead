@@ -184,11 +184,6 @@ public class BookDetailActivity extends MvpActivity<BookDetailContract.Presenter
             public void onItemClick(int position) {
                 AppRouter.showBookDetailActivity(BookDetailActivity.this, mRecommendBooks.getBooks().get(position).get_id());
             }
-
-            @Override
-            public void onItemLongClick(int position) {
-
-            }
         });
 
         mIvCover.setOnClickListener(this);
