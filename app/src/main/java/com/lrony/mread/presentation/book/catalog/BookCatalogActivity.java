@@ -8,7 +8,10 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -38,6 +41,8 @@ public class BookCatalogActivity extends MvpActivity<BookCatalogContract.Present
 
     private BookChapterPackage mChapter;
 
+    private boolean mIsReverserder = false;
+
     public static Intent newIntent(Context context, String bookid) {
         Intent intent = new Intent(context, BookCatalogActivity.class);
         intent.putExtra(K_EXTRA_BOOK, bookid);
@@ -49,6 +54,7 @@ public class BookCatalogActivity extends MvpActivity<BookCatalogContract.Present
         super.onCreate(savedInstanceState);
         init();
         setContentView(R.layout.activity_book_catalog);
+
         getPresenter().start();
         initView();
         initListener();
@@ -79,8 +85,6 @@ public class BookCatalogActivity extends MvpActivity<BookCatalogContract.Present
 
         mAdapter = new BookCatalogAdapter(this, null);
         mRecyclerView.setAdapter(mAdapter);
-
-        setRecyclerReverserder(true);
     }
 
     private void initListener() {
@@ -111,6 +115,28 @@ public class BookCatalogActivity extends MvpActivity<BookCatalogContract.Present
     @Override
     public BookCatalogContract.Presenter createPresenter() {
         return new BookCatalogPresenter();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_book_catalog, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_book_catalog_swich:
+                if (mIsReverserder) {
+                    setRecyclerReverserder(false);
+                    mIsReverserder = false;
+                } else {
+                    setRecyclerReverserder(true);
+                    mIsReverserder = true;
+                }
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
