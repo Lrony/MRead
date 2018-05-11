@@ -2,7 +2,6 @@ package com.lrony.mread;
 
 import android.app.Application;
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 
 import com.lrony.mread.data.db.DBRepository;
@@ -16,7 +15,7 @@ import me.yokeyword.fragmentation.helper.ExceptionHandler;
  */
 public class App extends Application {
 
-    private static final String TAG = "App";
+    private static final String TAG = "MReadApp";
 
     private static App mContext = null;
 
