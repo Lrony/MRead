@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -65,6 +66,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailContract.Presenter
     private TextView mTvWordCountCopyright;
     private TextView mTvCreateDateCopyright;
     private TextView mTvBookStatus;
+    private FrameLayout mFrmRecommend;
 
     private ProgressDialogHandler mDialogHandler;
 
@@ -122,6 +124,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailContract.Presenter
         mRecommendAdapter = new RecommendBookAdapter(this, mRecommendBooks, ScreenUtil.isLAndscape(this) ? 8 : 6);
         mRvRecommendBook.setAdapter(mRecommendAdapter);
         mTvBookStatus = findViewById(R.id.tv_book_status);
+        mFrmRecommend = findViewById(R.id.frm_recommend);
     }
 
     private void initListener() {
@@ -302,6 +305,7 @@ public class BookDetailActivity extends MvpActivity<BookDetailContract.Presenter
         mRecommendBooks = books;
         mRecommendAdapter.refresh(mRecommendBooks);
         mRecommendLoadOK = true;
+        if (books.getBooks().size() <= 0) mFrmRecommend.setVisibility(View.GONE);
         jugeCloseDialog();
     }
 

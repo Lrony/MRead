@@ -132,6 +132,8 @@ public class RecommendActivity extends MvpActivity<RecommendContract.Presenter> 
         super.complete();
         mStatusView.showContent();
         mRefreshView.setRefreshing(false);
+
+        if (mBooks.getBooks().size() <= 0) mStatusView.showEmpty();
     }
 
     @Override

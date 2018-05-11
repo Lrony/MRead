@@ -85,7 +85,13 @@
                         android:textSize="@dimen/text_size_medium"
                         tools:text="网易旗下利用大数据技术提供移动互联网应用的子公司,过去8年,先后推出有道词典、有道翻译官、有道云笔记、惠惠网、有道推广、有道精品课、有道口语大师等系列产品,总.cas sac as  s" />
 
-                    <include layout="@layout/layout_book_detail_recommend" />
+                    <FrameLayout
+                        android:id="@+id/frm_recommend"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <include layout="@layout/layout_book_detail_recommend" />
+                    </FrameLayout>
 
                     <include layout="@layout/layout_book_detail_copyright" />
 

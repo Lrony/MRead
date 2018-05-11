@@ -158,6 +158,8 @@ public class BookCatalogActivity extends MvpActivity<BookCatalogContract.Present
         super.complete();
         mStatusView.showContent();
         mRefreshView.setRefreshing(false);
+
+        if (mChapter.getMixToc().getChapters().size() <= 0) mStatusView.showEmpty();
     }
 
     @Override
