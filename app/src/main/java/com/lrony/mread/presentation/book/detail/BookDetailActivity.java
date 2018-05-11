@@ -251,6 +251,17 @@ public class BookDetailActivity extends MvpActivity<BookDetailContract.Presenter
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_bookdetail, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fl_add_bookcase:
