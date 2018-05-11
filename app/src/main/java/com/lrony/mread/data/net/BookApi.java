@@ -51,6 +51,15 @@ public interface BookApi {
     /*************************书籍详情**********************************/
 
     /**
+     * 书籍热门评论
+     *
+     * @param book
+     * @return
+     */
+    @GET("/post/review/best-by-book")
+    Call<HotCommentPackage> getHotCommnentPackage(@Query("book") String book);
+
+    /**
      * 书籍详情
      *
      * @param bookId
