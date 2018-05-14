@@ -105,4 +105,77 @@
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
+
+    <style name="Read" />
+
+    <style name="Read.Setting" />
+
+    <style name="Read.Setting.Button">
+        <item name="android:background">@drawable/read_bg_setting_button</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/read_menu_text</item>
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:minWidth">42dp</item>
+    </style>
+
+    <style name="Read.Setting.ThemeView">
+        <item name="android:layout_width">32dp</item>
+        <item name="android:layout_height">32dp</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="super_cornerRadius">10dp</item>
+        <item name="super_strokeWidth">1dp</item>
+        <item name="super_strokeColor_selected">@color/colorAccent</item>
+
+
+    </style>
+
+    <style name="Read.Setting.Dialog" parent="Theme.Design.BottomSheetDialog">
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+    <style name="Read.Setting.ImageButton">
+        <item name="android:background">@drawable/read_bg_setting_button</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">36dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:paddingLeft">10dp</item>
+    </style>
+
+    <style name="Read.ActionBar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="actionMenuTextColor">@color/read_text_primary</item>
+        <item name="colorControlNormal">@color/read_text_primary</item>
+    </style>
+
+    <style name="Read.TextAppearance.ActionBar.Title" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textColor">@color/read_text_primary</item>
+    </style>
+
+    <style name="Read.BottomMenu">
+        <item name="android:textColor">@color/read_menu_text</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:background">@drawable/read_bg_bottom_menu</item>
+    </style>
+
+    <style name="Read.BottomMenu.IconButton">
+        <item name="android:gravity">center_horizontal|bottom</item>
+        <item name="android:layout_width">68dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="Read.BottomMenu.Button">
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">10.0dp</item>
+        <item name="android:paddingRight">10.0dp</item>
+        <item name="android:paddingTop">18.0dp</item>
+        <item name="android:paddingBottom">18.0dp</item>
+    </style>
 </resources>

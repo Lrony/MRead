@@ -15,7 +15,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        
         <activity android:name=".presentation.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,7 +31,8 @@
         <activity android:name=".presentation.hot.HotTypeSelectActivity" />
         <activity android:name=".presentation.about.AboutActivity" />
         <activity android:name=".presentation.common.PhotoActivity" />
-        <activity android:name=".presentation.book.catalog.BookCatalogActivity"></activity>
+        <activity android:name=".presentation.book.catalog.BookCatalogActivity" />
+        <activity android:name=".presentation.read.ReadActivity"></activity>
     </application>
 
 </manifest>
