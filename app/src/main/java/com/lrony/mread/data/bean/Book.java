@@ -1,11 +1,13 @@
 package com.lrony.mread.data.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.telecom.Call;
 
 /**
  * Created by Lrony on 18-4-24.
  */
-public class Book {
+public class Book implements Parcelable {
 
     /*"books": [{
         "_id": "5702151c1c8e4db9483762d6",
@@ -90,6 +92,40 @@ public class Book {
 
     public Book() {
     }
+
+    protected Book(Parcel in) {
+        id = in.readString();
+        title = in.readString();
+        author = in.readString();
+        shortIntro = in.readString();
+        cover = in.readString();
+        site = in.readString();
+        majorCate = in.readString();
+        minorCate = in.readString();
+        contentType = in.readString();
+        allowMonthly = in.readByte() != 0;
+        banned = in.readInt();
+        latelyFollower = in.readInt();
+        retentionRatio = in.readDouble();
+        lastChapter = in.readString();
+        updated = in.readString();
+        isFinished = in.readByte() != 0;
+        wordCount = in.readLong();
+        postCount = in.readLong();
+        chaptersCount = in.readInt();
+    }
+
+    public static final Creator<Book> CREATOR = new Creator<Book>() {
+        @Override
+        public Book createFromParcel(Parcel in) {
+            return new Book(in);
+        }
+
+        @Override
+        public Book[] newArray(int size) {
+            return new Book[size];
+        }
+    };
 
     public String getId() {
         return id;
@@ -241,5 +277,33 @@ public class Book {
 
     public void setChaptersCount(int chaptersCount) {
         this.chaptersCount = chaptersCount;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(title);
+        dest.writeString(author);
+        dest.writeString(shortIntro);
+        dest.writeString(cover);
+        dest.writeString(site);
+        dest.writeString(majorCate);
+        dest.writeString(minorCate);
+        dest.writeString(contentType);
+        dest.writeByte((byte) (allowMonthly ? 1 : 0));
+        dest.writeInt(banned);
+        dest.writeInt(latelyFollower);
+        dest.writeDouble(retentionRatio);
+        dest.writeString(lastChapter);
+        dest.writeString(updated);
+        dest.writeByte((byte) (isFinished ? 1 : 0));
+        dest.writeLong(wordCount);
+        dest.writeLong(postCount);
+        dest.writeInt(chaptersCount);
     }
 }
