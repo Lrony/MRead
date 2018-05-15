@@ -133,7 +133,7 @@ public class HomeFragment extends MvpFragment<HomeContract.Presenter> implements
         @Override
         public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
             Log.d(TAG, "onSimpleItemClick: " + position);
-            AppRouter.showBookDetailActivity(getContext(), mBooks.get(position).getId());
+            AppRouter.showReadActivity(getContext(), mBooks.get(position));
         }
 
         @Override

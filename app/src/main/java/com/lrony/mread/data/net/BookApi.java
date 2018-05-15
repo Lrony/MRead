@@ -86,6 +86,14 @@ public interface BookApi {
     @GET("/mix-atoc/{bookId}")
     Call<BookChapterPackage> getBookChapterPackage(@Path("bookId") String bookId, @Query("view") String view);
 
+    /**
+     * 章节的内容
+     * 这里采用的是同步请求。
+     * @param url
+     * @return
+     */
+    @GET("http://chapter2.zhuishushenqi.com/chapter/{url}")
+    Call<ChapterInfoPackage> getChapterInfoPackage(@Path("url") String url);
 
     /************************************搜索书籍******************************************************/
 

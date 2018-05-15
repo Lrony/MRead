@@ -9,10 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.lrony.mread.data.bean.Book;
+import com.lrony.mread.data.db.table.BookTb;
 import com.lrony.mread.presentation.book.catalog.BookCatalogActivity;
 import com.lrony.mread.presentation.book.detail.BookDetailActivity;
 import com.lrony.mread.presentation.book.recommend.RecommendActivity;
 import com.lrony.mread.presentation.common.PhotoActivity;
+import com.lrony.mread.presentation.read.ReadActivity;
 import com.lrony.mread.presentation.search.SearchActivity;
 import com.lrony.mread.util.DensityUtil;
 
@@ -51,6 +54,14 @@ public class AppRouter {
 
     public static void showBookDetailActivity(Context context, String bookid) {
         context.startActivity(BookDetailActivity.newIntent(context, bookid));
+    }
+
+    public static void showReadActivity(Context context, Book book, Integer sectionIndex, String sectionId) {
+        context.startActivity(ReadActivity.newIntent(context, book, sectionIndex, sectionId));
+    }
+
+    public static void showReadActivity(Context context, BookTb bookTb) {
+        context.startActivity(ReadActivity.newIntent(context, bookTb));
     }
 
     public static void showSearchActivity(Context context) {

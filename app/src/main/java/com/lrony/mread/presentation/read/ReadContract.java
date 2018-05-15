@@ -14,5 +14,6 @@ public interface ReadContract {
 
     interface Presenter extends MvpPresenter<View> {
 
+        void loadData();
     }
 }
