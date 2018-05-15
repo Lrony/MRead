@@ -1,9 +1,13 @@
 package com.lrony.mread.presentation.read;
 
+import android.content.Context;
 import android.util.Log;
+import android.view.View;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lrony.mread.data.db.table.BookTb;
 import com.lrony.mread.data.net.BookApi;
+import com.lrony.mread.data.net.BookChapterPackage;
 import com.lrony.mread.data.net.ChapterInfoPackage;
 import com.lrony.mread.mvp.MvpBasePresenter;
 import com.lrony.mread.util.Constant;
@@ -23,10 +27,18 @@ public class ReadPresenter extends MvpBasePresenter<ReadContract.View> implement
 
     private BookApi bookApi;
 
+    private Context mContext;
     private BookTb mBookTb;
+    private String mBookId;
+    // 目录
+    private BookChapterPackage mBookChapters;
+    // 目录Adapter
+    private ReadSectionAdapter readSectionAdapter;
 
-    public ReadPresenter(BookTb bookTb) {
+    public ReadPresenter(Context context, BookTb bookTb) {
+        this.mContext = context;
         this.mBookTb = bookTb;
+        this.mBookId = bookTb.getId();
     }
 
     @Override
@@ -39,6 +51,45 @@ public class ReadPresenter extends MvpBasePresenter<ReadContract.View> implement
         bookApi = retrofit.create(BookApi.class);
     }
 
+    private ReadSectionAdapter createReadSectionAdapter(BookChapterPackage pakge) {
+
+        readSectionAdapter = new ReadSectionAdapter(mContext, pakge);
+        return readSectionAdapter;
+
+//        bookSectionAdapter = new BookSectionAdapter(bookSectionItems);
+//        bookSectionAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+//                BookSectionItem bookSectionItem = ((List<BookSectionItem>) adapter.getData()).get(position);
+//                doLoadData(bookSectionItem.getSectionIndex(), bookSectionItem.getSectionId(), true);
+//            }
+//        });
+//        return bookSectionAdapter;
+    }
+
+    @Override
+    public void loadSectionList() {
+        // View无效
+        if (!isViewAttached()) return;
+
+        Call<BookChapterPackage> call = bookApi.getBookChapterPackage(mBookId, "chapters");
+        call.enqueue(new Callback<BookChapterPackage>() {
+            @Override
+            public void onResponse(Call<BookChapterPackage> call, Response<BookChapterPackage> response) {
+                // View无效
+                if (!isViewAttached()) return;
+
+                mBookChapters = response.body();
+                getView().setSectionListAdapter(createReadSectionAdapter(response.body()));
+            }
+
+            @Override
+            public void onFailure(Call<BookChapterPackage> call, Throwable t) {
+                // View无效
+                if (!isViewAttached()) return;
+            }
+        });
+    }
 
     @Override
     public void loadData() {

@@ -23,12 +23,14 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.lrony.mread.AppManager;
 import com.lrony.mread.R;
 import com.lrony.mread.data.DBManger;
 import com.lrony.mread.data.bean.Book;
 import com.lrony.mread.data.db.table.BookTb;
 import com.lrony.mread.mvp.MvpActivity;
 import com.lrony.mread.pref.AppConfig;
+import com.lrony.mread.presentation.book.catalog.BookCatalogAdapter;
 import com.lrony.mread.ui.help.RecyclerViewItemDecoration;
 import com.lrony.mread.ui.help.ToolbarHelper;
 import com.lrony.mread.util.BrightnessUtils;
@@ -84,7 +86,7 @@ public class ReadActivity extends MvpActivity<ReadContract.Presenter> implements
 
     private boolean isShowCollectionDialog = false;
     private BookTb mBookTb;
-    private BookSectionAdapter sectionAdapter;
+    private ReadSectionAdapter sectionAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,13 +163,14 @@ public class ReadActivity extends MvpActivity<ReadContract.Presenter> implements
             }
         });
         getPresenter().start();
-        getPresenter().loadData();
+//        getPresenter().loadData();
+        getPresenter().loadSectionList();
     }
 
     @NonNull
     @Override
     public ReadContract.Presenter createPresenter() {
-        return new ReadPresenter(mBookTb);
+        return new ReadPresenter(this, mBookTb);
     }
 
     public static Intent newIntent(Context context, Book book, Integer sectionIndex, String sectionId) {
@@ -314,8 +317,101 @@ public class ReadActivity extends MvpActivity<ReadContract.Presenter> implements
         }
     }
 
+    private void toggleNightMode(boolean isOpen) {
+        if (isOpen) {
+            readTvNightMode.setText(getString(R.string.read_daytime));
+            readTvNightMode.setSelected(true);
+            readView.setPageBackground(ReadTheme.NIGHT.getPageBackground());
+            readView.setTextColor(ReadTheme.NIGHT.getTextColor());
+            readView.refreshPage();
+            ReaderSettingManager.getInstance().setPageBackground(readView.getPageBackground());
+            ReaderSettingManager.getInstance().setTextColor(readView.getTextColor());
+        } else {
+            readTvNightMode.setText(getString(R.string.read_night));
+            readTvNightMode.setSelected(false);
+            readView.setPageBackground(ReadTheme.DEFAULT.getPageBackground());
+            readView.setTextColor(ReadTheme.DEFAULT.getTextColor());
+            readView.refreshPage();
+            ReaderSettingManager.getInstance().setPageBackground(readView.getPageBackground());
+            ReaderSettingManager.getInstance().setTextColor(readView.getTextColor());
+        }
+    }
+
     @Override
     public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.read_tv_pre_chapter:
+//                getPresenter().prevSection();
+                break;
+            case R.id.read_tv_next_chapter:
+//                getPresenter().nextSection();
+                break;
+            case R.id.read_tv_category:
+                readDrawer.openDrawer(readSide);
+                break;
+            case R.id.read_tv_night_mode:
+                boolean nightModeSelected = !readTvNightMode.isSelected();
+                toggleNightMode(nightModeSelected);
+                ReaderSettingManager.getInstance().setNightMode(nightModeSelected);
+                AppConfig.setNightMode(nightModeSelected);
 
+                Object[] activityArray = AppManager.getInstance().getActivityArray();
+                for (Object appCompatActivity : activityArray) {
+                    if (appCompatActivity != this) {
+                        AppCompatDelegate delegate = ((AppCompatActivity) appCompatActivity).getDelegate();
+                        if (nightModeSelected) {
+                            delegate.setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+
+                        } else {
+                            delegate.setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                        }
+                    }
+                }
+
+                break;
+            case R.id.read_tv_setting:
+//                toggleMenu(true);
+//                openReadSetting(this);
+                break;
+
+        }
+    }
+
+    @Override
+    public void setSectionListAdapter(final ReadSectionAdapter adapter) {
+        sectionAdapter = adapter;
+        sectionAdapter.setTextColor(readView.getTextColor());
+        readRvSection.setAdapter(adapter);
+        readSbChapterProgress.setEnabled(true);
+        readSbChapterProgress.setMax(adapter.getItemCount());
+        readSbChapterProgress.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                int section = seekBar.getProgress() - 1;
+                if (section < 1) {
+                    section = 1;
+                }
+                readTvSectionProgress.setText(section + "/" + adapter.getItemCount());
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                readSectionProgress.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                readSectionProgress.setVisibility(View.GONE);
+                int section = seekBar.getProgress() - 1;
+                if (section < 0) {
+                    section = 0;
+                }
+//                getPresenter().openSection(section);
+            }
+        });
     }
 }
